@@ -29,11 +29,7 @@ export async function getCourses(): Promise<Course[]> {
 
     try {
         const data = await fetchCourses();
-        
-        // Transform courses
         const transformedCourses = data.map((course) => transformCourse(course));
-        
-        // Sort courses based on ID (or any other criteria you want)
         sortedCourses = transformedCourses.sort((a, b) => a.id.localeCompare(b.id));
     } catch (error) {
         console.error("Error fetching or transforming courses:", error);
