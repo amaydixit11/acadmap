@@ -1,48 +1,36 @@
-import { Course } from '@/models/courses';
-import CoursePage from './CoursePage';
-import { getCourses } from '@/lib/courses';
-import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation'
+import { Course } from '@/models/courses'
+import CoursePage from './CoursePage'
+import { getCourses } from '@/lib/courses'
 
-type Props = {
+type PageProps = {
   params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default async function CoursePageWrapper({ params, searchParams }: Props) {
+export default async function CoursePageWrapper({
+  params,
+  searchParams,
+}: PageProps) {
   try {
-    const courses = await getCourses();
-    const course = courses.find((c) => c.id === params.id);
+    const courses = await getCourses()
+    const course = courses.find((c) => c.id === params.id)
 
     if (!course) {
-      notFound();
+      notFound()
     }
 
-    return <CoursePage course={course} />;
+    return <CoursePage course={course} />
   } catch (error) {
-    throw error;
+    throw error
   }
 }
 
-// Option 1: Using Promise.resolve
 export async function generateStaticParams() {
-  const courses = await getCourses();
+  const courses = await getCourses()
   
-  return Promise.resolve(
-    courses.map((course) => ({
-      id: course.id,
-    }))
-  );
+  return courses.map((course) => ({
+    id: course.id,
+  }))
 }
 
-// Option 2: Using async/await (alternative approach)
-/*
-export async function generateStaticParams() {
-  const courses = await getCourses();
-  
-  const params = courses.map((course) => ({
-    id: course.id,
-  }));
-  
-  return params;
-}
-*/
