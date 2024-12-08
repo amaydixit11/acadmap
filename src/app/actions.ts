@@ -132,3 +132,21 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect("/sign-in");
 };
+
+export const OAuthAction = async () => {
+  const supabase = await createClient();
+  const origin = (await headers()).get('origin');
+  const { error, data } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${origin}/auth/callback`, // Ensure this matches your Supabase redirect URI
+    },
+  });
+
+  if (error) {
+    console.error("OAuth error:", error);
+    throw error;
+  }
+
+  return redirect(data.url);
+};

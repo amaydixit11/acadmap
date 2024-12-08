@@ -18,7 +18,7 @@ export async function fetchCourses(): Promise<CourseSupabase[]> {
 
     // Log and return the fetched data
     if (data) {
-        console.table(data); // Optional: For debugging
+        // console.table(data); // Optional: For debugging
     }
     return data || [];
 }
