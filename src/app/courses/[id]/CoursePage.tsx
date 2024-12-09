@@ -59,9 +59,6 @@ export default function CoursePage({ course }: CoursePageProps) {
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
             <h2 className="font-semibold text-gray-800 line-clamp-1">{course.title}</h2>
           </div>
-          <Button variant="outline" size="sm" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            Back to top
-          </Button>
         </div>
       </div>
 
@@ -78,7 +75,7 @@ export default function CoursePage({ course }: CoursePageProps) {
                   <Badge className="px-3 py-1">{course.credits} Credits</Badge>
                   <Badge variant="outline" className="px-3 py-1 ml-auto">
                     <Clock className="mr-1 h-4 w-4" />
-                    {course.schedule.lectures + course.schedule.labs + course.schedule.tutorials} hrs/week
+                    {Number(course.schedule.lectures) + Number(course.schedule.labs) + Number(course.schedule.tutorials)} hrs/week
                   </Badge>
                 </div>
                 <h1 className="text-4xl font-bold text-gray-800 mb-4">{course.title}</h1>
@@ -165,7 +162,7 @@ export default function CoursePage({ course }: CoursePageProps) {
                   <TabsContent value="resources" className="mt-0">
                     <Tabs defaultValue="lectures" className="space-y-6">
                       <TabsList className="w-full bg-gray-50/50 p-1 rounded-xl">
-                        {["Lectures", "Assignments", "Tutorials", "Previous Year Papers"].map((tab) => (
+                        {["Lectures", "Assignments", "Tutorials", "Exams"].map((tab) => (
                           <TabsTrigger
                             key={tab}
                             value={tab.toLowerCase().replace(/\s+/g, '')}

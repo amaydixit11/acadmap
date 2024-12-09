@@ -9,7 +9,7 @@ import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
 import { Button } from "@/components/ui/button";
 
-export default function SignupClient({ searchParams }: { searchParams: Message }) {
+export default function SignupClient() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -26,11 +26,6 @@ export default function SignupClient({ searchParams }: { searchParams: Message }
 
   return (
     <>
-      {("success" in searchParams || "error" in searchParams || "message" in searchParams) && (
-        <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-          <FormMessage message={searchParams} />
-        </div>
-      )}
         <form className="flex flex-col min-w-64 max-w-64 mx-auto" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-medium">Sign up</h1>
             <p className="text-sm text text-foreground">

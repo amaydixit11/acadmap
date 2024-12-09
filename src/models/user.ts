@@ -5,5 +5,6 @@ export interface UserData {
     year: string;
     rollNumber: string;
     phone: string;
+    avatar: string;
   }
   

@@ -12,13 +12,13 @@ import {
   CardTitle 
 } from "@/components/ui/card";
 import { 
-  BookOpen, 
-  Users, 
   FileText, 
+  Users, 
+  BookOpen, 
   ArrowRight, 
-  Star, 
+  Share2, 
   Zap, 
-  Globe 
+  Download 
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -33,22 +33,22 @@ export default function Hero() {
 
   const features = [
     {
-      icon: <BookOpen className="h-10 w-10 text-blue-600" />,
-      title: "Comprehensive Course Catalog",
-      description: "Access a wide range of courses across departments and semesters.",
-      link: "/courses"
+      icon: <FileText className="h-10 w-10 text-purple-600" />,
+      title: "Course Catalog & Resource Library",
+      description: "Access course materials shared by senior students.",
+      link: "/resources"
     },
     {
       icon: <Users className="h-10 w-10 text-green-600" />,
-      title: "Collaborative Study Groups",
-      description: "Connect, collaborate, and learn together with peers.",
-      link: "/study-groups"
+      title: "Peer Knowledge Sharing",
+      description: "Learn from students who've already taken the courses.",
+      link: "/contributors"
     },
     {
-      icon: <FileText className="h-10 w-10 text-purple-600" />,
-      title: "Resource Sharing Platform",
-      description: "Upload, explore, and share academic resources seamlessly.",
-      link: "/resources"
+      icon: <Share2 className="h-10 w-10 text-blue-600" />,
+      title: "Community Contribution",
+      description: "Upload and help future batches with your course materials.",
+      link: "/upload"
     }
   ];
 
@@ -70,28 +70,30 @@ export default function Hero() {
           {/* Left Content */}
           <div className="space-y-6">
             <Badge variant="secondary" className="px-3 py-1">
-              <Star className="mr-2 h-4 w-4 text-yellow-500" />
-              New: Enhanced Learning Platform
+              <Share2 className="mr-2 h-4 w-4 text-green-500" />
+              By Students, For Students
             </Badge>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
-              Elevate Your Academic Journey at 
-              <span className="block text-blue-600">IIT Bhilai</span>
+              Unlock Collective 
+              <span className="block text-blue-600">Learning Resources</span>
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-xl">
-              A comprehensive platform designed to transform your learning experience through collaboration, resources, and innovative tools.
+              A student-driven platform where peers share course materials, notes, and insights to help each other succeed.
             </p>
             
             <div className="flex space-x-4">
               <Button size="lg" asChild>
-                <Link href="/get-started">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Link href="/resources">
+                  Browse Resources
+                  <Download className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline">
-                Learn More
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/upload">
+                  Contribute Materials
+                </Link>
               </Button>
             </div>
           </div>
@@ -120,7 +122,7 @@ export default function Hero() {
                       <CardFooter>
                         <Button variant="link" asChild>
                           <Link href={feature.link}>
-                            Explore
+                            Learn More
                             <ArrowRight className="ml-2 h-4 w-4" />
                           </Link>
                         </Button>
@@ -142,19 +144,19 @@ export default function Hero() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center">
-              <Zap className="h-12 w-12 text-orange-500 mb-4" />
-              <h3 className="text-2xl font-bold">100+ Courses</h3>
-              <p className="text-muted-foreground">Diverse range of academic offerings</p>
+              <FileText className="h-12 w-12 text-purple-500 mb-4" />
+              <h3 className="text-2xl font-bold">500+ Resources</h3>
+              <p className="text-muted-foreground">Course materials and notes</p>
             </div>
             <div className="flex flex-col items-center">
               <Users className="h-12 w-12 text-green-500 mb-4" />
-              <h3 className="text-2xl font-bold">500+ Students</h3>
-              <p className="text-muted-foreground">Active learning community</p>
+              <h3 className="text-2xl font-bold">100+ Contributors</h3>
+              <p className="text-muted-foreground">Students helping students</p>
             </div>
             <div className="flex flex-col items-center">
-              <Globe className="h-12 w-12 text-blue-500 mb-4" />
+              <Zap className="h-12 w-12 text-orange-500 mb-4" />
               <h3 className="text-2xl font-bold">24/7 Access</h3>
-              <p className="text-muted-foreground">Learn anytime, anywhere</p>
+              <p className="text-muted-foreground">Learn and share anytime</p>
             </div>
           </div>
         </div>

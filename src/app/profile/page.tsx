@@ -27,7 +27,7 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getUserData } from "@/utils/getUserData";
 import { UserData } from "@/models/user";
 
@@ -68,6 +68,7 @@ const profileFields: ProfileField[] = [
     icon: <Phone />, 
     label: "Phone",
     type: "tel",
+    required: false,
     validation: (value) => /^\+?[\d\s-]{10,}$/.test(value)
   },
   { 
@@ -97,6 +98,7 @@ const ProfilePage = () => {
     year: "",
     rollNumber: "",
     phone: "",
+    avatar: "https://github.com/shadcn.png"
   });
 
   const [courses, setCourses] = useState<UserCourse[]>([
@@ -116,6 +118,7 @@ const ProfilePage = () => {
           year: user?.user.user_metadata.year || "",
           rollNumber: user?.user.user_metadata.roll_number || "",
           phone: user?.user.phone || "",
+          avatar: user?.user.user_metadata.avatar_url || ""
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -224,9 +227,13 @@ const ProfilePage = () => {
           <CardContent className="space-y-6">
             <div className="flex items-center justify-center mb-6">
               <div className="relative group">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                  <User className="w-16 h-16 text-primary-foreground" />
-                </div>
+                {/* <div className="w-32 h-32 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"> */}
+                <Avatar className="w-32 h-32 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                    <AvatarImage src={userData.avatar} />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+
+                {/* </div> */}
                 <Badge className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1">
                   Year {userData.year}
                 </Badge>

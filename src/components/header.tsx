@@ -16,34 +16,34 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/
 import { ModeToggle } from "@/components/mode-toggle";
 import {
   Search,
-  BookOpen,
+  Share2,
   Menu,
   User,
-  GraduationCap,
-  CalendarDays,
-  LibraryBig,
+  FileText,
+  Users,
   LogOut,
   Settings,
   UserCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { isUserLoggedIn } from "@/utils/ifLoggedIn";
+import { signOutAction } from "@/app/actions";
 
 const navigationConfig = [
   {
     title: "Courses",
     href: "/courses",
-    icon: <GraduationCap className="h-4 w-4" />,
+    icon: <FileText className="h-4 w-4" />,
   },
   {
-    title: "Resources",
-    href: "/resources",
-    icon: <LibraryBig className="h-4 w-4" />,
+    title: "Contributors",
+    href: "/contributors",
+    icon: <Users className="h-4 w-4" />,
   },
   {
-    title: "Study Groups",
-    href: "/study-groups",
-    icon: <User className="h-4 w-4" />,
+    title: "Upload",
+    href: "/upload",
+    icon: <Share2 className="h-4 w-4" />,
   },
 ];
 
@@ -68,7 +68,7 @@ export default function Header() {
 
   const handleSignOut = () => {
     setIsAuthenticated(false);
-    
+    signOutAction();
   };
 
   return (
@@ -78,10 +78,10 @@ export default function Header() {
         <Link 
           href="/" 
           className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
-          aria-label="IIT Bhilai Home"
+          aria-label="Student Resource Hub"
         >
-          <BookOpen className="h-6 w-6" />
-          <span className="font-bold text-lg tracking-tight">IIT Bhilai</span>
+          <Share2 className="h-6 w-6" />
+          <span className="font-bold text-lg tracking-tight">Student Resources</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -112,8 +112,8 @@ export default function Header() {
           <SheetContent side="left" className="w-64">
             <SheetHeader className="border-b pb-4">
               <SheetTitle className="flex items-center space-x-2">
-                <BookOpen className="h-5 w-5" />
-                <span>IIT Bhilai</span>
+                <Share2 className="h-5 w-5" />
+                <span>Student Resources</span>
               </SheetTitle>
             </SheetHeader>
             <nav className="mt-6 flex flex-col gap-2">
@@ -145,16 +145,16 @@ export default function Header() {
                 variant="ghost" 
                 size="icon" 
                 className="hover:bg-accent"
-                aria-label="Search courses and resources"
+                aria-label="Search resources"
               >
                 <Search className="h-5 w-5" />
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-              <DialogTitle>Search</DialogTitle>
+              <DialogTitle>Search Resources</DialogTitle>
               <form onSubmit={handleSearch} className="flex items-center space-x-2 mt-4">
                 <Input 
-                  placeholder="Search courses, resources..." 
+                  placeholder="Search course materials..." 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-1"
