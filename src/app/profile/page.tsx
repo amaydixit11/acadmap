@@ -74,13 +74,13 @@ const profileFields: ProfileField[] = [
     key: "department", 
     icon: <Building />, 
     label: "Department",
-    required: true
+    required: false
   },
   { 
     key: "rollNumber", 
     icon: <GraduationCap />, 
     label: "Roll Number",
-    required: true
+    required: false
   },
 ];
 
