@@ -36,7 +36,7 @@ export default function Hero() {
       icon: <FileText className="h-10 w-10 text-purple-600" />,
       title: "Course Catalog & Resource Library",
       description: "Access course materials shared by senior students.",
-      link: "/resources"
+      link: "/courses"
     },
     {
       icon: <Users className="h-10 w-10 text-green-600" />,

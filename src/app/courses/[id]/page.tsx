@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
-import { Course } from '@/models/courses'
+import { Course, demoCourse } from '@/models/courses'
 import CoursePage from './CoursePage'
 import { getCourses } from '@/lib/courses'
+import { getUserSessionData } from '@/lib/auth'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -9,16 +10,18 @@ interface PageProps {
 
 export default async function CoursePageWrapper({ params }: PageProps) {
   const {id} = await params;
+  const data = await getUserSessionData();
+  const user = data?.user;
 
   try {
-    const courses = await getCourses()
-    const course = courses.find((c) => c.id === id)
+    const courses: Course[] = await getCourses()
+    const course: Course = courses.find((c) => c.id === id) ?? demoCourse
 
     if (!course) {
       notFound()
     }
 
-    return <CoursePage course={course} />
+    return <CoursePage course={course} user={user} />
   } catch (error) {
     throw error
   }

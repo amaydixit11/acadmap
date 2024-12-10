@@ -1,10 +1,27 @@
-import { Suspense } from "react";
+"use client";
+
+import { useState } from "react";
 import { CourseFilters } from "@/components/courses/course-filters";
 import { CourseList } from "@/components/courses/course-list";
-import { CourseSearch } from "@/components/courses/course-search";
 import { Search, Filter, BookOpen } from "lucide-react";
+import { Department } from "@/models/courses";
+
 
 export default function CoursesPage() {
+  const [filters, setFilters] = useState({
+    departments: [] as (keyof typeof Department)[],
+    levels: [] as string[],
+    searchQuery: ""
+  });
+
+  const handleFilterChange = (newFilters: {
+    departments: (keyof typeof Department)[],
+    levels: string[],
+    searchQuery: string
+  }) => {
+    setFilters(newFilters);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="grid gap-8">
@@ -30,37 +47,14 @@ export default function CoursesPage() {
                   <Filter className="w-5 h-5 text-primary" />
                   Filters
                 </h2>
-                <button className="text-sm text-primary hover:bg-primary/10 px-2 py-1 rounded">
-                  Clear All
-                </button>
               </div>
-              <CourseFilters />
+              <CourseFilters onFilterChange={handleFilterChange} />
             </div>
           </aside>
 
           {/* Main Content Area */}
           <main className="space-y-6">
-            {/* Search Section */}
-            <div className="bg-white shadow-md rounded-xl p-4 border border-gray-100">
-              <CourseSearch />
-            </div>
-            
-            {/* Course List with Loading State */}
-            <Suspense 
-              fallback={
-                <div className="flex flex-col items-center justify-center py-12 bg-white shadow-md rounded-xl border border-gray-100">
-                  <div className="animate-pulse">
-                    <div className="w-16 h-16 bg-gray-200 rounded-full mb-4"></div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="h-4 bg-gray-200 rounded w-48"></div>
-                  </div>
-                  <p className="mt-4 text-muted-foreground">Loading courses...</p>
-                </div>
-              }
-            >
-              <CourseList />
-            </Suspense>
+            <CourseList parentFilters={filters}/>
           </main>
         </div>
       </div>

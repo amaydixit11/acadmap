@@ -10,6 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 export async function fetchCourses(): Promise<CourseSupabase[]> {
     const { data, error } = await supabase.from('courses').select('*');
     
+    
     // Handle data and error
     if (error) {
         console.error('Error fetching courses:', error.message);

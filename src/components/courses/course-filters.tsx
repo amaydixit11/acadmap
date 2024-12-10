@@ -1,63 +1,79 @@
 "use client";
 
 import { useState } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { 
+  Accordion, 
+  AccordionContent, 
+  AccordionItem, 
+  AccordionTrigger 
+} from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
-// Sample Data
-const departments = [
-  "Computer Science",
-  "Electrical Engineering",
-  "Mechanical Engineering",
-  "Chemical Engineering",
-  "Mathematics",
-  "Physics",
-];
+import { Department } from "@/models/courses";
 
 const levels = [
   "100 Level",
-  "200 Level",
-  "300 Level",
-  "400 Level",
-  "Graduate",
+  "200 Level", 
+  "300 Level", 
+  "400 Level", 
+  "500 Level", 
+  "600 Level"
 ];
 
-const semesters = [
-  "Fall 2024",
-  "Spring 2024",
-  "Fall 2023",
-  "Spring 2023",
-];
-
-export function CourseFilters() {
-  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
+export function CourseFilters({ 
+  onFilterChange 
+}: { 
+  onFilterChange: (filters: {
+    departments: (keyof typeof Department)[],
+    levels: string[],
+    searchQuery: string
+  }) => void 
+}) {
+  const [selectedDepartments, setSelectedDepartments] = useState<(keyof typeof Department)[]>([]);
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
-  const [selectedSemesters, setSelectedSemesters] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleCheckboxChange = (category: string, item: string) => {
-    const setter = {
-      department: setSelectedDepartments,
-      level: setSelectedLevels,
-      semester: setSelectedSemesters,
-    }[category];
+    let updatedSelection: string[];
+    switch (category) {
+      case "department":
+        updatedSelection = selectedDepartments.includes(item as keyof typeof Department)
+          ? selectedDepartments.filter(d => d !== item)
+          : [...selectedDepartments, item as keyof typeof Department];
+        setSelectedDepartments(updatedSelection as (keyof typeof Department)[]);
+        break;
+      case "level":
+        updatedSelection = selectedLevels.includes(item)
+          ? selectedLevels.filter(l => l !== item)
+          : [...selectedLevels, item];
+        setSelectedLevels(updatedSelection);
+        break;
+      default:
+        updatedSelection = [];
+    }
 
-    if (!setter) return;
-
-    setter((prev) => {
-      if (prev.includes(item)) {
-        return prev.filter((i) => i !== item); // Unselect
-      } else {
-        return [...prev, item]; // Select
-      }
+    // Notify parent component about filter changes
+    onFilterChange({
+      departments: category === "department" 
+        ? updatedSelection as (keyof typeof Department)[]
+        : selectedDepartments,
+      levels: category === "level" ? updatedSelection : selectedLevels,
+      searchQuery
     });
   };
 
   const handleClearFilters = () => {
     setSelectedDepartments([]);
     setSelectedLevels([]);
-    setSelectedSemesters([]);
+    setSearchQuery("");
+
+    // Notify parent component about cleared filters
+    onFilterChange({
+      departments: [] as (keyof typeof Department)[],
+      levels: [],
+      searchQuery: ""
+    });
   };
 
   return (
@@ -69,14 +85,19 @@ export function CourseFilters() {
           <AccordionTrigger>Department</AccordionTrigger>
           <AccordionContent>
             <div className="space-y-2">
-              {departments.map((dept) => (
-                <div key={dept} className="flex items-center space-x-2">
+              {Object.entries(Department).map(([short, full]) => (
+                <div key={short} className="flex items-center space-x-2">
                   <Checkbox
-                    id={dept}
-                    checked={selectedDepartments.includes(dept)}
-                    onChange={() => handleCheckboxChange("department", dept)}
+                    id={short}
+                    checked={selectedDepartments.includes(short as keyof typeof Department)}
+                    onCheckedChange={() => 
+                      handleCheckboxChange("department", short)
+                    }
                   />
-                  <Label htmlFor={dept}>{dept}</Label>
+                  <Label htmlFor={short} className="flex items-center">
+                    <span className="mr-2">{short}</span>
+                    <span className="text-xs text-gray-500 truncate">{full}</span>
+                  </Label>
                 </div>
               ))}
             </div>
@@ -93,28 +114,11 @@ export function CourseFilters() {
                   <Checkbox
                     id={level}
                     checked={selectedLevels.includes(level)}
-                    onChange={() => handleCheckboxChange("level", level)}
+                    onCheckedChange={() => 
+                      handleCheckboxChange("level", level)
+                    }
                   />
                   <Label htmlFor={level}>{level}</Label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Semester Filter */}
-        <AccordionItem value="semester">
-          <AccordionTrigger>Semester</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-2">
-              {semesters.map((semester) => (
-                <div key={semester} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={semester}
-                    checked={selectedSemesters.includes(semester)}
-                    onChange={() => handleCheckboxChange("semester", semester)}
-                  />
-                  <Label htmlFor={semester}>{semester}</Label>
                 </div>
               ))}
             </div>
@@ -124,7 +128,11 @@ export function CourseFilters() {
 
       {/* Clear Filters Button */}
       <div className="mt-4">
-        <Button onClick={handleClearFilters} variant="outline" className="w-full">
+        <Button 
+          onClick={handleClearFilters} 
+          variant="outline" 
+          className="w-full"
+        >
           Clear Filters
         </Button>
       </div>

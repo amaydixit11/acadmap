@@ -4,12 +4,13 @@ import { CourseSupabase, Course } from "@/models/courses"; // Adjust the import 
 
 // Helper function to transform a CourseSupabase object to a Course object
 export function transformCourse(courseSupabase: CourseSupabase): Course {
+  console.log("course department: ", courseSupabase.Department)
     const distributionParts = courseSupabase.distribution?.split('-') || ['', '', ''];
   return {
     id: courseSupabase.course_code.toLowerCase(), // Assuming the ID is not available in CourseSupabase
     code: courseSupabase.course_code,
     title: courseSupabase.course_name,
-    department: courseSupabase.department,
+    department: courseSupabase.Department,
     credits: courseSupabase.credits,
     description: courseSupabase.description,
     instructor: 'Dr. Amay Dixit', // Placeholder as no instructor is present in CourseSupabase
