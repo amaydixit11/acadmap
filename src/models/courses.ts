@@ -1,7 +1,7 @@
 export interface CourseResource {
   id: string;
   title: string;
-  type: 'pdf' | 'video' | 'archive' | 'link';
+  type: 'pdf' | 'video' | 'archive' | 'link' | 'other';
   url: string;
   uploadedBy: string;
   uploadDate: string;
@@ -22,10 +22,6 @@ export enum Department {
   CHE = "Chemistry",
   BSBM = "Bioscience and Biomedical Engineering",
   LA = "Liberal Arts"
-}
-
-function getEnumKeyByValue<T extends Record<string, string>>(enumObj: T, value: string): keyof T | undefined {
-  return Object.keys(enumObj).find(key => enumObj[key] === value) as keyof T | undefined;
 }
 
 export interface Course {

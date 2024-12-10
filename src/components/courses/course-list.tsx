@@ -29,9 +29,9 @@ export function CourseList({ parentFilters }: { parentFilters: Filters }) {
         const data = await fetchCourses();
         const transformedCourses = data.map((course) => transformCourse(course));
         const sortedCourses = transformedCourses.sort((a, b) =>
-          a.id.localeCompare(b.id, undefined, { numeric: true })
+          a.id.slice(3,).localeCompare(b.id.slice(3, ), undefined, { numeric: true })
         );
-        setCourses(sortedCourses);
+        setCourses(sortedCourses);2
         setFilteredCourses(sortedCourses);
       } catch (error) {
         console.error("Error fetching courses:", error);
