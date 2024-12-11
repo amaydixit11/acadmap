@@ -62,7 +62,7 @@ export default function Header() {
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Searching for:", searchQuery);
+    // console.log("Searching for:", searchQuery);
     setIsSearchOpen(false);
   };
 

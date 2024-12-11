@@ -58,7 +58,7 @@ export function CourseSidebar({ course }: CourseSidebarProps) {
       }
 
       // Optionally update local state or trigger a refresh (e.g., fetching reviews again)
-      console.log("Review submitted successfully:", data);
+      // console.log("Review submitted successfully:", data);
     } catch (error) {
       console.error("Failed to submit review", error);
     }

@@ -3,7 +3,7 @@ const GITHUB_API_URL = 'https://api.github.com';
 // Fetch all repositories in the organization, optionally filtered by courseCode
 export async function fetchOrganizationRepositories(courseCode?: string) {
     const url = `${GITHUB_API_URL}/orgs/${process.env.NEXT_PUBLIC_GITHUB_ORG}/repos`;
-    console.log(`Fetching from: ${url}`);
+    // console.log(`Fetching from: ${url}`);
 
     const response = await fetch(url, {
         headers: {
@@ -26,7 +26,7 @@ export async function fetchOrganizationRepositories(courseCode?: string) {
 // Fetch details of a specific repository
 export async function fetchRepositoryDetails(repoName: string) {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}`;
-    console.log(`Fetching repository details from: ${url}`);
+    // console.log(`Fetching repository details from: ${url}`);
 
     const response = await fetch(url, {
         headers: {
@@ -44,17 +44,17 @@ export async function fetchRepositoryDetails(repoName: string) {
 // Fetch contents of a repository (files/folders)
 export async function fetchRepositoryContent(repoName: string, path: string = '') {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}/contents/${path}`;
-    console.log(`[DEBUG] Constructed URL: ${url}`);
+    // console.log(`[DEBUG] Constructed URL: ${url}`);
 
     try {
-        console.log(`[DEBUG] Sending request to GitHub API...`);
+        // console.log(`[DEBUG] Sending request to GitHub API...`);
         const response = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
             },
         });
 
-        console.log(`[DEBUG] Response status: ${response.status}`);
+        // console.log(`[DEBUG] Response status: ${response.status}`);
         
         if (!response.ok) {
             console.error(`[ERROR] Failed to fetch repository content. Status: ${response.status}, StatusText: ${response.statusText}`);
@@ -62,7 +62,7 @@ export async function fetchRepositoryContent(repoName: string, path: string = ''
         }
 
         const data = await response.json();
-        console.log(`[DEBUG] Response JSON received:`, data);
+        // console.log(`[DEBUG] Response JSON received:`, data);
 
         return data;
     } catch (error) {
@@ -74,7 +74,7 @@ export async function fetchRepositoryContent(repoName: string, path: string = ''
 // Create a new repository within the organization
 export async function createRepository(repoName: string, description: string) {
     const url = `${GITHUB_API_URL}/orgs/${process.env.NEXT_PUBLIC_GITHUB_ORG}/repos`;
-    console.log(`Creating repository: ${url}`);
+    // console.log(`Creating repository: ${url}`);
 
     const response = await fetch(url, {
         method: 'POST',
@@ -104,7 +104,7 @@ export async function uploadFileToRepository(
     commitMessage: string
 ) {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}/contents/${filePath}`;
-    console.log(`Uploading file to: ${url}`);
+    // console.log(`Uploading file to: ${url}`);
 
     const response = await fetch(url, {
         method: 'PUT',  
@@ -133,7 +133,7 @@ export async function deleteFileFromRepository(
     commitMessage: string
 ) {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}/contents/${filePath}`;
-    console.log(`Deleting file from: ${url}`);
+    // console.log(`Deleting file from: ${url}`);
 
     const response = await fetch(url, {
         method: 'DELETE',
@@ -157,7 +157,7 @@ export async function deleteFileFromRepository(
 // Fetch contributors of a repository
 export async function fetchRepositoryContributors(repoName: string) {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}/contributors`;
-    console.log(`Fetching contributors from: ${url}`);
+    // console.log(`Fetching contributors from: ${url}`);
 
     const response = await fetch(url, {
         headers: {
