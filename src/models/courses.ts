@@ -45,6 +45,7 @@ export interface Course {
     assignments: CourseResource[];
     tutorials: CourseResource[];
     pyq: CourseResource[]; // Previous Year Questions
+    unclassified: CourseResource[];
   };
   rating?: {
     overall: number;
@@ -74,7 +75,8 @@ export let demoCourse: Course = {
     lectures: [],
     assignments: [],
     tutorials: [],
-    pyq: []
+    pyq: [],
+    unclassified: []
   },
   rating: {
     overall: 4.5,  // Placeholder for overall rating
