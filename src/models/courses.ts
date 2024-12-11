@@ -2,10 +2,9 @@ export interface CourseResource {
   id: string;
   title: string;
   type: 'pdf' | 'video' | 'archive' | 'link' | 'other';
+  category: 'lecture' | 'tutorial' | 'assignment' | 'pyq' | 'unclassified'
   url: string;
   uploadedBy: string;
-  uploadDate: string;
-  description?: string; // Optional field for description
   year: number;
 }
 export enum Department {

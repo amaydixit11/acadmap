@@ -23,10 +23,10 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
       
-      const validFiles = selectedFiles.filter(file => file.size <= 10 * 1024 * 1024);
+      const validFiles = selectedFiles.filter(file => file.size <= 100 * 1024 * 1024);
       
       if (validFiles.length !== selectedFiles.length) {
-        setUploadError('Some files exceed the 10MB size limit and were not added.');
+        setUploadError('Some files exceed the 100MB size limit and were not added.');
       }
       
       setFiles(validFiles);
@@ -59,7 +59,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
           <div className="space-y-2">
             <h3 className="font-medium">Drop files here or click to browse</h3>
             <p className="text-sm text-muted-foreground">
-              Maximum file size: 10MB
+              Maximum file size: 100MB
             </p>
           </div>
         </label>

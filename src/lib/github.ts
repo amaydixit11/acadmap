@@ -44,19 +44,31 @@ export async function fetchRepositoryDetails(repoName: string) {
 // Fetch contents of a repository (files/folders)
 export async function fetchRepositoryContent(repoName: string, path: string = '') {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}/contents/${path}`;
-    console.log(`Fetching repository content from: ${url}`);
+    console.log(`[DEBUG] Constructed URL: ${url}`);
 
-    const response = await fetch(url, {
-        headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-        },
-    });
+    try {
+        console.log(`[DEBUG] Sending request to GitHub API...`);
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+            },
+        });
 
-    if (!response.ok) {
-        throw new Error(`Failed to fetch repository content: ${response.statusText}`);
+        console.log(`[DEBUG] Response status: ${response.status}`);
+        
+        if (!response.ok) {
+            console.error(`[ERROR] Failed to fetch repository content. Status: ${response.status}, StatusText: ${response.statusText}`);
+            throw new Error(`Failed to fetch repository content: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log(`[DEBUG] Response JSON received:`, data);
+
+        return data;
+    } catch (error) {
+        console.error(`[ERROR] An error occurred while fetching repository content:`, error);
+        throw error;
     }
-
-    return response.json();
 }
 
 // Create a new repository within the organization
@@ -102,7 +114,7 @@ export async function uploadFileToRepository(
         },
         body: JSON.stringify({
             message: commitMessage,
-            content: Buffer.from(content).toString('base64'),
+            content,
         }),
     });
 

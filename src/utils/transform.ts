@@ -4,7 +4,7 @@ import { CourseSupabase, Course } from "@/models/courses"; // Adjust the import 
 
 // Helper function to transform a CourseSupabase object to a Course object
 export function transformCourse(courseSupabase: CourseSupabase): Course {
-  console.log("course department: ", courseSupabase.Department)
+  // console.log("course department: ", courseSupabase.Department)
     const distributionParts = courseSupabase.distribution?.split('-') || ['', '', ''];
   return {
     id: courseSupabase.course_code.toLowerCase(), // Assuming the ID is not available in CourseSupabase
@@ -27,6 +27,7 @@ export function transformCourse(courseSupabase: CourseSupabase): Course {
       assignments: [],
       tutorials: [],
       pyq: [], // Empty array as no resource info is in CourseSupabase
+      unclassified: []
     },
     rating: {
       overall: 0, // Default to 0 for rating fields

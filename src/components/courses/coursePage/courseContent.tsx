@@ -35,7 +35,7 @@ export function CourseContent({ course, user }: CourseContentProps) {
       value: "resources", 
       icon: Library, 
       label: "Resources",
-      component: <ResourceSection resources={course.resources} user={user} />
+      component: <ResourceSection course={course} user={user} />
     }
   ];
 

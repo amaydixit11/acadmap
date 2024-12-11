@@ -1,4 +1,4 @@
-import { Book, FileQuestion, FileText, GraduationCap, LinkIcon, Pencil, Video } from "lucide-react";
+import { Book, File, FileQuestion, FileText, GraduationCap, LinkIcon, Pencil, Video } from "lucide-react";
 
 // src/types/resource.ts
 export const resourceTypes = {

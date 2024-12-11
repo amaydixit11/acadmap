@@ -468,21 +468,33 @@ import { Course } from "@/models/courses";
 import { getCourses } from "@/lib/courses";
 import { createRepository, uploadFileToRepository } from "@/lib/github";
 
-import { ResourceTypeSelector } from "@/components/ResourceTypeSelector";
-import { ResourceCategorySelector } from "@/components/ResourceCategorySelector";
-import { FileUploader } from "@/components/FileUploader";
+import { ResourceTypeSelector } from "@/components/resources/ResourceTypeSelector";
+import { ResourceCategorySelector } from "@/components/resources/ResourceCategorySelector";
+import { FileUploader } from "@/components/resources/FileUploader";
 import { 
   ResourceType, 
   ResourceCategory, 
   resourceTypes, 
   resourceCategories 
 } from '@/types/resource'
+import { useSearchParams } from "next/navigation";
 
 export default function UploadPage() {
+  const searchParams = useSearchParams();
+
+  const defaultCourseCode = searchParams.get('courseCode')?.toUpperCase() || "";
+  const defaultCategory = searchParams.get('type') as ResourceCategory || "lectures";
+  const defaultYear = searchParams.get('year') || new Date().getFullYear().toString();
+  console.log(
+    "defaultCourseCode: ", defaultCourseCode,
+    "defaultCategory: ", defaultCategory,
+    "defaultYear: ", defaultYear,
+  )
+
   const [courses, setCourses] = useState<Course[]>([]);
-  const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [selectedCourse, setSelectedCourse] = useState<string>(defaultCourseCode ?? "");
   const [selectedType, setSelectedType] = useState<ResourceType>("document");
-  const [selectedCategory, setSelectedCategory] = useState<ResourceCategory>("lectures");
+  const [selectedCategory, setSelectedCategory] = useState<ResourceCategory>(defaultCategory ?? "lectures");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<{
     type: 'success' | 'error' | null,
@@ -492,37 +504,60 @@ export default function UploadPage() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    year: new Date().getFullYear(),
+    year: defaultYear ?? (new Date().getFullYear()).toString(),
     url: ""
   });
   const [userEmail, setUserEmail] = useState<string>("");
 
   useEffect(() => {
     const loadCourses = async () => {
+      console.log("loadCourses function triggered");
       try {
+        console.log("Fetching courses...");
         const fetchedCourses = await getCourses();
+        console.log("Fetched courses:", fetchedCourses);
+  
         setCourses(fetchedCourses);
+        console.log("Courses set in state.");
+  
+        // If a course code is provided in the URL, try to set it
+        if (defaultCourseCode) {
+          console.log("Default course code provided:", defaultCourseCode);
+          const matchingCourse = fetchedCourses.find(
+            course => course.code === defaultCourseCode
+          );
+          console.log("Matching course found:", matchingCourse);
+  
+          if (matchingCourse) {
+            setSelectedCourse(matchingCourse.id);
+            console.log("Selected course set:", matchingCourse.id);
+          } else {
+            console.warn("No matching course found for code:", defaultCourseCode);
+          }
+        }
       } catch (error) {
+        console.error("Error loading courses:", error);
         setUploadStatus({
           type: 'error',
           message: 'Failed to load courses. Please try again.'
         });
       }
     };
+  
+    console.log("useEffect triggered. defaultCourseCode:", defaultCourseCode);
     loadCourses();
-  }, []);
+  }, [defaultCourseCode]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
       
       // Validate file size (10MB max)
-      const validFiles = selectedFiles.filter(file => file.size <= 10 * 1024 * 1024);
-      
+      const validFiles = selectedFiles.filter(file => file.size <= 100 * 1024 * 1024);
       if (validFiles.length !== selectedFiles.length) {
         setUploadStatus({
           type: 'error',
-          message: 'Some files exceed the 10MB size limit and were not added.'
+          message: 'Some files exceed the 100MB size limit and were not added.'
         });
       }
       
@@ -533,6 +568,17 @@ export default function UploadPage() {
   const removeFile = (indexToRemove: number) => {
     setFiles(files.filter((_, index) => index !== indexToRemove));
   };
+  function arrayBufferToBase64(buffer: ArrayBuffer): string {
+    const binary = new Uint8Array(buffer);
+    let base64 = '';
+    const chunkSize = 8192; // Process in smaller chunks to avoid memory issues
+
+    for (let i = 0; i < binary.length; i += chunkSize) {
+        base64 += String.fromCharCode(...binary.subarray(i, i + chunkSize));
+    }
+
+    return btoa(base64);
+}
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -591,31 +637,27 @@ ${formData.url}`,
         // Upload files
         for (const file of files) {
           const reader = new FileReader();
-          reader.readAsDataURL(file);
-          
+          reader.readAsArrayBuffer(file);
+      
           await new Promise<void>((resolve, reject) => {
-            reader.onload = async () => {
-              try {
-                // Remove data URL prefix
-                const base64Content = reader.result?.toString().split(',')[1];
-                
-                if (!base64Content) {
-                  throw new Error('Failed to read file');
-                }
-
-                await uploadFileToRepository(
-                  repoName, 
-                  `${selectedCategory}/${file.name}`, 
-                  base64Content,
-                  `Add ${selectedType} resource: ${formData.title} (Uploaded by ${userEmail})`
-                );
-                resolve();
-              } catch (uploadError) {
-                reject(uploadError);
-              }
-            };
-            
-            reader.onerror = () => reject(new Error('File reading failed'));
+              reader.onload = async () => {
+                  try {
+                      // Convert ArrayBuffer to Base64
+                      const base64Content = arrayBufferToBase64(reader.result as ArrayBuffer);
+      
+                      await uploadFileToRepository(
+                          repoName,
+                          `${selectedCategory}/${file.name}`,
+                          base64Content,
+                          `Add ${selectedType} resource: ${formData.title} (Uploaded by ${userEmail})`
+                      );
+                      resolve();
+                  } catch (uploadError) {
+                      reject(uploadError);
+                  }
+              };
+      
+              reader.onerror = () => reject(new Error('File reading failed'));
           });
         }
       }
@@ -627,7 +669,7 @@ ${formData.url}`,
       });
 
       // Reset form
-      setFormData({ title: "", description: "", year: new Date().getFullYear(), url: "" });
+      setFormData({ title: "", description: "", year: (new Date().getFullYear()).toString(), url: "" });
       setFiles([]);
       setSelectedType('document');
       setSelectedCategory('lectures');
@@ -682,9 +724,19 @@ ${formData.url}`,
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="course">Course</Label>
-                  <Select value={selectedCourse} onValueChange={setSelectedCourse}>
+                  <Select 
+                    value={selectedCourse} 
+                    onValueChange={setSelectedCourse}
+                  >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select course" />
+                    <SelectValue 
+                      placeholder={
+                        defaultCourseCode !== "" 
+                          ? `${courses.find(course => course.code.toLowerCase() === defaultCourseCode.toLowerCase())?.code} - ${courses.find(course =>  course.code.toLowerCase() === defaultCourseCode.toLowerCase())?.title}` 
+                          : "Select course"
+                      } 
+                    />
+
                     </SelectTrigger>
                     <SelectContent>
                       {courses.map(course => (
@@ -745,7 +797,7 @@ ${formData.url}`,
                 <Input 
                   type="number"
                   value={formData.year}
-                  onChange={e => setFormData({...formData, year: parseInt(e.target.value)})}
+                  onChange={e => setFormData({...formData, year: parseInt(e.target.value).toString()})}
                   min={2000}
                   max={new Date().getFullYear()}
                 />
