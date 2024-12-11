@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Upload, FileText, AlertCircle, AlertTriangle, Badge, X } from "lucide-react";
+import { Upload, FileText, AlertCircle, AlertTriangle, Badge, X, LogIn } from "lucide-react";
 
 import { Course } from "@/models/courses";
 import { getCourses } from "@/lib/courses";
@@ -23,9 +23,48 @@ import {
   resourceTypes, 
   resourceCategories 
 } from '@/types/resource'
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
+import { isUserLoggedIn } from "@/utils/ifLoggedIn";
+import Link from "next/link";
+
 
 function UploadPageContent() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const status: boolean = await isUserLoggedIn();
+      setLoggedIn(status);
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  if (loggedIn != true) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
+        <Card className="max-w-md mx-auto">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-center gap-2">
+              <LogIn className="h-6 w-6" />
+              Login Required
+            </CardTitle>
+            <CardDescription>
+              Please log in to upload course resources
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href='/sign-in'>
+              <Button className="w-full">
+                <LogIn className="mr-2 h-4 w-4" />
+                Log In
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
   const searchParams = useSearchParams();
 
   const defaultCourseCode = searchParams.get('courseCode')?.toUpperCase() || "";
