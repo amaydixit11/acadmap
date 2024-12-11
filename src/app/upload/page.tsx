@@ -29,42 +29,7 @@ import Link from "next/link";
 
 
 function UploadPageContent() {
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const status: boolean = await isUserLoggedIn();
-      setLoggedIn(status);
-    };
-
-    checkLoginStatus();
-  }, []);
-
-  if (loggedIn != true) {
-    return (
-      <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
-        <Card className="max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2">
-              <LogIn className="h-6 w-6" />
-              Login Required
-            </CardTitle>
-            <CardDescription>
-              Please log in to upload course resources
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href='/sign-in'>
-              <Button className="w-full">
-                <LogIn className="mr-2 h-4 w-4" />
-                Log In
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
   const searchParams = useSearchParams();
 
   const defaultCourseCode = searchParams.get('courseCode')?.toUpperCase() || "";
@@ -441,6 +406,42 @@ ${formData.url}`,
 }
 
 export default function UploadPage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const status: boolean = await isUserLoggedIn();
+      setLoggedIn(status);
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  if (loggedIn != true) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
+        <Card className="max-w-md mx-auto">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-center gap-2">
+              <LogIn className="h-6 w-6" />
+              Login Required
+            </CardTitle>
+            <CardDescription>
+              Please log in to upload course resources
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href='/sign-in'>
+              <Button className="w-full">
+                <LogIn className="mr-2 h-4 w-4" />
+                Log In
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <UploadPageContent />
