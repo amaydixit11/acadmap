@@ -290,7 +290,7 @@ ${formData.url}`,
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Your Email</Label>
+                  <Label htmlFor="email">Your Email Address</Label>
                   <Input 
                     type="email"
                     value={userEmail}
