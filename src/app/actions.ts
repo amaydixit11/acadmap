@@ -135,7 +135,7 @@ export const signOutAction = async () => {
 
 export const OAuthAction = async () => {
   const supabase = await createClient();
-  const origin = (await headers()).get('origin');
+  const origin = process.env.NEXT_PUBLIC_ORIGIN || (await headers()).get('origin');
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
