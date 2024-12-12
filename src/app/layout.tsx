@@ -9,8 +9,8 @@ import Link from "next/link";
 import "./globals.css";
 import Header from "@/components/header";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+const defaultUrl = process.env.URL
+  ? `${process.env.URL}`
   : "http://localhost:3000";
 
 export const metadata = {

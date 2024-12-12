@@ -1,6 +1,7 @@
 // src/pages/UploadPage.tsx
 "use client"
 import { useState, useEffect, Suspense } from "react";
+import { User } from "@supabase/supabase-js";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,9 +27,14 @@ import {
 import { redirect, useSearchParams } from "next/navigation";
 import { isUserLoggedIn } from "@/utils/ifLoggedIn";
 import Link from "next/link";
+import { getUserData } from "@/utils/getUserData";
+import { Checkbox } from "@/components/ui/checkbox";
 
+interface PageProps {
+    user: User
+}
 
-function UploadPageContent() {
+function UploadPageContent({ user }: PageProps) {
 
   const searchParams = useSearchParams();
 
@@ -36,6 +42,7 @@ function UploadPageContent() {
   const defaultCategory = searchParams.get('type') as ResourceCategory || "lectures";
   const defaultYear = searchParams.get('year') || new Date().getFullYear().toString();
 
+  const [userEmail, setUserEmail] = useState("")
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>(defaultCourseCode ?? "");
   const [selectedType, setSelectedType] = useState<ResourceType>("document");
@@ -52,7 +59,6 @@ function UploadPageContent() {
     year: defaultYear ?? (new Date().getFullYear()).toString(),
     url: ""
   });
-  const [userEmail, setUserEmail] = useState<string>("");
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -136,16 +142,6 @@ function UploadPageContent() {
       });
       return;
     }
-
-    // Validate user email
-    if (!userEmail) {
-      setUploadStatus({
-        type: 'error',
-        message: 'Please enter your email.'
-      });
-      return;
-    }
-
     setIsSubmitting(true);
     setUploadStatus({ type: null, message: '' });
 
@@ -295,14 +291,21 @@ ${formData.url}`,
 
                 <div className="space-y-2">
                   <Label htmlFor="email">Your Email Address</Label>
-                  <Input 
+                  {/* <Input 
                     type="email"
                     value={userEmail}
                     onChange={e => setUserEmail(e.target.value)}
                     placeholder="your.email@example.com"
                     required
-                  />
+                  /> */}
+                  <div>
+                    <Checkbox
+                      id="userName"
+                      onCheckedChange={() => {}}
+                    />
                 </div>
+                </div>
+
               </div>
 
               <ResourceCategorySelector 
@@ -407,11 +410,13 @@ ${formData.url}`,
 
 export default function UploadPage() {
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const [user, setUser] = useState({} as User)
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const status: boolean = await isUserLoggedIn();
-      setLoggedIn(status);
+      const data = await getUserData();
+      const user = data?.user;
+      if (user) setUser(user)
+      setLoggedIn(!!user);
     };
 
     checkLoginStatus();
@@ -442,9 +447,10 @@ export default function UploadPage() {
       </div>
     );
   }
+  
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <UploadPageContent />
+      <UploadPageContent user = {user}/>
     </Suspense>
   );
 }
