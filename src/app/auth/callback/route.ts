@@ -10,7 +10,8 @@ export async function GET(request: Request) {
     const code = requestUrl.searchParams.get("code");
     console.log("Extracted 'code' parameter:", code); // Log the extracted 'code' parameter
 
-    const origin = requestUrl.origin;
+    const origin = process.env.NEXT_PUBLIC_ORIGIN
+    //  || requestUrl.origin;
     console.log("Determined origin:", origin); // Log the origin
 
     const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
