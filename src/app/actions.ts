@@ -142,7 +142,7 @@ export const OAuthAction = async () => {
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${origin}/auth/callback`, // Ensure this matches your Supabase redirect URI
+      redirectTo: `/auth/callback`, // Ensure this matches your Supabase redirect URI
     },
   });
 
