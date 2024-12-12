@@ -137,12 +137,12 @@ export const signOutAction = async () => {
 
 export const OAuthAction = async () => {
   const supabase = await createClient();
-  const origin = process.env.NEXT_PUBLIC_ORIGIN 
+  // const origin = process.env.NEXT_PUBLIC_ORIGIN 
   // || (await headers()).get('origin');
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `/auth/callback`, // Ensure this matches your Supabase redirect URI
+      redirectTo: `${process.env.NEXT_PUBLIC_ORIGIN}/auth/callback`, // Ensure this matches your Supabase redirect URI
     },
   });
 

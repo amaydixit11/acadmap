@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     //  || requestUrl.origin;
     // console.log("Determined origin:", origin); // Log the origin
 
-    const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
+    const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString()  || "/";
     // console.log("Extracted 'redirect_to' parameter:", redirectTo); // Log the extracted 'redirect_to' parameter
 
     if (code) {
@@ -27,13 +27,13 @@ export async function GET(request: Request) {
       // console.log("No code provided. Skipping session exchange.");
     }
 
-    if (redirectTo) {
+    // if (redirectTo) {
       // console.log(`Redirecting to: ${origin}${redirectTo}`); // Log the redirection URL
-      return NextResponse.redirect(`${origin}${redirectTo}`);
-    }
+      // return NextResponse.redirect(`${origin}${redirectTo}`);
+    // }
 
     // console.log(`Redirecting to default: ${origin}/`); // Log the default redirection
-    return NextResponse.redirect(`/`);
+    return NextResponse.redirect(new URL(redirectTo, origin));
   } catch (error) {
     // console.error("Error occurred in GET handler:", error); // Log any errors
     return NextResponse.error(); // Return a server error response
