@@ -1,48 +1,24 @@
-// hooks/useAuth.ts
-import { useState, useEffect } from 'react';
+"use client"
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { useState, useEffect } from "react";
+import { isUserLoggedIn } from "@/utils/ifLoggedIn";
+import { signOutAction } from "@/app/actions";
 
-export function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const useAuth = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Simulated authentication check
-    // In a real app, replace with actual authentication logic
-    const checkAuthentication = async () => {
-      try {
-        // Placeholder: Replace with actual authentication service
-        const token = localStorage.getItem('authToken');
-        if (token) {
-          // Fetch user details
-          setUser({
-            id: 'user123',
-            name: 'John Doe',
-            email: 'john.doe@example.com'
-          });
-        }
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
+    const checkAuthStatus = async () => {
+      const loggedIn = await isUserLoggedIn();
+      setIsAuthenticated(loggedIn);
     };
-
-    checkAuthentication();
+    checkAuthStatus();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    // Implement login logic
+  const handleSignOut = async () => {
+    setIsAuthenticated(false);
+    await signOutAction();
   };
 
-  const logout = () => {
-    // Implement logout logic
-    setUser(null);
-  };
-
-  return { user, isLoading, login, logout };
-}
+  return { isAuthenticated, handleSignOut };
+};
