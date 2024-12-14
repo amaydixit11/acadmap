@@ -143,6 +143,7 @@ export const OAuthAction = async () => {
     provider: 'google',
     options: {
       redirectTo: `${process.env.NEXT_PUBLIC_ORIGIN}/auth/callback`, // Ensure this matches your Supabase redirect URI
+      // redirectTo: `/courses`, // Ensure this matches your Supabase redirect URI
     },
   });
 
@@ -150,6 +151,9 @@ export const OAuthAction = async () => {
     console.error("OAuth error:", error);
     throw error;
   }
-
+  console.log(data)
+  // return redirect(`${data.url}/courses`);
+  // data.url.slice(data.url.search("redirect_to"), data.url.slice(data.url.search("redirect_to"),).search())
   return redirect(data.url);
+  // if (data) return redirect(process.env.NEXT_PUBLIC_ORIGIN ?? "/");
 };

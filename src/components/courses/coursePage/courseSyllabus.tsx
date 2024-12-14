@@ -1,17 +1,12 @@
 import { CheckCircle, FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Course } from "@/models/courses";
+import { Course } from "@/types/courses";
 
 interface CourseSyllabusProps {
   course: Course;
 }
 
 export function CourseSyllabus({ course }: CourseSyllabusProps) {
-  const handleDownloadSyllabus = () => {
-    // Implement PDF download logic
-    // This could be a link to a backend endpoint or cloud storage
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

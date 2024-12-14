@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CourseRatingBar } from "./courseRatingbar";
 import { CourseReviewModal } from "./courseReviewModal";
-import { Course } from "@/models/courses";
+import { Course } from "@/types/courses";
 import { createClient } from "@/utils/supabase/client";
 
 interface CourseSidebarProps {

@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getUserData } from "@/utils/getUserData";
-import { UserData } from "@/models/user";
+import { UserData } from "@/types/user";
 
 export interface ProfileField {
   icon: JSX.Element;

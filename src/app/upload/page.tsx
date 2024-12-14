@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Upload, FileText, AlertCircle, AlertTriangle, Badge, X, LogIn } from "lucide-react";
 
-import { Course } from "@/models/courses";
+import { Course } from "@/types/courses";
 import { getCourses } from "@/lib/courses";
 import { createRepository, uploadFileToRepository } from "@/lib/github";
 

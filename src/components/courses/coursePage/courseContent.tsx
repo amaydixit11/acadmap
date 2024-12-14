@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { FileText, Calendar, Library } from "lucide-react";
-import { Course} from "@/models/courses";
+import { Course} from "@/types/courses";
 import { User } from "@supabase/supabase-js";
 import { CourseSyllabus } from "./courseSyllabus";
 import { CourseSchedule } from "./courseSchedule";
-import { ResourceSection } from "./resourceSection";
+import { ResourceSection } from "./resources/resourceSection";
 
 interface CourseContentProps {
   course: Course;
@@ -16,7 +16,6 @@ interface CourseContentProps {
 }
 
 export function CourseContent({ course, user }: CourseContentProps) {
-  const [activeTab, setActiveTab] = useState("syllabus");
 
   const tabItems = [
     { 

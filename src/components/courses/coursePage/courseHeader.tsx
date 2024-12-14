@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Badge, ChevronRight } from "lucide-react";
-import { Course } from "@/models/courses";
+import { Course } from "@/types/courses";
 
 interface CourseHeaderProps {
   course: Course;

@@ -1,28 +1,21 @@
-import { Course, CourseResource } from "@/models/courses";
+import { Course, CourseResource } from "@/types/courses";
 import { fetchOrganizationRepositories, fetchRepositoryContent } from "./github";
 import { Download, FileArchive, FileText, Video } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ResourceFetchOptions {
     courseCode?: string;
     resourceCategory?: string;
     year?: Number | null;
   }
-
-
 export async function fetchCourseResources(options: ResourceFetchOptions = {}): Promise<{
     resources: CourseResource[];
     count: number;
   }> {
     try {
-      // Fetch repositories, optionally filtered by course code
       const repos = await fetchOrganizationRepositories(options.courseCode);
-    //   console.log("repos: ", repos )
-  
-      // Process repositories into resources
       const resources: CourseResource[] = [];
-  
       for (const repo of repos) {
-        // Try to extract year and resource category from repository name
         const nameParts = repo.name.split('-');
         const year = nameParts.length > 1 ? parseInt(nameParts[1]) : undefined;
         const category = determineResourceCategory(repo.name);
@@ -35,7 +28,6 @@ export async function fetchCourseResources(options: ResourceFetchOptions = {}): 
         //   continue;
         // }
   
-        // Fetch repository contents
         const contents = await fetchRepositoryContent(repo.name);
         console.log("contents: ", JSON.stringify(contents))
         for (let folder of contents){
@@ -51,18 +43,6 @@ export async function fetchCourseResources(options: ResourceFetchOptions = {}): 
             }));
             resources.push(...repoResources);
         }
-        // Create resource entries for each file
-        // const repoCategories = contents.map((file: any) => ({
-        //   id: file.sha,
-        //   name: file.name,
-        //   category,
-        //   year,
-        //   url: file.html_url,
-        //   downloadUrl: file.download_url,
-        //   description: repo.description
-        // }));
-  
-        // resources.push(...repoCategories);
       }
   
       return {
@@ -134,5 +114,17 @@ export async function prefetchCourseResources(courseCode: string) {
     }
 }
   
-  
-  
+interface UploadResourcesProps{
+  courseCode: string;
+  resourceType: string;
+  year: string;
+}
+export function uploadResource({courseCode, resourceType, year}: UploadResourcesProps){
+  const router = useRouter();
+  const params = new URLSearchParams({
+      courseCode: courseCode,
+      type: resourceType,
+      ...(year && { year: year })
+  });
+  router.push(`/upload?${params.toString()}`);
+}

@@ -1,5 +1,5 @@
 import { Calendar, BookOpen, Activity, Users } from "lucide-react";
-import { Course } from "@/models/courses";
+import { Course } from "@/types/courses";
 
 interface CourseScheduleProps {
   course: Course;

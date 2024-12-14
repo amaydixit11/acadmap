@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
-import { Course, demoCourse } from '@/models/courses'
-import CoursePage from './CoursePage'
+import { Course, demoCourse } from '@/types/courses'
+import CoursePage from '../../../components/courses/CoursePage'
 import { getCourses } from '@/lib/courses'
 import { getUserSessionData } from '@/lib/auth'
 

@@ -5,12 +5,12 @@ export async function GET(request: Request) {
   try {
     // console.log("Received GET request"); // Log entry point
     const requestUrl = new URL(request.url);
-    // console.log("Parsed request URL:", requestUrl.toString()); // Log the full request URL
+    console.log("Parsed request URL:", requestUrl.toString()); // Log the full request URL
 
     const code = requestUrl.searchParams.get("code");
     // console.log("Extracted 'code' parameter:", code); // Log the extracted 'code' parameter
 
-    const origin = process.env.NEXT_PUBLIC_ORIGIN
+    const origin = process.env.NEXT_PUBLIC_ORIGIN   
     //  || requestUrl.origin;
     // console.log("Determined origin:", origin); // Log the origin
 

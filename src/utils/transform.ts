@@ -1,6 +1,6 @@
 // transform.ts
 
-import { CourseSupabase, Course } from "@/models/courses"; // Adjust the import paths as necessary
+import { CourseSupabase, Course } from "@/types/courses"; // Adjust the import paths as necessary
 
 // Helper function to transform a CourseSupabase object to a Course object
 export function transformCourse(courseSupabase: CourseSupabase): Course {

@@ -1,7 +1,7 @@
 // components/courses/CourseResourceFilter.tsx
 import { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CourseResource } from '@/models/courses';
+import { CourseResource } from '@/types/courses';
 
 interface CourseResourceFilterProps {
   resources: CourseResource[];
