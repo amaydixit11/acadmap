@@ -1,6 +1,4 @@
 import LoginClient from "./client";
-
-
 interface PageProps {
   params: Promise<{ searchParams: string }>
 }

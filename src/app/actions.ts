@@ -136,24 +136,33 @@ export const signOutAction = async () => {
 };
 
 export const OAuthAction = async () => {
+  console.log("OAuthAction started");
+
   const supabase = await createClient();
-  // const origin = process.env.NEXT_PUBLIC_ORIGIN 
-  // || (await headers()).get('origin');
+  console.log("Supabase client created");
+
+  const origin = process.env.NEXT_PUBLIC_ORIGIN;
+  console.log("Origin resolved:", origin);
+
   const { error, data } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
+    provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_ORIGIN}/auth/callback`, // Ensure this matches your Supabase redirect URI
-      // redirectTo: `/courses`, // Ensure this matches your Supabase redirect URI
+      redirectTo: `${origin}/auth/callback`,
     },
   });
 
   if (error) {
-    console.error("OAuth error:", error);
-    throw error;
+    console.error("OAuth sign-in failed with error:", error.message);
+    return encodedRedirect("error", "/sign-in", "OAuth sign-in failed");
   }
-  console.log(data)
-  // return redirect(`${data.url}/courses`);
-  // data.url.slice(data.url.search("redirect_to"), data.url.slice(data.url.search("redirect_to"),).search())
-  return redirect(data.url);
-  // if (data) return redirect(process.env.NEXT_PUBLIC_ORIGIN ?? "/");
+
+  console.log("OAuth sign-in data:", data);
+
+  if (data.url) {
+    console.log("Redirecting to provider's URL:", data.url);
+    return redirect(data.url);
+  }
+
+  console.log("Default fallback redirect to /profile");
+  return redirect("/profile");
 };

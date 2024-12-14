@@ -1,41 +1,46 @@
-import { createClient } from "@/utils/supabase/server";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { createClient } from '@/utils/supabase/server';
 
 export async function GET(request: Request) {
-  try {
-    // console.log("Received GET request"); // Log entry point
-    const requestUrl = new URL(request.url);
-    console.log("Parsed request URL:", requestUrl.toString()); // Log the full request URL
+  console.log("GET handler invoked with request URL:", request.url);
 
-    const code = requestUrl.searchParams.get("code");
-    // console.log("Extracted 'code' parameter:", code); // Log the extracted 'code' parameter
+  const { searchParams, origin } = new URL(request.url);
+  const code = searchParams.get('code');
+  console.log("Authorization code received:", code);
 
-    const origin = process.env.NEXT_PUBLIC_ORIGIN   
-    //  || requestUrl.origin;
-    // console.log("Determined origin:", origin); // Log the origin
+  const next = searchParams.get('next') ?? '/profile';
+  console.log("Next redirect path:", next);
 
-    const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString()  || "/";
-    // console.log("Extracted 'redirect_to' parameter:", redirectTo); // Log the extracted 'redirect_to' parameter
+  if (code) {
+    const supabase = await createClient();
+    console.log("Supabase client created, attempting session exchange...");
 
-    if (code) {
-      // console.log("Code is present. Creating Supabase client...");
-      const supabase = await createClient();
-      // console.log("Supabase client created. Attempting to exchange code for session...");
-      const session = await supabase.auth.exchangeCodeForSession(code);
-      // console.log("Session exchange response:", session); // Log the session exchange response
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (error) {
+      console.error("Error exchanging code for session:", error.message);
     } else {
-      // console.log("No code provided. Skipping session exchange.");
+      console.log("Session exchange successful");
     }
 
-    // if (redirectTo) {
-      // console.log(`Redirecting to: ${origin}${redirectTo}`); // Log the redirection URL
-      // return NextResponse.redirect(`${origin}${redirectTo}`);
-    // }
+    const forwardedHost = request.headers.get('x-forwarded-host');
+    console.log("Forwarded host:", forwardedHost);
 
-    // console.log(`Redirecting to default: ${origin}/`); // Log the default redirection
-    return NextResponse.redirect(new URL(redirectTo, origin));
-  } catch (error) {
-    // console.error("Error occurred in GET handler:", error); // Log any errors
-    return NextResponse.error(); // Return a server error response
+    const isLocalEnv = process.env.NODE_ENV === 'development';
+    console.log("Is local environment:", isLocalEnv);
+
+    if (isLocalEnv) {
+      console.log("Redirecting to local environment:", `${origin}${next}`);
+      return NextResponse.redirect(`${origin}${next}`);
+    } else if (forwardedHost) {
+      console.log("Redirecting via forwarded host:", `https://${forwardedHost}${next}`);
+      return NextResponse.redirect(`https://${forwardedHost}${next}`);
+    } else {
+      console.log("Redirecting via origin:", `${origin}${next}`);
+      return NextResponse.redirect(`${origin}${next}`);
+    }
   }
+
+  console.error("Authorization code not provided or error occurred");
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }
