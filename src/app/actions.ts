@@ -136,33 +136,24 @@ export const signOutAction = async () => {
 };
 
 export const OAuthAction = async () => {
-  console.log("OAuthAction started");
-
   const supabase = await createClient();
-  console.log("Supabase client created");
-
   const origin = process.env.NEXT_PUBLIC_ORIGIN;
-  console.log("Origin resolved:", origin);
 
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${origin}/auth/callback`, // Use environment variable for origin
     },
   });
 
   if (error) {
-    console.error("OAuth sign-in failed with error:", error.message);
+    console.error(error.message);
     return encodedRedirect("error", "/sign-in", "OAuth sign-in failed");
   }
 
-  console.log("OAuth sign-in data:", data);
-
   if (data.url) {
-    console.log("Redirecting to provider's URL:", data.url);
-    return redirect(data.url);
+    return redirect(data.url); // Redirect to the provider's URL if available
   }
 
-  console.log("Default fallback redirect to /profile");
-  return redirect("/profile");
+  return redirect("/profile"); // Default fallback redirect
 };
