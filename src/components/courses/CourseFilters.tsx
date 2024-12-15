@@ -10,8 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Department } from "@/types/courses";
 import { Filter } from "lucide-react";
-import { Filters } from "@/types/filters";
-import { useFilters } from "@/hooks/useFilters";
+import { useFilters } from "@/context/FiltersContext";
 
 const levels = [
   "100 Level",
@@ -22,50 +21,31 @@ const levels = [
   "600 Level"
 ];
 
-export function CourseFilters({onFilterChange}: {onFilterChange: (filters: Filters) => void}) {
-  const {filters, changeFilters, resetFilters} = useFilters();
+export function CourseFilters() {
+  const {filters, dispatch} = useFilters();
 
   const handleCheckboxChange = (category: string, item: string) => {
-    let updatedSelection: string[];
     switch (category) {
       case "department":
-          changeFilters({
-          departments: filters.departments.includes(item as keyof typeof Department)
+        dispatch({
+          type: 'UPDATE_FILTER', 
+          key: "departments",
+          value: filters.departments.includes(item as keyof typeof Department)
           ? filters.departments.filter(d => d !== item)
-          : [...filters.departments, item as keyof typeof Department]}
-        )
+          : [...filters.departments, item as keyof typeof Department]})
         break;
       case "level":
-        changeFilters({levels: filters.levels.includes(item)
+        dispatch({ 
+          type: 'UPDATE_FILTER', 
+          key: "levels",
+          value: filters.levels.includes(item)
           ? filters.levels.filter(l => l !== item)
           : [...filters.levels, item]})
         break;
-      default:
-        updatedSelection = [];
     }
-
-    onFilterChange({
-      ...filters,
-      departments: category === "department" 
-        ? (filters.departments.includes(item as keyof typeof Department)
-          ? filters.departments.filter(d => d !== item)
-          : [...filters.departments, item as keyof typeof Department])
-        : filters.departments,
-      levels: category === "level"
-        ? (filters.levels.includes(item)
-          ? filters.levels.filter(l => l !== item)
-          : [...filters.levels, item])
-        : filters.levels
-    });
   };
-
   const handleClearFilters = () => {
-    resetFilters();
-    onFilterChange({
-      departments: [],
-      levels: [],
-      searchQuery: ""
-    });
+    dispatch({ type: 'RESET_FILTERS'})
   };
 
   return (

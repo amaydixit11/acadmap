@@ -6,11 +6,11 @@ import { CourseList } from "@/components/courses/CourseList";
 import { Search, Filter, BookOpen } from "lucide-react";
 import { Department } from "@/types/courses";
 import CoursePageHeader from "@/components/courses/CoursePageHeader";
-import { useFilters } from "@/hooks/useFilters";
+import { useFilters } from "@/context/FiltersContext";
 
 
 export default function CoursesPage() {
-  const {filters, changeFilters} = useFilters();
+  const {filters, dispatch} = useFilters();
 
 
   return (
@@ -18,9 +18,11 @@ export default function CoursesPage() {
       <div className="grid gap-8">
         <CoursePageHeader />
         <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6">
-          <CourseFilters onFilterChange={changeFilters} />
+          {/* <CourseFilters filters={filters} onFilterChange={changeFilters} onReset={resetFilters}/> */}
+          <CourseFilters />
           <main className="space-y-6">
-            <CourseList parentFilters={filters}/>
+            <CourseList />
+            {/* <CourseList parentFilters={filters} onFilterChange={changeFilters}/> */}
           </main>
         </div>
       </div>

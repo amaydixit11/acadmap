@@ -5,6 +5,7 @@
 - add /contributors
 - add legal pages
 - add /about-us
+- make /profile real
 - maybe add real signin/signup as well
 - header search
 - Study Groups

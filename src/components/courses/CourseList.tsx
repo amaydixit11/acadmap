@@ -2,15 +2,16 @@
 
 import { useMemo } from "react";
 import { Filters } from "@/types/filters";
-import { useFilters } from "@/hooks/useFilters";
 import { useCourses } from "@/hooks/useCourses";
 import { CourseSearch } from "./CourseSearch";
 import { filterCoursesUtil } from "@/utils/filterCoursesUtil";
 import { CourseCatalog } from "./CourseCatalog";
+import { useFilters } from "@/context/FiltersContext";
 
-export function CourseList({ parentFilters }: { parentFilters: Filters }) {
+export function CourseList() {
   const {courses} = useCourses();
-  const { filters, changeFilters } = useFilters(parentFilters);
+  // const { filters, changeFilters } = useFilters(filters);
+  const {filters, dispatch} = useFilters();
 
   const filteredCourses = useMemo(() => 
     filterCoursesUtil(courses, filters), 
@@ -18,7 +19,7 @@ export function CourseList({ parentFilters }: { parentFilters: Filters }) {
   );
 
   const handleSearchChange = (query: string) => {
-    changeFilters({ searchQuery: query });
+    dispatch({ type: 'UPDATE_FILTER', key: 'searchQuery', value: query} );
   };
 
   return (

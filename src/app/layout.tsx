@@ -3,6 +3,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Header from "@/components/layout/header/header";
 import Footer from "@/components/layout/footer/Footer";
+import { FilterProvider } from "@/context/FiltersContext";
 
 const defaultUrl = process.env.NEXT_PUBLIC_ORIGIN
   ? `${process.env.NEXT_PUBLIC_ORIGIN}`
@@ -28,6 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <FilterProvider>
           <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
               <Header />
@@ -37,6 +39,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </main>
+          </FilterProvider>
         </ThemeProvider>
       </body>
     </html>
