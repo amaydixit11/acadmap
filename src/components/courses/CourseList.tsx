@@ -10,7 +10,6 @@ import { useFilters } from "@/context/FiltersContext";
 
 export function CourseList() {
   const {courses} = useCourses();
-  // const { filters, changeFilters } = useFilters(filters);
   const {filters, dispatch} = useFilters();
 
   const filteredCourses = useMemo(() => 
