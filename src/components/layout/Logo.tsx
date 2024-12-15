@@ -8,6 +8,6 @@ export const Logo = () => (
     aria-label="Student Resource Hub"
   >
     <Share2 className="h-6 w-6" />
-    <span className="font-bold text-lg tracking-tight">Student Resources</span>
+    <span className="font-bold text-lg tracking-tight">AcadMap</span>
   </Link>
 );

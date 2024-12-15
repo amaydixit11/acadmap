@@ -6,10 +6,10 @@ export const AuthButtons = () => (
   <>
     <div className="hidden sm:flex space-x-2">
       <Link href="/sign-in">
-        <Button variant="ghost">Sign In</Button>
+        <Button variant="ghost" size="sm">Sign In</Button>
       </Link>
       <Link href="/sign-up">
-        <Button variant="default">Sign Up</Button>
+        <Button size="sm">Sign Up</Button>
       </Link>
     </div>
     <Link href="/sign-in" className="sm:hidden">

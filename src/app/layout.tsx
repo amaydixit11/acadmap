@@ -1,7 +1,8 @@
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import Header from "@/components/layout/header";
+import Header from "@/components/layout/header/header";
+import Footer from "@/components/layout/footer/Footer";
 
 const defaultUrl = process.env.NEXT_PUBLIC_ORIGIN
   ? `${process.env.NEXT_PUBLIC_ORIGIN}`
@@ -23,7 +24,7 @@ export default function RootLayout({
       <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
@@ -33,10 +34,7 @@ export default function RootLayout({
               <div className="flex flex-col gap-20 max-w-7xl p-5">
                 {children}
               </div>
-
-              <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-
-              </footer>
+              <Footer />
             </div>
           </main>
         </ThemeProvider>

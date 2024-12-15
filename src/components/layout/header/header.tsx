@@ -8,7 +8,7 @@ import { AuthButtons } from "./AuthButtons";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useAuth } from "@/hooks/useAuth";
 import { useSearch } from "@/hooks/useSearch";
-import { Logo } from "./Logo";
+import { Logo } from "../Logo";
 
 export default function Header() {
   const { isAuthenticated, handleSignOut } = useAuth();
@@ -22,10 +22,11 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Logo />
-        <DesktopNavigation />
-        <MobileNavigation />
+      <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Logo />
+        <div className="flex items-center space-x-4">
+          <DesktopNavigation className="hidden lg:flex" />
+        </div>
         
         <div className="flex items-center space-x-2">
           <SearchDialog
@@ -41,6 +42,7 @@ export default function Header() {
           ) : (
             <AuthButtons />
           )}
+          <MobileNavigation />
         </div>
       </div>
     </header>
