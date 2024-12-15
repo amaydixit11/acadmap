@@ -1,22 +1,33 @@
-import React from 'react';
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { resourceCategories, ResourceCategory } from '@/types/resource';
-import { motion } from 'framer-motion';
+import { resourceCategories, ResourceCategory } from "@/types/resource";
+import { motion } from "framer-motion";
 
 interface ResourceCategorySelectorProps {
   selectedCategory: ResourceCategory;
   onCategoryChange: (category: ResourceCategory) => void;
 }
 
-export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> = ({ 
-  selectedCategory, 
-  onCategoryChange 
+export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> = ({
+  selectedCategory,
+  onCategoryChange,
 }) => {
   return (
     <div className="space-y-4">
-      <Label className="text-sm font-semibold text-gray-700">Select Resource Category</Label>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      <Label className="text-sm font-semibold text-gray-700">
+        Select Resource Category
+      </Label>
+      <div
+        className="
+          grid gap-3
+          grid-cols-2
+          sm:grid-cols-3 
+          lg:grid-cols-3 
+          xl:grid-cols-3
+          2xl:grid-cols-3
+        "
+      >
         {Object.entries(resourceCategories).map(([key, value]) => {
           const Icon = value.icon;
           const isSelected = selectedCategory === key;
@@ -32,32 +43,43 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
                 type="button"
                 variant={isSelected ? "default" : "outline"}
                 className={`
-                  h-24 w-full flex flex-col justify-center items-center gap-3
+                  h-20 w-full flex flex-col justify-center items-center gap-2
+                  sm:h-24 md:h-28
                   transition-all duration-300 ease-in-out
-                  ${!isSelected ? 'hover:bg-gray-100 hover:border-gray-300' : ''}
+                  ${!isSelected ? "hover:bg-gray-100 hover:border-gray-300" : ""}
                   group
                 `}
                 onClick={() => onCategoryChange(key as ResourceCategory)}
               >
-                <div className={`
-                  p-2 rounded-full transition-all duration-300 ease-in-out
-                  ${isSelected 
-                    ? 'bg-white/20' 
-                    : 'bg-gray-100 bg-opacity-50 group-hover:bg-opacity-70'
-                  }
-                `}>
-                  <Icon className={`
-                    h-6 w-6 
-                    ${isSelected ? 'text-white' : 'text-gray-600'}
-                    transition-colors duration-300 ease-in-out
-                    group-hover:text-gray-800
-                  `} />
+                <div
+                  className={`
+                    p-2 rounded-full transition-all duration-300 ease-in-out
+                    ${isSelected 
+                      ? "bg-white/20" 
+                      : "bg-gray-100 bg-opacity-50 group-hover:bg-opacity-70"
+                    }
+                  `}
+                >
+                  <Icon
+                    className={`
+                      h-6 w-6 
+                      sm:h-8 sm:w-8
+                      ${isSelected ? "text-white" : "text-gray-600"}
+                      transition-colors duration-300 ease-in-out
+                      group-hover:text-gray-800
+                    `}
+                  />
                 </div>
-                <span className={`
-                  text-sm font-medium 
-                  ${isSelected ? 'text-white' : 'text-gray-700 group-hover:text-gray-900'}
-                  transition-colors duration-300 ease-in-out
-                `}>
+                <span
+                  className={`
+                    text-xs sm:text-sm font-medium 
+                    ${isSelected 
+                      ? "text-white" 
+                      : "text-gray-700 group-hover:text-gray-900"
+                    }
+                    transition-colors duration-300 ease-in-out
+                  `}
+                >
                   {value.label}
                 </span>
               </Button>

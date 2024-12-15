@@ -1,6 +1,7 @@
 # Todo
 - Responsive
 - Upload Toasts
+- make uploader context
 - Dark Mode
 - add /contributors
 - add legal pages
