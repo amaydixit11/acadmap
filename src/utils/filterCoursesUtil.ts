@@ -30,7 +30,7 @@ export const filterCoursesUtil = (
     const query = filters.searchQuery.toLowerCase();
     result = result.filter((course) =>
       (course.title?.toLowerCase() ?? "").includes(query) ||
-      (course.description?.toLowerCase() ?? "").includes(query) ||
+      // (course.description?.toLowerCase() ?? "").includes(query) ||
       (course.code?.toLowerCase() ?? "").includes(query) ||
       (course.department?.toLowerCase() ?? "").includes(query)
     );

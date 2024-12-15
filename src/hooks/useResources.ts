@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { CourseResource } from '@/types/courses';
-import { fetchCourseResources } from '@/lib/resources';
+import { ResourceModel } from '@/types/courses';
+import { fetchResourceModels } from '@/lib/resources';
 
 export function useResources(courseCode: string, resourceType: string) {
-  const [resources, setResources] = useState<CourseResource[]>([]);
+  const [resources, setResources] = useState<ResourceModel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -11,7 +11,7 @@ export function useResources(courseCode: string, resourceType: string) {
     async function fetchResources() {
       setIsLoading(true);
       try {
-        const { resources } = await fetchCourseResources({
+        const { resources } = await fetchResourceModels({
           courseCode,
           resourceCategory: resourceType
         });

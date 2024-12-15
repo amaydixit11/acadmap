@@ -1,20 +1,22 @@
-import { Course, CourseResource } from "@/types/courses";
+import { Course } from "@/types/courses";
 import { fetchOrganizationRepositories, fetchRepositoryContent } from "./github";
 import { Download, FileArchive, FileText, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ResourceModel } from "@/models/resources";
+import { createClient } from "@/utils/supabase/client";
 
 interface ResourceFetchOptions {
     courseCode?: string;
     resourceCategory?: string;
     year?: Number | null;
   }
-export async function fetchCourseResources(options: ResourceFetchOptions = {}): Promise<{
-    resources: CourseResource[];
+export async function fetchResourceModels(options: ResourceFetchOptions = {}): Promise<{
+    resources: ResourceModel[];
     count: number;
   }> {
     try {
       const repos = await fetchOrganizationRepositories(options.courseCode);
-      const resources: CourseResource[] = [];
+      const resources: ResourceModel[] = [];
       for (const repo of repos) {
         const nameParts = repo.name.split('-');
         const year = nameParts.length > 1 ? parseInt(nameParts[1]) : undefined;
@@ -31,16 +33,19 @@ export async function fetchCourseResources(options: ResourceFetchOptions = {}): 
         const contents = await fetchRepositoryContent(repo.name);
         console.log("contents: ", JSON.stringify(contents))
         for (let folder of contents){
+
             const folderContents = await fetchRepositoryContent(repo.name, folder.path);
-            const repoResources: CourseResource[] = folderContents.map((file: any) => ({
-                id: file.sha,
+            const repoResources: ResourceModel[] = folderContents.map((file: any) => ({
+                reourceId: file.sha,
+                course_code: nameParts[0],
                 title: file.name,
                 type: 'other',
                 category: folder.name,
                 url: file.download_url,
-                uploadedBy: 'unknown',
+                uploadedBy: getUploaderName(file.sha),
                 year: Number(repo.name.slice(7,))
             }));
+            
             resources.push(...repoResources);
         }
       }
@@ -54,9 +59,31 @@ export async function fetchCourseResources(options: ResourceFetchOptions = {}): 
       throw error;
     }
   }
+
+  async function getUploaderName(resourceId: string): Promise<string> {
+    const supabase = createClient();
   
+    // Query the database
+    const { data, error } = await supabase
+      .from('resources')
+      .select('uploadedBy') // Select only the required column to optimize the query
+      .eq('resourceId', resourceId)
+      .limit(1) // Limit the result to 1 since you expect a single match
+  
+    // Handle errors and return "unknown" if necessary
+    if (error) {
+      console.error('Error fetching uploader name:', error.message);
+      return 'unknown';
+    }
+  
+    // Check if data exists and return the uploader's name or "unknown"
+    const name = data?.[0]?.uploadedBy ?? 'unknown';
+    return name;
+  }
+
+
 // Utility function to determine resource category based on repository name
-function determineResourceCategory(repoName: string): CourseResource['category'] {
+function determineResourceCategory(repoName: string): ResourceModel['category'] {
     const lowerName = repoName.toLowerCase();
 
     if (lowerName.includes('lecture') || lowerName.includes('video')) {
@@ -91,9 +118,9 @@ export function getResourceCategoryIcon(category: string) {
     }
 }
 // Prefetch and categorize resources
-export async function prefetchCourseResources(courseCode: string) {
+export async function prefetchResourceModels(courseCode: string) {
     try {
-        const { resources } = await fetchCourseResources({ courseCode });
+        const { resources } = await fetchResourceModels({ courseCode });
         
         return {
         lectures: resources.filter(r => r.category === 'lecture'),
@@ -127,4 +154,34 @@ export function uploadResource({courseCode, resourceType, year}: UploadResources
       ...(year && { year: year })
   });
   router.push(`/upload?${params.toString()}`);
+}
+
+export async function uploadToDatabase(resource: ResourceModel): Promise<void> {
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('resources') // Replace 'resources' with your table name
+      .insert(
+        {
+          resourceId: resource.resourceId,
+          course_code: resource.course_code,
+          title: resource.title,
+          type: resource.type,
+          category: resource.category,
+          url: resource.url,
+          uploadedBy: resource.uploadedBy,
+          description: resource.description,
+          year: resource.year,
+        }
+      );
+
+    if (error) {
+      throw new Error(`Failed to upload resource: ${error.message}`);
+    }
+
+    console.log('Resource uploaded successfully:', data);
+  } catch (error) {
+    console.error('Error uploading to Supabase:', error);
+    throw error;
+  }
 }

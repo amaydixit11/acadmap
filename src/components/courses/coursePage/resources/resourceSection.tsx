@@ -78,8 +78,8 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {filteredAndSortedResources.length > 0 ? (
-          filteredAndSortedResources.map(resource => (
-            <ResourceCard key={resource.id} resource={resource} />
+          filteredAndSortedResources.map((resource, index) => (
+            <ResourceCard key={index} resource={resource} />
           ))
         ) : (
           <NoResources

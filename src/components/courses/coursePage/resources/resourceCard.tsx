@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CourseResource } from "@/types/courses";
 import { 
   FileText, 
   Video, 
@@ -13,12 +12,15 @@ import {
   ExternalLink, 
   PlayCircle,
   BookOpen,
-  Paperclip
+  Paperclip,
+  Image,
+  Microscope
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ResourceModel } from '@/models/resources';
 
 interface ResourceCardProps {
-  resource: CourseResource;
+  resource: ResourceModel;
 }
 
 // Utility function to truncate text
@@ -29,8 +31,9 @@ const truncateText = (text: string, maxLength: number = 30) => {
 
 export function ResourceCard({ resource }: ResourceCardProps) {
   const resourceIcons = {
-    'pdf': FileText,
+    'document': FileText,
     'video': Video,
+    'image': Image,
     'archive': FileArchive,
     'link': LinkIcon,
     'other': Paperclip
@@ -41,6 +44,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
     'tutorial': PlayCircle,
     'assignment': FileText,
     'pyq': FileArchive,
+    'lab': Microscope,
     'unclassified': Paperclip
   };
 
@@ -102,7 +106,8 @@ export function ResourceCard({ resource }: ResourceCardProps) {
               <Tooltip>
                 <TooltipTrigger>
                   <Badge variant="outline" className="text-xs">
-                    {truncateText(resource.uploadedBy, 15)}
+                    {/* {truncateText(resource.uploadedBy, 15)} */}
+                    {resource.uploadedBy}
                   </Badge>
                 </TooltipTrigger>
                 <TooltipContent>Uploaded by {resource.uploadedBy}</TooltipContent>

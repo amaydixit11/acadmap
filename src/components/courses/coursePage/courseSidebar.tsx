@@ -112,8 +112,8 @@ export function CourseSidebar({ course }: CourseSidebarProps) {
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <Button className="w-full" size="lg">
-                <Users className="mr-2 h-5 w-5" /> Join Study Group
+              <Button className="w-full" size="lg" disabled>
+                <Users className="mr-2 h-5 w-5" /> Join Study Group (upcoming feature)
               </Button>
               {session && (
                 <Button
@@ -121,8 +121,9 @@ export function CourseSidebar({ course }: CourseSidebarProps) {
                   className="w-full"
                   size="lg"
                   onClick={() => setIsReviewModalOpen(true)}
+                  disabled
                 >
-                  <Star className="mr-2 h-5 w-5" /> Write a Review
+                  <Star className="mr-2 h-5 w-5" /> Write a Review (upcoming feature)
                 </Button>
               )}
             </div>

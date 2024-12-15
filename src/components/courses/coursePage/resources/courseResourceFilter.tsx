@@ -1,17 +1,17 @@
-// components/courses/CourseResourceFilter.tsx
+// components/courses/ResourceModelFilter.tsx
 import { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CourseResource } from '@/types/courses';
+import { ResourceModel } from '@/types/courses';
 
-interface CourseResourceFilterProps {
-  resources: CourseResource[];
-  onFilterChange: (filteredResources: CourseResource[]) => void;
+interface ResourceModelFilterProps {
+  resources: ResourceModel[];
+  onFilterChange: (filteredResources: ResourceModel[]) => void;
 }
 
-export function CourseResourceFilter({ 
+export function ResourceModelFilter({ 
   resources, 
   onFilterChange 
-}: CourseResourceFilterProps) {
+}: ResourceModelFilterProps) {
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>('lectures');
 

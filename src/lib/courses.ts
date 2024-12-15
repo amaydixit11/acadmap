@@ -1,4 +1,5 @@
-import { Course, CourseSupabase } from '@/types/courses'
+import { CourseModel } from '@/models/courses'
+import { Course } from '@/types/courses'
 import { transformCourse } from '@/utils/transform'
 import { createClient } from '@supabase/supabase-js'
 
@@ -7,7 +8,7 @@ const supabaseKey: string = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "secret
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
-export async function fetchCourses(): Promise<CourseSupabase[]> {
+export async function fetchCourses(): Promise<CourseModel[]> {
     const { data, error } = await supabase.from('courses').select('*');
     if (error) {
         console.error('Error fetching courses:', error.message);
