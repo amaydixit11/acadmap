@@ -62,14 +62,15 @@ export function ResourceCard({ resource }: ResourceCardProps) {
   return (
     <TooltipProvider>
       <Card 
-        className="group/card w-full max-w-md transition-all duration-300 hover:shadow-xl hover:border-primary/50 border-2 border-transparent"
+        className="group/card w-full max-w-md transition-all duration-300 hover:shadow-xl hover:border-primary/50 border-2 border-transparent 
+        sm:max-w-sm md:max-w-md lg:max-w-lg"
       >
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4 pb-0">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0 p-4 pb-0">
           <div className="flex items-center space-x-3 w-full min-w-0">
             <Tooltip>
               <TooltipTrigger>
                 <ResourceIcon 
-                  className="w-6 h-6 text-muted-foreground flex-shrink-0 group-hover/card:text-primary"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground flex-shrink-0 group-hover/card:text-primary"
                 />
               </TooltipTrigger>
               <TooltipContent>{resource.type}</TooltipContent>
@@ -77,18 +78,18 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
             <Tooltip>
               <TooltipTrigger className="w-full min-w-0">
-                <h3 className="font-semibold text-sm truncate text-gray-800 group-hover/card:text-primary">
-                  {truncateText(resource.title, 40)}
+                <h3 className="font-semibold text-xs sm:text-sm truncate text-gray-800 group-hover/card:text-primary">
+                  {truncateText(resource.title, 35)}
                 </h3>
               </TooltipTrigger>
               <TooltipContent>{resource.title}</TooltipContent>
             </Tooltip>
           </div>
 
-          <div className="flex items-center space-x-2 ml-2 flex-shrink-0">
+          <div className="flex flex-wrap items-center space-x-2 mt-2 sm:mt-0 sm:ml-2 flex-shrink-0">
             <Tooltip>
               <TooltipTrigger>
-                <Badge variant="secondary" className="flex items-center">
+                <Badge variant="secondary" className="flex items-center text-xs">
                   <CategoryIcon className="mr-1 h-3 w-3" />
                   {resource.category}
                 </Badge>
@@ -96,17 +97,16 @@ export function ResourceCard({ resource }: ResourceCardProps) {
               <TooltipContent>Resource Category</TooltipContent>
             </Tooltip>
 
-            <Badge variant="outline">{resource.year}</Badge>
+            <Badge variant="outline" className="text-xs">{resource.year}</Badge>
           </div>
         </CardHeader>
 
-        <CardFooter className="p-4 pt-0 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
+        <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
+          <div className="flex items-center space-x-2 w-full">
             {resource.uploadedBy && (
               <Tooltip>
                 <TooltipTrigger>
-                  <Badge variant="outline" className="text-xs">
-                    {/* {truncateText(resource.uploadedBy, 15)} */}
+                  <Badge variant="outline" className="text-xs max-w-full truncate">
                     {resource.uploadedBy}
                   </Badge>
                 </TooltipTrigger>
@@ -119,7 +119,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
             size="sm" 
             variant="default"
             onClick={handleResourceAction}
-            className="group/btn my-4"
+            className="group/btn w-full sm:w-auto mt-2 sm:mt-0"
           >
             {resource.type === 'link' ? (
               <>

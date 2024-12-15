@@ -1,5 +1,5 @@
-import { CheckCircle, FileText, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { CheckCircle } from "lucide-react";
 import { Course } from "@/types/courses";
 
 interface CourseSyllabusProps {
@@ -7,24 +7,43 @@ interface CourseSyllabusProps {
 }
 
 export function CourseSyllabus({ course }: CourseSyllabusProps) {
+  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+
+  const toggleCheckbox = (index: number) => {
+    setCheckedItems(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-          <CheckCircle className="mr-2 text-primary" /> Course Syllabus
+    <div className="space-y-4 sm:space-y-6 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-800 flex items-center mb-3 sm:mb-0">
+          <CheckCircle className="mr-2 text-primary w-5 h-5 sm:w-6 sm:h-6" /> 
+          Course Syllabus
         </h2>
       </div>
-      <ul className="space-y-4 text-muted-foreground">
+      <ul className="space-y-3 sm:space-y-4 text-muted-foreground">
         {course.syllabus.map((item, index) => (
           <li 
             key={index} 
-            className="flex items-start px-4 py-0 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center px-2 sm:px-4 py-0 rounded-lg hover:bg-gray-50 transition-colors"
           >
-            <ArrowRight className="mr-3 mt-1 text-primary w-4 h-4 flex-shrink-0" />
-            <span className="leading-relaxed">{item}</span>
+            <input 
+              type="checkbox"
+              checked={checkedItems[index] || false}
+              onChange={() => toggleCheckbox(index)}
+              className="mr-2 sm:mr-3 w-4 h-4 sm:w-5 sm:h-5 text-primary rounded focus:ring-primary"
+            />
+            <span className={`text-sm sm:text-base leading-relaxed ${checkedItems[index] ? 'line-through text-gray-400' : ''}`}>
+              {item}
+            </span>
           </li>
         ))}
       </ul>
     </div>
   );
 }
+
+export default CourseSyllabus;

@@ -16,7 +16,6 @@ interface CourseContentProps {
 }
 
 export function CourseContent({ course, user }: CourseContentProps) {
-
   const tabItems = [
     { 
       value: "syllabus", 
@@ -39,27 +38,44 @@ export function CourseContent({ course, user }: CourseContentProps) {
   ];
 
   return (
-    <div className="lg:col-span-2 space-y-8">
-      <Card className="shadow-lg border-gray-100">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
+      <Card className="shadow-lg border-gray-100 w-full">
         <Tabs defaultValue="syllabus" className="w-full">
           <CardHeader className="pb-0">
-            <TabsList className="w-full bg-gray-50/50 p-1">
+            <TabsList className="grid grid-cols-3 w-full bg-gray-50/50 p-1 gap-2 
+              max-w-full 
+              mobile:flex mobile:flex-col mobile:w-full 
+              mobile:items-stretch 
+              mobile:space-y-2">
               {tabItems.map(({ value, icon: Icon, label }) => (
                 <TabsTrigger
                   key={value}
                   value={value}
-                  className="flex-1 data-[state=active]:bg-white data-[state=active]:shadow-sm py-3"
+                  className="flex items-center justify-center 
+                    data-[state=active]:bg-white data-[state=active]:shadow-sm 
+                    py-3 
+                    mobile:w-full 
+                    mobile:justify-start 
+                    mobile:px-4 
+                    mobile:text-left"
                 >
-                  <Icon className="mr-2 h-4 w-4" />
+                  <Icon className="mr-2 h-4 w-4 mobile:mr-3" />
                   {label}
                 </TabsTrigger>
               ))}
             </TabsList>
           </CardHeader>
 
-          <CardContent className="p-6">
+          <CardContent className="p-6 mobile:p-4">
             {tabItems.map(({ value, component }) => (
-              <TabsContent key={value} value={value} className="mt-0">
+              <TabsContent 
+                key={value} 
+                value={value} 
+                className="mt-0 
+                  mobile:max-w-full 
+                  mobile:overflow-x-auto 
+                  mobile:p-2"
+              >
                 {component}
               </TabsContent>
             ))}

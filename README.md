@@ -7,6 +7,7 @@
 - add /about-us
 - make /profile real
 - maybe add real signin/signup as well
+- add upvote features
 - header search
 - Study Groups
 - Reviews

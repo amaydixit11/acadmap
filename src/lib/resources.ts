@@ -1,7 +1,7 @@
 import { Course } from "@/types/courses";
 import { fetchOrganizationRepositories, fetchRepositoryContent } from "./github";
 import { Download, FileArchive, FileText, Microscope, Video } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { ResourceModel } from "@/models/resources";
 import { createClient } from "@/utils/supabase/client";
 
@@ -154,14 +154,16 @@ interface UploadResourcesProps{
   resourceType: string;
   year: string;
 }
+
 export function uploadResource({courseCode, resourceType, year}: UploadResourcesProps){
-  const router = useRouter();
+  // const router = useRouter();
   const params = new URLSearchParams({
       courseCode: courseCode,
       type: resourceType,
       ...(year && { year: year })
   });
-  router.push(`/upload?${params.toString()}`);
+  // router.push(`/upload?${params.toString()}`);
+  redirect(`/upload?${params.toString()}`);
 }
 
 export async function uploadToDatabase(resource: ResourceModel): Promise<void> {

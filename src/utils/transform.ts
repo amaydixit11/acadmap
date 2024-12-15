@@ -14,7 +14,7 @@ export function transformCourse(course: CourseModel): Course {
     department: course.Department,
     credits: course.credits,
     prerequisites: course.prerequisites,
-    syllabus: course.syllabus ? course.syllabus.split(/[;.]/).slice(0, -1) : [], // Assuming syllabus is a string of comma-separated items
+    syllabus: course.syllabus ? course.syllabus.split(/[;.,]/).slice(0, -1) : [], // Assuming syllabus is a string of comma-separated items
     schedule: {
         lectures: distributionParts[0], // Handle distribution safely
         tutorials: distributionParts[1],
