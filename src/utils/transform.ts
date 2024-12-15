@@ -23,6 +23,7 @@ export function transformCourse(course: CourseModel): Course {
     // resources: {
     //   lectures: [],
     //   assignments: [],
+    //   labs: [],
     //   tutorials: [],
     //   pyq: [], // Empty array as no resource info is in CourseModel
     //   unclassified: []

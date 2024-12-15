@@ -1,6 +1,6 @@
 import { Course } from "@/types/courses";
 import { fetchOrganizationRepositories, fetchRepositoryContent } from "./github";
-import { Download, FileArchive, FileText, Video } from "lucide-react";
+import { Download, FileArchive, FileText, Microscope, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ResourceModel } from "@/models/resources";
 import { createClient } from "@/utils/supabase/client";
@@ -90,9 +90,12 @@ function determineResourceCategory(repoName: string): ResourceModel['category'] 
         return 'lecture';
     }
     if (lowerName.includes('assignment') || lowerName.includes('homework')) {
-        return 'assignment';
+      return 'assignment';
     }
-    if (lowerName.includes('tutorial') || lowerName.includes('lab')) {
+    if (lowerName.includes('lab')) {
+      return 'lab';
+    }
+    if (lowerName.includes('tutorial')) {
         return 'tutorial';
     }
     if (lowerName.includes('pyq') || lowerName.includes('past-year') || lowerName.includes('previous-year')) {
@@ -108,7 +111,9 @@ export function getResourceCategoryIcon(category: string) {
         case 'lecture':
         return Video;
         case 'assignment':
-        return FileText;
+        return FileText;        
+        case 'lab':
+        return Microscope;
         case 'tutorial':
         return FileArchive;
         case 'pyq':
@@ -125,6 +130,7 @@ export async function prefetchResourceModels(courseCode: string) {
         return {
         lectures: resources.filter(r => r.category === 'lecture'),
         assignments: resources.filter(r => r.category === 'assignment'),
+        labs: resources.filter(r => r.category === 'lab'),
         tutorials: resources.filter(r => r.category === 'tutorial'),
         pyq: resources.filter(r => r.category === 'pyq'),
         totalCount: resources.length
@@ -134,6 +140,8 @@ export async function prefetchResourceModels(courseCode: string) {
         return {
         lectures: [],
         assignments: [],
+        labs: [],
+
         tutorials: [],
         pyq: [],
         totalCount: 0

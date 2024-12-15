@@ -10,10 +10,11 @@ import { uploadResource } from "@/lib/resources";
 
 const RESOURCE_TYPES = [
   { value: "all", label: "All" },
-  { value: "lectures", label: "Lectures" },
-  { value: "assignments", label: "Assignments" },
-  { value: "tutorials", label: "Tutorials" },
+  { value: "lecture", label: "Lectures" },
+  { value: "assignment", label: "Assignments" },
+  { value: "tutorial", label: "Tutorials" },
   { value: "pyq", label: "Past Year Questions" },
+  { value: "lab", label: "Labs" },
   { value: "unclassified", label: "Unclassified" }
 ];
 

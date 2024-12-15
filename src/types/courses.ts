@@ -61,6 +61,7 @@ export let demoCourse: Course = {
   // resources: {
   //   lectures: [],
   //   assignments: [],
+  //   labs: []
   //   tutorials: [],
   //   pyq: [],
   //   unclassified: []
