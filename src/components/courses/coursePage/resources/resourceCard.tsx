@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ResourceModel } from '@/models/resources';
-import { getUserNameFromId } from '@/lib/auth';
 
 interface ResourceCardProps {
   resource: ResourceModel;
@@ -37,8 +36,8 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
   useEffect(() => {
     const fetchUserName = async () => {
-      const name = await getUserNameFromId(resource.uploadedBy);
-      console.log("name: ", name);
+      // const name = await getUserNameFromId(resource.uploadedBy);
+      // console.log("name: ", name);
       setUserName(name ?? resource.uploadedBy);
     };
     fetchUserName();
