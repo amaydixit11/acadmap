@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { SmtpMessage } from "../smtp-message";
 import { Button } from "@/components/ui/button";
+import SignInWithGoogleButton from "@/components/layout/header/SignInWithGoogleButton";
 
 export default function SignupClient() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,9 +52,10 @@ export default function SignupClient() {
             
             </div>
         </form> */}
-        <Button className="min-w-64 max-w-64 mx-auto" onClick={handleOAuth}>
+        <SignInWithGoogleButton />
+        {/* <Button className="min-w-64 max-w-64 mx-auto" onClick={handleOAuth}>
             Sign up with Google
-        </Button>
+        </Button> */}
       {/* <SmtpMessage /> */}
     </>
   );

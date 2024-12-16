@@ -1,16 +1,15 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
+import SignInWithGoogleButton from "./SignInWithGoogleButton";
 
 export const AuthButtons = () => (
   <>
     <div className="hidden sm:flex space-x-2">
-      <Link href="/sign-in">
-        <Button variant="ghost" size="sm">Sign In</Button>
-      </Link>
-      <Link href="/sign-up">
+      {/* <Link href="/sign-up">
         <Button size="sm">Sign Up</Button>
-      </Link>
+      </Link> */}
+      <SignInWithGoogleButton text = "Sign Up" size="sm"/>
     </div>
     <Link href="/sign-in" className="sm:hidden">
       <Button variant="ghost" size="icon">

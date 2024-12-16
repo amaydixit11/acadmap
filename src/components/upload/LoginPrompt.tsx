@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SignInWithGoogleButton from "../layout/header/SignInWithGoogleButton";
 
 
 export const LoginPrompt = () => (
@@ -17,12 +18,13 @@ export const LoginPrompt = () => (
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Link href="/sign-in">
+          <SignInWithGoogleButton />
+          {/* <Link href="/sign-in">
             <Button className="w-full">
               <LogIn className="mr-2 h-4 w-4" />
               Log In
             </Button>
-          </Link>
+          </Link> */}
         </CardContent>
       </Card>
     </div>

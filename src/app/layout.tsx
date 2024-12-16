@@ -32,19 +32,19 @@ export default function RootLayout({
         >
           <ToastProvider>
             <FilterProvider>
+                  <Header />
               <main className="min-h-screen flex flex-col">
                 <div className="flex-1 w-full flex flex-col items-center">
-                  <Header />
                   <div className="w-full flex-1 flex flex-col">
                     <div className="flex-1 w-full max-w-[95%] sm:max-w-[90%] md:max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
                       <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 lg:gap-20 py-6 sm:py-8 md:py-10 lg:py-12">
                         {children}
                       </div>
                     </div>
-                    <Footer />
                   </div>
                 </div>
               </main>
+                    <Footer />
             </FilterProvider>
           </ToastProvider>
         </ThemeProvider>
