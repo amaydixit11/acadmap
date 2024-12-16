@@ -39,7 +39,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
     const fetchUserName = async () => {
       const name = await getUserNameFromId(resource.uploadedBy);
       console.log("name: ", name);
-      setUserName(name ? resource.uploadedBy : name);
+      setUserName(name ?? resource.uploadedBy);
     };
     fetchUserName();
   }, [resource.uploadedBy]);
@@ -120,14 +120,14 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
         <CardFooter className="p-4 pt-0 flex mt-2 flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
           <div className="flex items-center space-x-2 w-full">
-            {resource.uploadedBy && (
+            {userName && (
               <Tooltip>
                 <TooltipTrigger>
                   <Badge variant="outline" className="text-xs max-w-full truncate dark:text-gray-400">
-                    {resource.uploadedBy}
+                    {userName}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>Uploaded by {resource.uploadedBy}</TooltipContent>
+                <TooltipContent>Uploaded by {userName}</TooltipContent>
               </Tooltip>
             )}
           </div>

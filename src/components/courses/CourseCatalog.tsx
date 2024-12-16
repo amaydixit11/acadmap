@@ -14,7 +14,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({ courses }) => {
 
     if (isLoading) {
         return (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 bg-black">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 {Array.from({ length: 8 }).map((_, idx) => (
                     <div key={idx} className="w-full space-y-3">
                         <Skeleton className="h-48 w-full rounded-xl bg-neutral-900" />
@@ -28,7 +28,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({ courses }) => {
 
     if (courses.length === 0) {
         return (
-            <div className="col-span-full flex flex-col items-center justify-center min-h-[400px] bg-black p-8">
+            <div className="col-span-full flex flex-col items-center justify-center min-h-[400px] p-8">
                 <div className="bg-neutral-900 p-4 rounded-full mb-4">
                     <Search className="h-8 w-8 text-neutral-500" />
                 </div>
@@ -44,12 +44,12 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({ courses }) => {
     }
 
     return (
-        <div className="space-y-8 bg-black p-6">
+        <div className="space-y-8 p-6">
             <div className="flex items-center justify-between">
-                <p className="text-neutral-400">
-                    Showing <span className="font-medium text-neutral-200">{courses.length}</span> courses
+                <p className="text-neutral-800">
+                    Showing <span className="font-medium text-neutral-800">{courses.length}</span> courses
                 </p>
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-neutral-600">
                     Page 1 of 1
                 </p>
             </div>

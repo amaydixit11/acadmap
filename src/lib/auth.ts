@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { createClient as createClientSupabase} from "@supabase/supabase-js";
 
 
 export async function getUserSessionData() {
@@ -20,14 +21,31 @@ export async function getUserSessionData() {
 }
 
 export async function getUserNameFromId(userId: string): Promise<string | undefined> {
-    const supabase = await createClient();
+    console.log("Initializing Supabase client...");
+    const supabase = createClientSupabase(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!, {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      })
+      
+    
+    console.log(`Fetching user details for userId: ${userId}`);
     const { data, error } = await supabase.auth.admin.getUserById(userId);
 
     if (error) {
         console.error("Error fetching user:", error);
         return undefined;
     }
-    console.log("data: ", data)
-    const userName = data.user?.user_metadata?.name;
+
+    console.log("Raw data received from Supabase:", data);
+
+    const userName = data?.user?.user_metadata?.name;
+    if (!userName) {
+        console.warn("User metadata or name is missing in the response.");
+    } else {
+        console.log(`Extracted user name: ${userName}`);
+    }
+
     return userName;
 }
