@@ -279,8 +279,10 @@ const ProfilePage = () => {
           </CardHeader>
           
           <CardContent>
+
             <div className="space-y-4">
-              {courses.map((course) => (
+              Upcoming Feature
+              {/* {courses.map((course) => (
                 <Card key={course.code} className="hover:shadow-md transition-shadow duration-200">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
@@ -301,7 +303,7 @@ const ProfilePage = () => {
                     </div>
                   </CardContent>
                 </Card> 
-              ))}
+              ))} */}
             </div>
           </CardContent>
         </Card>
