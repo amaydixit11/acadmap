@@ -4,7 +4,7 @@ import React from 'react'
 
 const StarThisProject = ({className} : {className?: string}) => {
     const handleStarProject = () => {
-        window.open('https://github.com/yourusername/yourproject', '_blank');
+        window.open('https://github.com/amaydixit11/acadmap', '_blank');
       };
     
   return (

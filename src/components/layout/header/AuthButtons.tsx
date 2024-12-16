@@ -11,10 +11,13 @@ export const AuthButtons = () => (
       </Link> */}
       <SignInWithGoogleButton text = "Sign Up" size="sm"/>
     </div>
-    <Link href="/sign-in" className="sm:hidden">
+    {/* <Link href="/sign-in" className="sm:hidden">
       <Button variant="ghost" size="icon">
         <User className="h-5 w-5" />
       </Button>
-    </Link>
+    </Link> */}
+    <SignInWithGoogleButton size="icon" className="sm:hidden">
+      <User className="h-5 w-5" />
+    </SignInWithGoogleButton>
   </>
 );
