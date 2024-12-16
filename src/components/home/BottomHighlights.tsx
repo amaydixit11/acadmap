@@ -1,3 +1,4 @@
+import { useResources } from "@/hooks/useResources";
 import { 
   FileText, 
   Users,
@@ -5,20 +6,24 @@ import {
 } from "lucide-react";
 
 const BottomHighlights = () => {
+  const { resources, uniqueContributors } = useResources();
+  const resourcesNumber = Math.round(resources.length / 50) * 50
+  // const uniqueContributors = new Set(resources.map(resource => resource.uploadedBy));
+  const contributorsNumber = uniqueContributors?.size ?? "10"
   return (
     <div className="bg-secondary/50 py-12">
       <div className="container mx-auto px-4">
         <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-3">
           <div className="flex flex-col items-center">
             <FileText className="h-12 w-12 text-purple-500 mb-4 sm:h-16 sm:w-16" />
-            <h3 className="text-xl font-bold sm:text-2xl">500+ Resources</h3>
+            <h3 className="text-xl font-bold sm:text-2xl">{resourcesNumber}+ Resources</h3>
             <p className="text-sm text-muted-foreground sm:text-base">
               Course materials and notes
             </p>
           </div>
           <div className="flex flex-col items-center">
             <Users className="h-12 w-12 text-green-500 mb-4 sm:h-16 sm:w-16" />
-            <h3 className="text-xl font-bold sm:text-2xl">100+ Contributors</h3>
+            <h3 className="text-xl font-bold sm:text-2xl">{contributorsNumber}+ Contributors</h3>
             <p className="text-sm text-muted-foreground sm:text-base">
               Students helping students
             </p>

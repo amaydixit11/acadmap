@@ -9,6 +9,7 @@ interface ResourceFetchOptions {
     courseCode?: string;
     resourceCategory?: string;
     year?: Number | null;
+    // columnN
   }
 export async function fetchResourceModels(options: ResourceFetchOptions = {}): Promise<{
     resources: ResourceModel[];
@@ -60,6 +61,7 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
     }
   }
 
+  
   async function getUploaderName(resourceId: string): Promise<string> {
     const supabase = createClient();
   
