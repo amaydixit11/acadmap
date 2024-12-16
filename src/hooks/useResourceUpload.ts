@@ -30,7 +30,8 @@ export const useResourceUpload = () => {
     category: ResourceCategory,
     title: string, 
     type: string,
-    name: string
+    name: string,
+    userId: string
   ) => {
     for (const file of files) {
       try {
@@ -43,7 +44,7 @@ export const useResourceUpload = () => {
           `Add ${type} resource: ${title} (Uploaded by ${name})`
         );
         console.log("res: ", response);
-        const resource: ResourceModel = processUploadResponse(response, name, type as ResourceType, title, category, repoName.split('-')[1], repoName.split('-')[0]);
+        const resource: ResourceModel = processUploadResponse(response, userId, type as ResourceType, title, category, repoName.split('-')[1], repoName.split('-')[0]);
         uploadToDatabase(resource);
         
       } catch (error) {
@@ -106,7 +107,7 @@ ${formData.url}`;
       } catch (error) {
         // Repository might already exist, continue with upload
       }
-
+      const userId = user.id;
       const name = nameOption === 'user' ? user.user_metadata.name || 'unknown' 
         : nameOption === 'custom' ? customName 
         : 'anonymous';
@@ -114,11 +115,8 @@ ${formData.url}`;
       if (type === 'link') {
         await handleLinkUpload(repoName, formData, category, name);
       } else {
-        await handleFileUpload(repoName, files, category, formData.title, type, name);
+        await handleFileUpload(repoName, files, category, formData.title, type, name, userId);
       }
-
-
-
 
       setUploadStatus({
         type: 'success',

@@ -18,3 +18,16 @@ export async function getUserSessionData() {
 
     return userData; 
 }
+
+export async function getUserNameFromId(userId: string): Promise<string | undefined> {
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.admin.getUserById(userId);
+
+    if (error) {
+        console.error("Error fetching user:", error);
+        return undefined;
+    }
+    console.log("data: ", data)
+    const userName = data.user?.user_metadata?.name;
+    return userName;
+}

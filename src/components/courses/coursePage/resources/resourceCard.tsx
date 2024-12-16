@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -18,6 +20,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ResourceModel } from '@/models/resources';
+import { getUserNameFromId } from '@/lib/auth';
 
 interface ResourceCardProps {
   resource: ResourceModel;
@@ -30,6 +33,17 @@ const truncateText = (text: string, maxLength: number = 30) => {
 };
 
 export function ResourceCard({ resource }: ResourceCardProps) {
+  const [userName, setUserName] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const name = await getUserNameFromId(resource.uploadedBy);
+      console.log("name: ", name);
+      setUserName(name ? resource.uploadedBy : name);
+    };
+    fetchUserName();
+  }, [resource.uploadedBy]);
+
   const resourceIcons = {
     'document': FileText,
     'video': Video,
