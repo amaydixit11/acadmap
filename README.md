@@ -1,4 +1,4 @@
-2<br/>
+<br/>
 <div align="center">
 <a href="https://github.com/amaydixit11/acadmap">
 <img src="./logo.png" alt="AcadMap Logo" >

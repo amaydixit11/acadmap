@@ -26,7 +26,7 @@ export default function SignupClient() {
 
   return (
     <>
-        <form className="flex flex-col min-w-64 max-w-64 mx-auto" onSubmit={handleSubmit}>
+        {/* <form className="flex flex-col min-w-64 max-w-64 mx-auto" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-medium">Sign up</h1>
             <p className="text-sm text text-foreground">
             Already have an account?{" "}
@@ -50,7 +50,7 @@ export default function SignupClient() {
             </SubmitButton>
             
             </div>
-        </form>
+        </form> */}
         <Button className="min-w-64 max-w-64 mx-auto" onClick={handleOAuth}>
             Sign up with Google
         </Button>

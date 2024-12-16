@@ -25,7 +25,7 @@ export default function LoginClient() {
 
   return (
     <>
-        <form className="flex-1 flex flex-col min-w-64" onSubmit={handleSubmit}>
+        {/* <form className="flex-1 flex flex-col min-w-64" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-medium">Sign in</h1>
             <p className="text-sm text-foreground">
                 Don't have an account?{" "}
@@ -54,9 +54,8 @@ export default function LoginClient() {
                 <SubmitButton pendingText="Signing In...">
                 Sign in
                 </SubmitButton>
-                {/* <FormMessage message={searchParams} /> */}
             </div>
-        </form>
+        </form> */}
         <Button className="min-w-64 max-w-64 mx-auto" onClick={handleOAuth}>
             Sign In with Google
         </Button>
