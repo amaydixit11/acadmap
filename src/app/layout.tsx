@@ -5,6 +5,7 @@ import Header from "@/components/layout/header/header";
 import Footer from "@/components/layout/footer/Footer";
 import { FilterProvider } from "@/context/FiltersContext";
 import { ToastProvider } from "@/context/ToastContext";
+import { Analytics } from '@vercel/analytics/next';
 
 const defaultUrl = process.env.NEXT_PUBLIC_ORIGIN
   ? `${process.env.NEXT_PUBLIC_ORIGIN}`
@@ -48,6 +49,7 @@ export default function RootLayout({
             </FilterProvider>
           </ToastProvider>
         </ThemeProvider>
+              <Analytics />
       </body>
     </html>
   );
