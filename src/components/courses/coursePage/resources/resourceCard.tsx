@@ -32,13 +32,13 @@ const truncateText = (text: string, maxLength: number = 30) => {
 };
 
 export function ResourceCard({ resource }: ResourceCardProps) {
-  const [userName, setUserName] = useState<string | undefined>(undefined);
+  const [userName, setUserName] = useState<string | undefined>(resource.uploadedBy);
 
   useEffect(() => {
     const fetchUserName = async () => {
       // const name = await getUserNameFromId(resource.uploadedBy);
       // console.log("name: ", name);
-      setUserName(name ?? resource.uploadedBy);
+      setUserName(resource.uploadedBy);
     };
     fetchUserName();
   }, [resource.uploadedBy]);
@@ -132,7 +132,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           </div>
 
           <Button 
-            size="sm" 
+            size="sm"
             variant="default"
             onClick={handleResourceAction}
             className="group/btn w-full sm:w-auto mt-2 dark:bg-black dark:text-white dark:hover:bg-black"

@@ -44,7 +44,7 @@ export const useResourceUpload = () => {
           `Add ${type} resource: ${title} (Uploaded by ${name})`
         );
         console.log("res: ", response);
-        const resource: ResourceModel = processUploadResponse(response, userId, type as ResourceType, title, category, repoName.split('-')[1], repoName.split('-')[0]);
+        const resource: ResourceModel = processUploadResponse(response, name, type as ResourceType, title, category, repoName.split('-')[1], repoName.split('-')[0]);
         uploadToDatabase(resource);
         
       } catch (error) {
