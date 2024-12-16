@@ -15,7 +15,7 @@ export const ResourceTypeSelector: React.FC<ResourceTypeSelectorProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      <Label className="text-sm font-semibold text-gray-700">Select Resource Type</Label>
+      <Label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Select Resource Type</Label>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {Object.entries(resourceTypes).map(([key, value]) => {
           const Icon = value.icon;
@@ -34,7 +34,7 @@ export const ResourceTypeSelector: React.FC<ResourceTypeSelectorProps> = ({
                 className={`
                   h-24 w-full flex flex-col justify-center items-center gap-3
                   transition-all duration-300 ease-in-out
-                  ${!isSelected ? 'hover:bg-gray-100 hover:border-gray-300' : ''}
+                  ${!isSelected ? 'hover:bg-gray-100 hover:border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600' : ''}
                   group
                 `}
                 onClick={() => onTypeChange(key as ResourceType)}
@@ -42,19 +42,20 @@ export const ResourceTypeSelector: React.FC<ResourceTypeSelectorProps> = ({
                 <div className={`
                   p-2 rounded-full transition-all duration-300 ease-in-out
                   ${isSelected 
-                    ? 'bg-white/20' 
-                    : `${value.color} bg-opacity-10 group-hover:bg-opacity-20`
+                    ? 'bg-white/20 dark:bg-white/10' 
+                    : `${value.color} bg-opacity-10 group-hover:bg-opacity-20 dark:bg-opacity-10 dark:group-hover:bg-opacity-20`
                   }
                 `}>
                   <Icon className={`
                     h-6 w-6 
                     ${isSelected ? 'text-white' : value.color}
                     transition-colors duration-300 ease-in-out
+                    dark:${isSelected ? 'text-white' : 'text-gray-300'}
                   `} />
                 </div>
                 <span className={`
                   text-sm font-medium 
-                  ${isSelected ? 'text-white' : 'text-gray-700 group-hover:text-gray-900'}
+                  ${isSelected ? 'text-white' : 'text-gray-700 group-hover:text-gray-900 dark:text-gray-300 dark:group-hover:text-white'}
                   transition-colors duration-300 ease-in-out
                 `}>
                   {value.label}

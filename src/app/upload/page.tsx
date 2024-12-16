@@ -25,5 +25,5 @@ export default function UploadPage() {
     return <LoginPrompt />;
   }
   
-  return <UploadPageContent user={user} />;
+  return <UploadPageContent user={user}/>;
 }

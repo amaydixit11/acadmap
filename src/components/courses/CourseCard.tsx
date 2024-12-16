@@ -27,29 +27,29 @@ interface CourseCardProps {
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   // Determine credit color and intensity
   const getCreditVariant = (credits: number) => {
-    if (credits <= 2) return "bg-green-100 text-green-700 border-green-200";
-    if (credits < 4) return "bg-blue-100 text-blue-700 border-blue-200";
-    return "bg-orange-100 text-orange-700 border-orange-200";
+    if (credits <= 2) return "bg-neutral-900 text-green-500 border-neutral-800";
+    if (credits < 4) return "bg-neutral-900 text-blue-500 border-neutral-800";
+    return "bg-neutral-900 text-orange-500 border-neutral-800";
   };
 
   // Determine department color
   const getDepartmentColor = (department: string) => {
     const departmentColors: { [key: string]: string } = {
-      [Department.CSE]: 'bg-blue-50 text-blue-700 border-blue-200',
-      [Department.DSAI]: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-      [Department.ECE]: 'bg-teal-50 text-teal-700 border-teal-200',
-      [Department.EE]: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      [Department.EVT]: 'bg-lime-50 text-lime-700 border-lime-200',
-      [Department.ME]: 'bg-amber-50 text-amber-700 border-amber-200',
-      [Department.MT]: 'bg-orange-50 text-orange-700 border-orange-200',
-      [Department.MSME]: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-      [Department.PHY]: 'bg-purple-50 text-purple-700 border-purple-200',
-      [Department.MAT]: 'bg-rose-50 text-rose-700 border-rose-200',
-      [Department.CHE]: 'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200',
-      [Department.BSBM]: 'bg-green-50 text-green-700 border-green-200',
-      [Department.LA]: 'bg-gray-50 text-gray-700 border-gray-200'
+      [Department.CSE]: 'bg-neutral-900 text-blue-500 border-neutral-800',
+      [Department.DSAI]: 'bg-neutral-900 text-indigo-500 border-neutral-800',
+      [Department.ECE]: 'bg-neutral-900 text-teal-500 border-neutral-800',
+      [Department.EE]: 'bg-neutral-900 text-emerald-500 border-neutral-800',
+      [Department.EVT]: 'bg-neutral-900 text-lime-500 border-neutral-800',
+      [Department.ME]: 'bg-neutral-900 text-amber-500 border-neutral-800',
+      [Department.MT]: 'bg-neutral-900 text-orange-500 border-neutral-800',
+      [Department.MSME]: 'bg-neutral-900 text-cyan-500 border-neutral-800',
+      [Department.PHY]: 'bg-neutral-900 text-purple-500 border-neutral-800',
+      [Department.MAT]: 'bg-neutral-900 text-rose-500 border-neutral-800',
+      [Department.CHE]: 'bg-neutral-900 text-fuchsia-500 border-neutral-800',
+      [Department.BSBM]: 'bg-neutral-900 text-green-500 border-neutral-800',
+      [Department.LA]: 'bg-neutral-900 text-gray-500 border-neutral-800'
     };
-    return departmentColors[department] || 'bg-gray-50 text-gray-700 border-gray-200';
+    return departmentColors[department] || 'bg-neutral-900 text-gray-500 border-neutral-800';
   };
 
   return (
@@ -59,17 +59,19 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         className="group block transform transition-all duration-300 hover:scale-[1.02]"
         aria-label={`View details for ${course.title}`}
       >
-        <Card className={cn(
-          "h-full overflow-hidden border-2 border-transparent",
-          "hover:border-primary/30 hover:shadow-xl",
-          "transition-all duration-300",
-          "flex flex-col"
-        )}>
+        <Card
+          className={cn(
+            "h-80 flex flex-col overflow-hidden border-2 border-neutral-800 bg-black",
+            "hover:border-neutral-700 hover:shadow-2xl",
+            "transition-all duration-300"
+          )}
+        >
+
           <CardHeader className="pb-3 space-y-2">
             <div className="flex justify-between items-start">
               <Badge 
                 variant="secondary" 
-                className="uppercase tracking-wider font-semibold"
+                className="uppercase tracking-wider font-semibold bg-neutral-900 text-neutral-300"
               >
                 {course.code}
               </Badge>
@@ -86,25 +88,25 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                     {course.credits} Credits
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="bg-neutral-900 text-neutral-300 border-neutral-800">
                   Course Credit Intensity
                 </TooltipContent>
               </Tooltip>
             </div>
 
             <CardTitle className={cn(
-              "text-xl font-bold text-gray-900",
+              "text-xl font-bold text-neutral-200",
               "line-clamp-2",
-              "group-hover:text-primary/80",
+              "group-hover:text-neutral-400",
               "transition-colors"
             )}>
               {course.title}
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="space-y-3 text-sm text-gray-600 pb-4 flex-grow">
+          <CardContent className="space-y-3 text-sm text-neutral-400 pb-4 flex-grow">
             <div className="flex items-center">
-              <Tag className="w-4 h-4 mr-2 text-gray-400" />
+              <Tag className="w-4 h-4 mr-2 text-neutral-600" />
               <Tooltip>
                 <TooltipTrigger>
                   <Badge 
@@ -114,37 +116,36 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                       "font-medium"
                     )}
                   >
-                    {/* {Department[course.department as keyof typeof Department]} */}
                     {course.department}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="bg-neutral-900 text-neutral-300 border-neutral-800">
                   Academic Department
                 </TooltipContent>
               </Tooltip>
             </div>
 
             <div className="flex items-center">
-              <BookmarkCheck className="w-4 h-4 mr-2 text-gray-400" />
-              <span className="font-medium text-gray-700">Prerequisites:</span>
-              <span className="ml-2 truncate">
+              <BookmarkCheck className="w-4 h-4 mr-2 text-neutral-600" />
+              <span className="font-medium text-neutral-300">Prerequisites:</span>
+              <span className="ml-2 truncate text-neutral-400">
                 {course.prerequisites || 'None'}
               </span>
             </div>
 
             <div className="flex items-center">
-              <Clock className="w-4 h-4 mr-2 text-gray-400" />
-              <span className="font-medium text-gray-700">L-T-P:</span>
-              <span className="ml-2 truncate">
+              <Clock className="w-4 h-4 mr-2 text-neutral-600" />
+              <span className="font-medium text-neutral-300">L-T-P:</span>
+              <span className="ml-2 truncate text-neutral-400">
                 {`${course.schedule.lectures}-${course.schedule.tutorials}-${course.schedule.labs}` || 'TBA'}
               </span>
             </div>
           </CardContent>
 
-          <CardFooter className="bg-gray-50/50 border-t py-3">
+          <CardFooter className="bg-neutral-900/50 border-t border-neutral-800 py-3">
             <div className="flex justify-between items-center w-full">
-              <div className="flex items-center text-sm text-gray-500 
-                group-hover:text-primary 
+              <div className="flex items-center text-sm text-neutral-500 
+                group-hover:text-neutral-300 
                 transition-colors">
                 <BookOpen className="w-4 h-4 mr-2" />
                 <span className="font-medium">Explore Course</span>
@@ -152,8 +153,8 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
               <Badge 
                 variant="outline" 
                 className={cn(
-                  "text-primary border-primary/30",
-                  "group-hover:bg-primary/10",
+                  "text-neutral-400 border-neutral-800",
+                  "group-hover:bg-neutral-800",
                   "transition-all"
                 )}
               >

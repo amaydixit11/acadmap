@@ -15,7 +15,7 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
 }) => {
   return (
     <div className="space-y-4">
-      <Label className="text-sm font-semibold text-gray-700">
+      <Label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
         Select Resource Category
       </Label>
       <div
@@ -46,7 +46,7 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
                   h-20 w-full flex flex-col justify-center items-center gap-2
                   sm:h-24 md:h-28
                   transition-all duration-300 ease-in-out
-                  ${!isSelected ? "hover:bg-gray-100 hover:border-gray-300" : ""}
+                  ${!isSelected ? "hover:bg-gray-100 hover:border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600" : ""}
                   group
                 `}
                 onClick={() => onCategoryChange(key as ResourceCategory)}
@@ -55,8 +55,8 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
                   className={`
                     p-2 rounded-full transition-all duration-300 ease-in-out
                     ${isSelected 
-                      ? "bg-white/20" 
-                      : "bg-gray-100 bg-opacity-50 group-hover:bg-opacity-70"
+                      ? "bg-white/20 dark:bg-white/10" 
+                      : "bg-gray-100 bg-opacity-50 group-hover:bg-opacity-70 dark:bg-gray-800 dark:bg-opacity-50 dark:group-hover:bg-opacity-70"
                     }
                   `}
                 >
@@ -64,9 +64,9 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
                     className={`
                       h-6 w-6 
                       sm:h-8 sm:w-8
-                      ${isSelected ? "text-white" : "text-gray-600"}
+                      ${isSelected ? "text-white" : "text-gray-600 dark:text-gray-300"}
                       transition-colors duration-300 ease-in-out
-                      group-hover:text-gray-800
+                      group-hover:text-gray-800 dark:group-hover:text-white
                     `}
                   />
                 </div>
@@ -75,7 +75,7 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
                     text-xs sm:text-sm font-medium 
                     ${isSelected 
                       ? "text-white" 
-                      : "text-gray-700 group-hover:text-gray-900"
+                      : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
                     }
                     transition-colors duration-300 ease-in-out
                   `}

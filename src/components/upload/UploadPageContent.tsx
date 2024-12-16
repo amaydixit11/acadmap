@@ -24,7 +24,9 @@ interface UploadPageContentProps {
   user: User;
 }
 
-export function UploadPageContent({ user }: UploadPageContentProps) {
+export function UploadPageContent(
+  { user }: UploadPageContentProps
+) {
   const searchParams = useSearchParams();
   const defaultCourseCode = searchParams.get('courseCode')?.toUpperCase() || '';
   const defaultCategory = searchParams.get('type') as ResourceCategory || 'unclassified';

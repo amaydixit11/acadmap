@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 import { Filters } from "@/types/filters";
 import { useCourses } from "@/hooks/useCourses";
@@ -22,11 +23,26 @@ export function CourseList() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
+    <div 
+      className={cn(
+        "container mx-auto px-4 py-8",
+        "dark:bg-black"
+      )}
+    >
+      <h1 
+        className={cn(
+          "text-3xl font-bold mb-8 text-center text-gray-800",
+          "dark:text-white"
+        )}
+      >
         Available Courses 
         {filteredCourses.length > 0 && (
-          <span className="text-base ml-2 text-muted-foreground">
+          <span 
+            className={cn(
+              "text-base ml-2 text-muted-foreground",
+              "dark:text-gray-400"
+            )}
+          >
             ({filteredCourses.length})
           </span>
         )}

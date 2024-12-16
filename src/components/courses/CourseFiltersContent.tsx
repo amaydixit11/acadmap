@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { 
   Accordion, 
   AccordionContent, 
@@ -20,6 +21,7 @@ const levels = [
     "500 Level", 
     "600 Level"
   ];
+
 export const FilterContent = () => {
   const {filters, dispatch} = useFilters();
     const handleCheckboxChange = (category: string, item: string) => {
@@ -47,16 +49,37 @@ export const FilterContent = () => {
       <Accordion type="single" collapsible className="w-full">
         {/* Department Filter */}
         <AccordionItem value="department">
-          <AccordionTrigger className="hover:bg-gray-50 rounded-md px-2">
-            Department
+          <AccordionTrigger 
+            className={cn(
+              "hover:bg-gray-50 rounded-md px-2",
+              "dark:hover:bg-gray-800"
+            )}
+          >
+            <span 
+              className={cn(
+                "text-gray-800",
+                "dark:text-white"
+              )}
+            >
+              Department
+            </span>
             {filters.departments.length > 0 && (
-              <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+              <span 
+                className={cn(
+                  "ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full",
+                  "dark:bg-primary/20 dark:text-primary-foreground"
+                )}
+              >
                 {filters.departments.length}
               </span>
             )}
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-2 lg:grid-cols-1 sm:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto overflow-x-hidden">
+            <div 
+              className={cn(
+                "grid grid-cols-2 lg:grid-cols-1 sm:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto overflow-x-hidden"
+              )}
+            >
               {Object.entries(Department).map(([short, full]) => (
                 <div key={short} className="flex items-center space-x-2">
                   <Checkbox
@@ -68,12 +91,21 @@ export const FilterContent = () => {
                   />
                   <Label 
                     htmlFor={short} 
-                    className="flex flex-col cursor-pointer"
+                    className={cn(
+                      "flex flex-col cursor-pointer",
+                      "text-gray-800",
+                      "dark:text-gray-200"
+                    )}
                   >
                     <span className="text-sm font-medium">{short}</span>
-                    {/* <span className="text-xs text-gray-500 truncate">{full}</span> */}
-                    <span className="text-xs text-gray-500 break-words">{full}</span>
-                    {/* <span className="text-xs text-gray-500 overflow-hidden text-ellipsis whitespace-nowrap">{full}</span> */}
+                    <span 
+                      className={cn(
+                        "text-xs text-gray-500 break-words",
+                        "dark:text-gray-400"
+                      )}
+                    >
+                      {full}
+                    </span>
                   </Label>
                 </div>
               ))}
@@ -83,10 +115,27 @@ export const FilterContent = () => {
 
         {/* Level Filter */}
         <AccordionItem value="level">
-          <AccordionTrigger className="hover:bg-gray-50 rounded-md px-2">
-            Level
+          <AccordionTrigger 
+            className={cn(
+              "hover:bg-gray-50 rounded-md px-2",
+              "dark:hover:bg-gray-800"
+            )}
+          >
+            <span 
+              className={cn(
+                "text-gray-800",
+                "dark:text-white"
+              )}
+            >
+              Level
+            </span>
             {filters.levels.length > 0 && (
-              <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+              <span 
+                className={cn(
+                  "ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full",
+                  "dark:bg-primary/20 dark:text-primary-foreground"
+                )}
+              >
                 {filters.levels.length}
               </span>
             )}
@@ -104,7 +153,11 @@ export const FilterContent = () => {
                   />
                   <Label 
                     htmlFor={level} 
-                    className="cursor-pointer text-sm"
+                    className={cn(
+                      "cursor-pointer text-sm",
+                      "text-gray-800",
+                      "dark:text-gray-200"
+                    )}
                   >
                     {level}
                   </Label>
@@ -115,4 +168,5 @@ export const FilterContent = () => {
         </AccordionItem>
       </Accordion>
     </div>
-  );}
+  );
+};

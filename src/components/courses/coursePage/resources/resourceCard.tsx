@@ -62,15 +62,18 @@ export function ResourceCard({ resource }: ResourceCardProps) {
   return (
     <TooltipProvider>
       <Card 
-        className="group/card w-full max-w-md transition-all duration-300 hover:shadow-xl hover:border-primary/50 border-2 border-transparent 
-        sm:max-w-sm md:max-w-md lg:max-w-lg"
+        className={cn(
+          "group/card w-full max-w-md transition-all duration-300 hover:shadow-lg hover:border-primary/50 border-2 border-transparent",
+          "bg-white text-black dark:bg-neutral-900 dark:text-white",  // Improved dark mode styling
+          "sm:max-w-sm md:max-w-md lg:max-w-lg"
+        )}
       >
         <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0 p-4 pb-0">
           <div className="flex items-center space-x-3 w-full min-w-0">
             <Tooltip>
               <TooltipTrigger>
                 <ResourceIcon 
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground flex-shrink-0 group-hover/card:text-primary"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground flex-shrink-0 group-hover/card:text-primary dark:text-gray-400 dark:group-hover/card:text-primary"  // Dark mode icon color
                 />
               </TooltipTrigger>
               <TooltipContent>{resource.type}</TooltipContent>
@@ -78,7 +81,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
             <Tooltip>
               <TooltipTrigger className="w-full min-w-0">
-                <h3 className="font-semibold text-xs sm:text-sm truncate text-gray-800 group-hover/card:text-primary">
+                <h3 className="font-semibold text-xs sm:text-sm truncate text-gray-800 dark:text-gray-100 group-hover/card:text-primary dark:group-hover/card:text-primary">
                   {truncateText(resource.title, 35)}
                 </h3>
               </TooltipTrigger>
@@ -89,24 +92,24 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           <div className="flex flex-wrap items-center space-x-2 mt-2 sm:mt-0 sm:ml-2 flex-shrink-0">
             <Tooltip>
               <TooltipTrigger>
-                <Badge variant="secondary" className="flex items-center text-xs">
-                  <CategoryIcon className="mr-1 h-3 w-3" />
+                <Badge variant="secondary" className="flex items-center text-xs dark:bg-gray-800 dark:text-white">
+                  <CategoryIcon className="mr-1 h-3 w-3 text-gray-600 dark:text-gray-400" />
                   {resource.category}
                 </Badge>
               </TooltipTrigger>
               <TooltipContent>Resource Category</TooltipContent>
             </Tooltip>
 
-            <Badge variant="outline" className="text-xs">{resource.year}</Badge>
+            <Badge variant="outline" className="text-xs dark:text-gray-400">{resource.year}</Badge>
           </div>
         </CardHeader>
 
-        <CardFooter className="p-4 pt-0 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
+        <CardFooter className="p-4 pt-0 flex mt-2 flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
           <div className="flex items-center space-x-2 w-full">
             {resource.uploadedBy && (
               <Tooltip>
                 <TooltipTrigger>
-                  <Badge variant="outline" className="text-xs max-w-full truncate">
+                  <Badge variant="outline" className="text-xs max-w-full truncate dark:text-gray-400">
                     {resource.uploadedBy}
                   </Badge>
                 </TooltipTrigger>
@@ -119,16 +122,16 @@ export function ResourceCard({ resource }: ResourceCardProps) {
             size="sm" 
             variant="default"
             onClick={handleResourceAction}
-            className="group/btn w-full sm:w-auto mt-2 sm:mt-0"
+            className="group/btn w-full sm:w-auto mt-2 dark:bg-black dark:text-white dark:hover:bg-black"
           >
             {resource.type === 'link' ? (
               <>
-                <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
+                <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse dark:text-white" />
                 Open Link
               </>
             ) : (
               <>
-                <Download className="mr-2 h-4 w-4 group-hover/btn:animate-bounce" />
+                <Download className="mr-2 h-4 w-4 group-hover/btn:animate-bounce dark:text-white" />
                 Download
               </>
             )}

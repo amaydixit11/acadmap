@@ -73,11 +73,11 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
     // Handle errors and return "unknown" if necessary
     if (error) {
       console.error('Error fetching uploader name:', error.message);
-      return 'unknown';
+      return 'Anonymous';
     }
   
-    // Check if data exists and return the uploader's name or "unknown"
-    const name = data?.[0]?.uploadedBy ?? 'unknown';
+    // Check if data exists and return the uploader's name or "Anonymous"
+    const name = data?.[0]?.uploadedBy ?? 'Anonymous';
     return name;
   }
 

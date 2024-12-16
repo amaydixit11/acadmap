@@ -14,12 +14,12 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({ courses }) => {
 
     if (isLoading) {
         return (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 bg-black">
                 {Array.from({ length: 8 }).map((_, idx) => (
                     <div key={idx} className="w-full space-y-3">
-                        <Skeleton className="h-48 w-full rounded-xl" />
-                        <Skeleton className="h-4 w-3/4" />
-                        <Skeleton className="h-4 w-1/2" />
+                        <Skeleton className="h-48 w-full rounded-xl bg-neutral-900" />
+                        <Skeleton className="h-4 w-3/4 bg-neutral-800" />
+                        <Skeleton className="h-4 w-1/2 bg-neutral-800" />
                     </div>
                 ))}
             </div>
@@ -28,14 +28,14 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({ courses }) => {
 
     if (courses.length === 0) {
         return (
-            <div className="col-span-full flex flex-col items-center justify-center min-h-[400px] bg-gray-50 rounded-xl p-8">
-                <div className="bg-gray-100 p-4 rounded-full mb-4">
-                    <Search className="h-8 w-8 text-gray-400" />
+            <div className="col-span-full flex flex-col items-center justify-center min-h-[400px] bg-black p-8">
+                <div className="bg-neutral-900 p-4 rounded-full mb-4">
+                    <Search className="h-8 w-8 text-neutral-500" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-700">
+                <h3 className="text-xl font-semibold text-neutral-300">
                     No courses found
                 </h3>
-                <p className="text-gray-500 mt-2 text-center max-w-md">
+                <p className="text-neutral-500 mt-2 text-center max-w-md">
                     We couldn't find any courses matching your current filters. 
                     Try adjusting your search criteria or clearing filters.
                 </p>
@@ -44,12 +44,12 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({ courses }) => {
     }
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 bg-black p-6">
             <div className="flex items-center justify-between">
-                <p className="text-gray-600">
-                    Showing <span className="font-medium">{courses.length}</span> courses
+                <p className="text-neutral-400">
+                    Showing <span className="font-medium text-neutral-200">{courses.length}</span> courses
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-neutral-500">
                     Page 1 of 1
                 </p>
             </div>
