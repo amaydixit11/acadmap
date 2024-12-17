@@ -1,5 +1,5 @@
 import { ProfileModel } from "@/models/profile";
-import { getRecordById, insertRecord } from "./supabase";
+import { getRecordById, insertRecord, updateRecord } from "./supabase";
 import { getUserSessionData } from "./auth";
 
 export const createProfileIfNotExist = async (authId: string, email: string, name: string, profile_image: string) => {
@@ -95,3 +95,46 @@ export async function getCurrentUserProfile() {
     console.log("Current user profile:", profile);
     return profile;
 }
+
+export const updateUserProfile = async (profileData: Partial<ProfileModel>)=> {
+    console.log("[DEBUG] Attempting to update user profile:", profileData);
+
+    // Validate required fields
+    if (!profileData.id) {
+        console.error("[ERROR] Cannot update profile: Missing user ID");
+        return null;
+    }
+    console.log("[DEBUG] User ID provided:", profileData.id);
+
+    // Determine role if email or batch is updated
+    let updatedRole: ('student' | 'alumni' | 'external') | undefined;
+    if (profileData.email || profileData.batch) {
+        console.log("[DEBUG] Email or batch updated, determining new role...");
+        updatedRole = getRole(profileData.email, profileData.batch);
+        console.log("[DEBUG] Determined role:", updatedRole);
+    }
+
+    // Prepare update payload
+    const updatePayload: Partial<ProfileModel> = {
+        ...profileData,
+        ...(updatedRole && { role: updatedRole }) // Conditionally add role if determined
+    };
+    console.log("[DEBUG] Update payload prepared:", updatePayload);
+
+    try {
+        console.log("[DEBUG] Updating record in the 'profiles' table...");
+        // Update record in the 'profiles' table
+        const updatedProfile = await updateRecord('profiles', profileData.id, updatePayload);
+        
+        // if (!updatedProfile) {
+        //     console.error("[ERROR] Failed to update profile for ID:", profileData.id);
+        //     return null;
+        // }
+
+        console.log("[DEBUG] Profile updated successfully:", updatedProfile);
+        // return updatedProfile as ProfileModel;
+    } catch (error) {
+        console.error("[ERROR] Exception while updating user profile:", error);
+        // return null;
+    }
+};

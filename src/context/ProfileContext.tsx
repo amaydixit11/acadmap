@@ -10,7 +10,7 @@ import React, {
   } from 'react';
   import { ProfileModel } from '@/models/profile';
   import { ProfileField } from '@/types/profile';
-  import { getCurrentUserProfile } from '@/lib/profile';
+  import { getCurrentUserProfile, updateUserProfile } from '@/lib/profile';
 import { toast } from '@/hooks/use-toast';
   
   // Define the shape of the context
@@ -161,7 +161,8 @@ import { toast } from '@/hooks/use-toast';
   
         // Update profile
         // Uncomment when backend is ready
-        // const updatedProfile = await updateUserProfile(profileData);
+        // const updatedProfile = 
+        await updateUserProfile(profileData);
         // setProfile(updatedProfile);
         
         setIsEditing(false);

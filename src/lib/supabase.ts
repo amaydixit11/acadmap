@@ -69,16 +69,30 @@ export const updateRecord = async (
   record: Partial<Record>
 ): Promise<Record | null> => {
   const supabase = createClient();
+  console.log(`[DEBUG] Preparing to update record in table '${table}' with ID '${id}'.`);
+  console.log(`[DEBUG] Update payload:`, record);
 
   try {
-    const { data, error } = await supabase.from(table).update(record).eq('id', id).single();
-    if (error) throw error;
+    console.log(`[DEBUG] Sending update request to Supabase...`);
+    const { data, error } = await supabase
+      .from(table)
+      .update(record)
+      .eq('id', id)
+      .maybeSingle();
+
+    if (error) {
+      console.error(`[ERROR] Failed to update record in table '${table}' for ID '${id}':`, error);
+      return null;
+    }
+
+    console.log(`[DEBUG] Record updated successfully in table '${table}' for ID '${id}':`, data);
     return data;
   } catch (error) {
-    console.error(`Error updating record in ${table}:`, error);
+    console.error(`[ERROR] Exception while updating record in table '${table}' for ID '${id}':`, error);
     return null;
   }
 };
+
 
 export const deleteRecord = async (table: string, id: string): Promise<boolean> => {
   const supabase = createClient();
