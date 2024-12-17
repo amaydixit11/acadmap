@@ -9,12 +9,12 @@ import { getUserSessionData } from "@/lib/auth";
 
 export const OAuthAction = async () => {
   const supabase = await createClient();
-  const origin = process.env.NEXT_PUBLIC_ORIGIN;
+  // const origin = (await headers()).get("origin")
 
   const { error, data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback`, // Use environment variable for origin
+      redirectTo: `${getURL()}auth/callback`, // Use environment variable for origin
     },
   });
 
@@ -22,11 +22,28 @@ export const OAuthAction = async () => {
     console.error(error.message);
     return encodedRedirect("error", "/", "OAuth sign-in failed");
   }
-  const user = (await getUserSessionData())?.user
+  const user = (await getUserSessionData())?.user;
+  console.log("Fetched user session data:", user);
+  
   if (user) {
     const { id, user_metadata: { full_name, email, avatar_url } } = user;
-    createProfileIfNotExist(id, email, full_name, avatar_url);
+    
+    // Debugging individual values
+    console.log("User ID:", id);
+    console.log("User full name:", full_name);
+    console.log("User email:", email);
+    console.log("User avatar URL:", avatar_url);
+  
+    try {
+      await createProfileIfNotExist(id, email, full_name, avatar_url);
+      console.log("Profile creation/check completed successfully for user ID:", id);
+    } catch (err) {
+      console.error("Error creating/checking profile for user ID:", id, err);
+    }
+  } else {
+    console.log("No user session data found.");
   }
+  
 
   if (data.url) {
     return redirect(data.url); // Redirect to the provider's URL if available
@@ -34,6 +51,18 @@ export const OAuthAction = async () => {
 
   return redirect("/profile"); // Default fallback redirect
 };
+
+const getURL = () => {
+  let url =
+    process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
+    process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+    'http://localhost:3000/'
+  // Make sure to include `https://` when not localhost.
+  url = url.startsWith('http') ? url : `https://${url}`
+  // Make sure to include a trailing `/`.
+  url = url.endsWith('/') ? url : `${url}/`
+  return url
+}
 
 
 export const signUpAction = async (formData: FormData) => {
@@ -122,6 +151,8 @@ export const  forgotPasswordAction = async (formData: FormData) => {
     "Check your email for a link to reset your password.",
   );
 };
+
+
 
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();

@@ -3,16 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ResourceType, resourceTypes } from '@/types/resource';
 import { motion } from 'framer-motion';
+import { useUploadContext } from '@/context/UploadContext';
 
-interface ResourceTypeSelectorProps {
-  selectedType: ResourceType;
-  onTypeChange: (type: ResourceType) => void;
-}
 
-export const ResourceTypeSelector: React.FC<ResourceTypeSelectorProps> = ({ 
-  selectedType, 
-  onTypeChange 
-}) => {
+export const ResourceTypeSelector = () => {
+  const { selectedType, setSelectedType } = useUploadContext();
+
   return (
     <div className="space-y-4">
       <Label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Select Resource Type</Label>
@@ -37,7 +33,7 @@ export const ResourceTypeSelector: React.FC<ResourceTypeSelectorProps> = ({
                   ${!isSelected ? 'hover:bg-gray-100 hover:border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600' : ''}
                   group
                 `}
-                onClick={() => onTypeChange(key as ResourceType)}
+                onClick={() => setSelectedType(key as ResourceType)}
               >
                 <div className={`
                   p-2 rounded-full transition-all duration-300 ease-in-out

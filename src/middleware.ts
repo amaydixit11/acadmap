@@ -7,28 +7,9 @@ import { createClient } from './utils/supabase/server';
 import { getUserSessionData } from './lib/auth';
 import { createProfileIfNotExist } from './lib/profile';
 
-// export async function middleware(request: NextRequest) {
-//   const supabase = await createClient()
-//   const user = (await getUserSessionData())?.user
-//   if (user) {
-//     const { id, user_metadata: { full_name, email, avatar_url } } = user;
-//     createProfileIfNotExist(id, email, full_name, avatar_url);
-//   }
-
-//   // Step 4: Continue the request to the next middleware or handler
-//   return NextResponse.next();
-// }
-
 export async function middleware(request: NextRequest) {
   return await updateSession(request);
 }
-
-
-// Optional: specify where this middleware should be applied
-// export const config = {
-//   matcher: ['/profile', '/'],
-// };
-
 
 export const config = {
   matcher: [

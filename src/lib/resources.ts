@@ -4,6 +4,7 @@ import { Download, FileArchive, FileText, Microscope, Video } from "lucide-react
 import { redirect, useRouter } from "next/navigation";
 import { ResourceModel } from "@/models/resources";
 import { createClient } from "@/utils/supabase/client";
+import { insertRecord } from "./supabase";
 
 interface ResourceFetchOptions {
     courseCode?: string;
@@ -32,7 +33,7 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
         // }
   
         const contents = await fetchRepositoryContent(repo.name);
-        console.log("contents: ", JSON.stringify(contents))
+        // console.log("contents: ", JSON.stringify(contents))
         for (let folder of contents){
 
             const folderContents = await fetchRepositoryContent(repo.name, folder.path);
@@ -168,30 +169,32 @@ export function uploadResource({courseCode, resourceType, year}: UploadResources
   redirect(`/upload?${params.toString()}`);
 }
 
-export async function uploadToDatabase(resource: ResourceModel): Promise<void> {
+export async function uploadResourceToDatabase(resource: ResourceModel): Promise<void> {
   try {
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from('resources') // Replace 'resources' with your table name
-      .insert(
-        {
-          resourceId: resource.resourceId,
-          course_code: resource.course_code,
-          title: resource.title,
-          type: resource.type,
-          category: resource.category,
-          url: resource.url,
-          uploadedBy: resource.uploadedBy,
-          description: resource.description,
-          year: resource.year,
-        }
-      );
+    const response = await insertRecord('resources', resource)
+    // const supabase = createClient();
+    // const { data, error } = await supabase
+    //   .from('resources')
+    //   .insert(
+    //     {
+    //       resourceId: resource.resourceId,
+    //       course_code: resource.course_code,
+    //       title: resource.title,
+    //       type: resource.type,
+    //       category: resource.category,
+    //       url: resource.url,
+    //       uploadedBy: resource.uploadedBy,
+    //       description: resource.description,
+    //       year: resource.year,
+    //     }
+    //   );
 
-    if (error) {
-      throw new Error(`Failed to upload resource: ${error.message}`);
-    }
+    // if (error) {
+    //   throw new Error(`Failed to upload resource: ${error.message}`);
+    // }
 
-    console.log('Resource uploaded successfully:', data);
+    // console.log('Resource uploaded successfully:', data);
+    console.log('Resource uploaded successfully:', response);
   } catch (error) {
     console.error('Error uploading to Supabase:', error);
     throw error;

@@ -97,12 +97,14 @@ export async function createRepository(repoName: string, description: string) {
 }
 
 // Upload a file to a repository
-export async function uploadFileToRepository(
+
+interface UploadFileToRepositoryProps{
     repoName: string,
     filePath: string,
     content: string,
     commitMessage: string
-) {
+}
+export async function uploadFileToRepository({repoName, filePath, content, commitMessage}: UploadFileToRepositoryProps) {
     const url = `${GITHUB_API_URL}/repos/${process.env.NEXT_PUBLIC_GITHUB_ORG}/${repoName}/contents/${filePath}`;
     // console.log(`Uploading file to: ${url}`);
 

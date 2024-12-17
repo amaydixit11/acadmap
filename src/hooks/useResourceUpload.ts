@@ -9,14 +9,6 @@ import { processUploadResponse } from '@/utils/processUploadResponse';
 import { ResourceModel } from '@/models/resources';
 import { uploadToDatabase } from '@/lib/resources';
 
-class UploadError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'UploadError';
-  }
-}
-
-
 export const useResourceUpload = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<{ 
@@ -48,7 +40,7 @@ export const useResourceUpload = () => {
         uploadToDatabase(resource);
         
       } catch (error) {
-        throw new UploadError(`Failed to upload file ${file.name}`);
+        throw `Failed to upload file ${file.name}`;
       }
     }
   };
@@ -125,11 +117,9 @@ ${formData.url}`;
 
       return true;
     } catch (error) {
-      const errorMessage = error instanceof UploadError 
-        ? error.message 
-        : 'An unexpected error occurred.';
+      const errorMessage = error ? error : 'An unexpected error occurred.';
 
-      setUploadStatus({ type: 'error', message: errorMessage });
+      setUploadStatus({ type: 'error', message: errorMessage.toString() });
       return false;
     } finally {
       setIsSubmitting(false);

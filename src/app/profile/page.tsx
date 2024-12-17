@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createProfileIfNotExist, getCurrentUserProfile } from "@/lib/profile";
 import {
   Card,
   CardContent,
@@ -11,15 +11,17 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   User,
   Mail,
   Phone,
-  Building,
+  Building2,
   Edit2,
   Save,
   GraduationCap,
   AlertCircle,
+  Linkedin,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -27,24 +29,18 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { getUserData } from "@/utils/getUserData";
-import { UserData } from "@/types/user";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ProfileModel } from "@/models/profile";
+import { getUserSessionData } from "@/lib/auth";
 
-export interface ProfileField {
+interface ProfileField {
   icon: JSX.Element;
   label: string;
-  key: keyof UserData;
+  key: keyof ProfileModel;
   type?: string;
   required?: boolean;
   validation?: (value: string) => boolean;
-}
-
-export interface UserCourse {
-    code: string,
-    title: string,
-    credits: number,
-    grade: string
+  component?: "input" | "textarea";
 }
 
 const profileFields: ProfileField[] = [
@@ -64,25 +60,35 @@ const profileFields: ProfileField[] = [
     validation: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
   },
   { 
-    key: "phone", 
+    key: "mobile", 
     icon: <Phone />, 
-    label: "Phone",
+    label: "Mobile",
     type: "tel",
-    required: false,
     validation: (value) => /^\+?[\d\s-]{10,}$/.test(value)
   },
   { 
     key: "department", 
-    icon: <Building />, 
-    label: "Department",
-    required: false
+    icon: <Building2 />, 
+    label: "Department"
   },
   { 
-    key: "rollNumber", 
+    key: "batch", 
     icon: <GraduationCap />, 
-    label: "Roll Number",
-    required: false
+    label: "Batch"
   },
+  {
+    key: "linkedin_url",
+    icon: <Linkedin />,
+    label: "LinkedIn URL",
+    type: "url",
+    validation: (value) => value ? /^https:\/\/[a-zA-Z0-9-]+\.linkedin\.com/.test(value) : true
+  },
+  {
+    key: "bio",
+    icon: <User />,
+    label: "Bio",
+    component: "textarea"
+  }
 ];
 
 const ProfilePage = () => {
@@ -90,61 +96,41 @@ const ProfilePage = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  
-  const [userData, setUserData] = useState<UserData>({
-    name: "",
-    email: "",
-    department: "",
-    year: "",
-    rollNumber: "",
-    phone: "",
-    avatar: "https://github.com/shadcn.png"
-  });
-
-  const [courses, setCourses] = useState<UserCourse[]>([
-    { code: "CS101", title: "Introduction to Programming", credits: 4, grade: "A" },
-    { code: "MA201", title: "Linear Algebra", credits: 3, grade: "B+" },
-    { code: "PH101", title: "Physics I", credits: 4, grade: "A-" },
-  ]);
+  const [profile, setProfile] = useState<ProfileModel | null>(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchProfile = async () => {
       try {
-        let user = await getUserData();
-        setUserData({
-          name: user?.user.user_metadata.full_name || "",
-          email: user?.user.user_metadata.email || "",
-          department: user?.user.user_metadata.department || "",
-          year: user?.user.user_metadata.year || "",
-          rollNumber: user?.user.user_metadata.roll_number || "",
-          phone: user?.user.phone || "",
-          avatar: user?.user.user_metadata.avatar_url || ""
-        });
+        const userProfile = await getCurrentUserProfile();
+        setProfile(userProfile);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching profile:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserData();
+    fetchProfile();
   }, []);
 
   const validateField = (field: ProfileField, value: string) => {
     if (field.required && !value) {
       return `${field.label} is required`;
     }
-    if (field.validation && !field.validation(value)) {
+    if (field.validation && value && !field.validation(value)) {
       return `Invalid ${field.label.toLowerCase()}`;
     }
     return "";
   };
 
   const handleSave = async () => {
+    if (!profile) return;
+
     const newErrors: Record<string, string> = {};
     
     profileFields.forEach((field) => {
-      const error = validateField(field, userData[field.key]);
+      const value = profile[field.key]?.toString() || "";
+      const error = validateField(field, value);
       if (error) {
         newErrors[field.key] = error;
       }
@@ -165,27 +151,17 @@ const ProfilePage = () => {
     }
   };
 
-  const handleInputChange = (key: keyof UserData, value: string) => {
-    setUserData(prev => ({
-      ...prev,
+  const handleInputChange = (key: keyof ProfileModel, value: string) => {
+    if (!profile) return;
+
+    setProfile(prev => ({
+      ...prev!,
       [key]: value
     }));
     setErrors(prev => ({
       ...prev,
       [key]: ""
     }));
-  };
-
-  const getGradeColor = (grade: string) => {
-    const gradeColors: Record<string, string> = {
-      'A': 'bg-green-500',
-      'A-': 'bg-green-400',
-      'B+': 'bg-blue-500',
-      'B': 'bg-blue-400',
-      'C': 'bg-yellow-500',
-      'D': 'bg-red-500',
-    };
-    return gradeColors[grade.charAt(0)] || 'bg-gray-500';
   };
 
   if (loading) {
@@ -196,19 +172,31 @@ const ProfilePage = () => {
     );
   }
 
+  if (!profile) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>Failed to load profile data.</AlertDescription>
+        </Alert>
+      </div>
+    );
+  }
+  
   return (
     <div className="container mx-auto px-4 py-8">
+
       {saveSuccess && (
-        <Alert className="mb-4 bg-green-50 border-green-200">
-          <AlertCircle className="h-4 w-4 text-green-600" />
+        <Alert className="mb-4">
+          <AlertCircle className="h-4 w-4" />
           <AlertTitle>Success</AlertTitle>
           <AlertDescription>Your profile has been updated successfully.</AlertDescription>
         </Alert>
       )}
 
-      <div className="grid gap-8 lg:grid-cols-3">
-        {/* Profile Card */}
-        <Card className="lg:col-span-1 hover:shadow-lg transition-shadow duration-300">
+      <div className="grid gap-8 lg:grid-cols-2">
+        <Card className="hover:shadow-lg transition-shadow duration-300">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-2xl font-bold">Profile</CardTitle>
@@ -227,15 +215,12 @@ const ProfilePage = () => {
           <CardContent className="space-y-6">
             <div className="flex items-center justify-center mb-6">
               <div className="relative group">
-                {/* <div className="w-32 h-32 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"> */}
-                <Avatar className="w-32 h-32 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                    <AvatarImage src={userData.avatar} />
-                    <AvatarFallback>CN</AvatarFallback>
+                <Avatar className="w-32 h-32">
+                  <AvatarImage src={profile.profile_image} />
+                  <AvatarFallback>{profile.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
-
-                {/* </div> */}
                 <Badge className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1">
-                  Year {userData.year}
+                  {profile.role}
                 </Badge>
               </div>
             </div>
@@ -248,17 +233,26 @@ const ProfilePage = () => {
                       {field.icon}
                     </div>
                     {isEditing ? (
-                      <Input
-                        type={field.type || "text"}
-                        value={userData[field.key]}
-                        onChange={(e) => handleInputChange(field.key, e.target.value)}
-                        className={`flex-1 ${errors[field.key] ? 'border-red-500' : ''}`}
-                        placeholder={`Enter your ${field.label.toLowerCase()}`}
-                      />
+                      field.component === "textarea" ? (
+                        <Textarea
+                          value={profile[field.key]?.toString() || ""}
+                          onChange={(e) => handleInputChange(field.key, e.target.value)}
+                          className={`flex-1 ${errors[field.key] ? 'border-red-500' : ''}`}
+                          placeholder={`Enter your ${field.label.toLowerCase()}`}
+                        />
+                      ) : (
+                        <Input
+                          type={field.type || "text"}
+                          value={profile[field.key]?.toString() || ""}
+                          onChange={(e) => handleInputChange(field.key, e.target.value)}
+                          className={`flex-1 ${errors[field.key] ? 'border-red-500' : ''}`}
+                          placeholder={`Enter your ${field.label.toLowerCase()}`}
+                        />
+                      )
                     ) : (
                       <div className="flex-1">
                         <p className="text-sm font-medium text-muted-foreground">{field.label}</p>
-                        <p className="font-semibold">{userData[field.key] || '-'}</p>
+                        <p className="font-semibold">{profile[field.key]?.toString() || '-'}</p>
                       </div>
                     )}
                   </div>
@@ -267,43 +261,6 @@ const ProfilePage = () => {
                   )}
                 </div>
               ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Current Courses */}
-        <Card className="lg:col-span-2 hover:shadow-lg transition-shadow duration-300">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Current Courses</CardTitle>
-            <CardDescription>Your enrolled courses this semester</CardDescription>
-          </CardHeader>
-          
-          <CardContent>
-
-            <div className="space-y-4">
-              Upcoming Feature
-              {/* {courses.map((course) => (
-                <Card key={course.code} className="hover:shadow-md transition-shadow duration-200">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1">
-                        <h4 className="font-semibold text-lg">{course.title}</h4>
-                        <div className="flex items-center space-x-2">
-                          <Badge variant="outline">{course.code}</Badge>
-                          <span className="text-sm text-muted-foreground">
-                            {course.credits} Credits
-                          </span>
-                        </div>
-                      </div>
-                      <Badge 
-                        className={`${getGradeColor(course.grade)} text-white`}
-                      >
-                        {course.grade}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card> 
-              ))} */}
             </div>
           </CardContent>
         </Card>

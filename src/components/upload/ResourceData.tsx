@@ -4,20 +4,15 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { FileUploader } from "./FileUploader";
 import { ResourceType } from "@/types/resource";
+import { useUploadContext } from "@/context/UploadContext";
 
-interface ResourceDataProps {
-  formData: UploadFormData;
-  selectedType: ResourceType;
-  updateFormData: (updates: Partial<UploadFormData>) => void;
-  onFilesChange: (files: File[]) => void;
-}
-
-const ResourceData = ({
-  formData,
-  updateFormData,
-  selectedType,
-  onFilesChange,
-}: ResourceDataProps) => {
+const ResourceData = () => {
+  const {
+    formData,
+    updateFormData,
+    selectedType,
+    setFiles,
+  } = useUploadContext();
   return (
     <>
       <div className="space-y-4 sm:space-y-5">
@@ -74,7 +69,7 @@ const ResourceData = ({
             />
           </div>
         ) : (
-          <FileUploader resourceType={selectedType} onFilesChange={onFilesChange} />
+          <FileUploader resourceType={selectedType} onFilesChange={setFiles} />
         )}
       </div>
     </>

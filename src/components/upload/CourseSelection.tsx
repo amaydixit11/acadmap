@@ -2,18 +2,30 @@ import React from 'react'
 import { Label } from '../ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Course } from '@/types/courses';
+import { useUploadContext } from '@/context/UploadContext';
+import { useSearchParams } from 'next/navigation';
 
-interface CourseSelectionProps{
-    courses: Course[];
-    value: string;
-    onValueChange: (value: string) => void;
-}
 
-const CourseSelection = ({courses, value, onValueChange}: CourseSelectionProps) => {
+const CourseSelection = () => {
+    const { 
+        courses, 
+        selectedCourse, 
+        setSelectedCourse,
+        coursesError 
+      } = useUploadContext();
+    
+      if (coursesError) {
+        return (
+          <div className="space-y-2 sm:space-y-3">
+            <p className="text-sm text-red-500">{coursesError}</p>
+          </div>
+        );
+      }
+
   return (
     <div className="space-y-2 sm:space-y-3">
         <Label htmlFor="course" className="text-sm sm:text-base">Course</Label>
-        <Select value={value} onValueChange={onValueChange}>
+        <Select value={selectedCourse} onValueChange={setSelectedCourse}>
         <SelectTrigger className="w-full text-sm sm:text-base">
             <SelectValue placeholder="Select course" />
         </SelectTrigger>

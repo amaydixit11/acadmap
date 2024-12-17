@@ -3,16 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { resourceCategories, ResourceCategory } from "@/types/resource";
 import { motion } from "framer-motion";
+import { useUploadContext } from "@/context/UploadContext";
 
-interface ResourceCategorySelectorProps {
-  selectedCategory: ResourceCategory;
-  onCategoryChange: (category: ResourceCategory) => void;
-}
-
-export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> = ({
-  selectedCategory,
-  onCategoryChange,
-}) => {
+export const ResourceCategorySelector = () => {
+  const { selectedCategory, setSelectedCategory } = useUploadContext();
   return (
     <div className="space-y-4">
       <Label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -49,7 +43,7 @@ export const ResourceCategorySelector: React.FC<ResourceCategorySelectorProps> =
                   ${!isSelected ? "hover:bg-gray-100 hover:border-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600" : ""}
                   group
                 `}
-                onClick={() => onCategoryChange(key as ResourceCategory)}
+                onClick={() => setSelectedCategory(key as ResourceCategory)}
               >
                 <div
                   className={`

@@ -6,8 +6,8 @@ export interface ProfileModel {
     batch?: string; 
     mobile?: string; 
     department?: string; 
-    profileImage?: string; 
+    profile_image?: string; 
     bio?: string; 
-    linkedinUrl?: string; 
+    linkedin_url?: string; 
   }
   
