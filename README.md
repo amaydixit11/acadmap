@@ -11,7 +11,7 @@ A platform to share and explore academic resources built for students of IIT Bhi
 <a href="https://github.com/amaydixit11/acadmap/"><strong>Explore the docs »</strong></a>
 <br/>
 <br/>
-<a href="https://acadmap.vercel.app">View Demo</a>
+<a href="https://acadmap.vercel.app">View Full Site</a>
 ·
 <a href="https://github.com/amaydixit11/acadmap/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
 ·
@@ -80,10 +80,11 @@ _For more detailed usage instructions, refer to the [Documentation](https://gith
 
 - [x] Responsive Design
 - [x] File Upload and Download
-- [ ] Add Dark Mode
-- [ ] Implement Search Bar in Header
-- [ ] Introduce Gamification (e.g., Contributor Badges)
+- [x] Add Dark Mode
+- [ ] Implement Users
 - [ ] Enable User Profiles
+- [ ] Introduce Gamification (e.g., Contributor Badges)
+- [ ] Implement Search Bar in Header
 - [ ] Add Upvote Features For Resources
 - [ ] Expand Features for Group Discussions
 

@@ -5,6 +5,30 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const OAuthAction = async () => {
+  const supabase = await createClient();
+  const origin = process.env.NEXT_PUBLIC_ORIGIN;
+
+  const { error, data } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${origin}/auth/callback`, // Use environment variable for origin
+    },
+  });
+
+  if (error) {
+    console.error(error.message);
+    return encodedRedirect("error", "/", "OAuth sign-in failed");
+  }
+
+  if (data.url) {
+    return redirect(data.url); // Redirect to the provider's URL if available
+  }
+
+  return redirect("/profile"); // Default fallback redirect
+};
+
+
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -135,25 +159,3 @@ export const signOutAction = async () => {
   // return redirect("/sign-in");
 };
 
-export const OAuthAction = async () => {
-  const supabase = await createClient();
-  const origin = process.env.NEXT_PUBLIC_ORIGIN;
-
-  const { error, data } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${origin}/auth/callback`, // Use environment variable for origin
-    },
-  });
-
-  if (error) {
-    console.error(error.message);
-    return encodedRedirect("error", "/sign-in", "OAuth sign-in failed");
-  }
-
-  if (data.url) {
-    return redirect(data.url); // Redirect to the provider's URL if available
-  }
-
-  return redirect("/profile"); // Default fallback redirect
-};

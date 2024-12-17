@@ -1,6 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import { createClient as createClientSupabase} from "@supabase/supabase-js";
-
 
 export async function getUserSessionData() {
     const supabase = await createClient();
