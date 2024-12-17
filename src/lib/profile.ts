@@ -3,34 +3,35 @@ import { createClient } from "@/utils/supabase/client";
 import { getRecordById, insertRecord } from "./supabase";
 
 export const createProfileIfNotExist = async (authId: string, email: string, name: string, profileImage: string) => {
-    const existingProfile = await getRecordById('profile', authId)
-    // const { data: existingProfile, error } = await supabase
-    //   .from('profile')
-    //   .select('*')
-    //   .eq('id', authId)
-    //   .single(); // Assuming 'id' is unique for each user
+    // const existingProfile = await getRecordById('profile', authId)
+    const supabase = createClient();
+    const { data: existingProfile, error } = await supabase
+      .from('profile')
+      .select('*')
+      .eq('id', authId)
+      .single(); // Assuming 'id' is unique for each user
   
-    // if (error && error.code !== 'PGRST116') {
-    //   console.error('Error fetching profile:', error);
-    //   return;
-    // }
+    if (error && error.code !== 'PGRST116') {
+      console.error('Error fetching profile:', error);
+      return;
+    }
   
     // If no existing profile is found, create a new one
     if (!existingProfile) {
         const profile = createProfileData(authId, email, name, profileImage)
-        const response = await insertRecord('profile', profile)
-        console.log("Inserted profile: ", response)
-    //   const { data, error: insertError } = await supabase
-    //     .from('profile')
-    //     .insert([
-    //       {
-    //         id: profile.id,
-    //         email: profile.email,
-    //         name: profile.name,
-    //         role: profile.role,
-    //         profileImage: profile.profileImage,
-    //       }
-    //     ]);
+        // const response = await insertRecord('profile', profile)
+        // console.log("Inserted profile: ", response)
+      const { data, error: insertError } = await supabase
+        .from('profile')
+        .insert([
+          {
+            id: profile.id,
+            email: profile.email,
+            name: profile.name,
+            role: profile.role,
+            profileImage: profile.profileImage,
+          }
+        ]);
     } else {
       console.log('profile already exists:', existingProfile);
     }
