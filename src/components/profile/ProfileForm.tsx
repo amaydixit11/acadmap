@@ -24,7 +24,12 @@ const ProfileForm = () => {
             <field.icon />
           </div>
           {isEditing ? (
-            field.component === "textarea" ? (
+            field.component === "disabled" ? (
+              <div className="flex-1">
+                <p className="text-sm font-medium text-muted-foreground opacity-50">{field.label}</p>
+                <p className="font-semibold text-muted-foreground">{profile[field.key]?.toString() || '-'}</p>
+              </div>
+            ) : field.component === "textarea" ? (
               <Textarea
                 value={profile[field.key]?.toString() || ""}
                 onChange={(e) => handleInputChange(field.key, e.target.value)}

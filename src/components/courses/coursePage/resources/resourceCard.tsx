@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ResourceModel } from '@/models/resources';
+import { getRecordById } from '@/lib/supabase';
 
 interface ResourceCardProps {
   resource: ResourceModel;
@@ -36,9 +37,11 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
   useEffect(() => {
     const fetchUserName = async () => {
-      // const name = await getUserNameFromId(resource.uploadedBy);
-      // console.log("name: ", name);
-      setUserName(resource.uploadedBy);
+      const profile = await getRecordById('profiles', resource.uploadedBy);
+      if (profile){
+        console.log("name: ", profile.name);
+      }
+      setUserName(profile?.name ?? resource.uploadedBy);
     };
     fetchUserName();
   }, [resource.uploadedBy]);

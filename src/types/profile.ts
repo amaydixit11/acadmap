@@ -22,7 +22,7 @@ export interface ProfileField {
     type?: string;
     required?: boolean;
     validation?: (value: string) => boolean;
-    component?: "input" | "textarea" | "select";
+    component?: "input" | "textarea" | "select" | "disabled";
     options?: string[];
   }
 
@@ -33,7 +33,8 @@ export const profileFields: ProfileField[] = [
       icon: User, 
       label: "Full Name",
       required: true,
-      validation: (value) => value.length >= 2
+      validation: (value) => value.length >= 2,
+      component: "disabled"
     },
     { 
       key: "email", 
@@ -41,16 +42,18 @@ export const profileFields: ProfileField[] = [
       label: "Email",
       type: "email",
       required: true,
+      component: "disabled",
       validation: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
     },
     { 
       key: "role", 
       icon: GraduationCap, 
       label: "Role",
-      component: "select",
+      // component: "select",
+      component: "disabled",
       required: true,
       // options: ['student', 'external', 'alumni']
-      options: []
+      // options: []
     },
     { 
       key: "mobile", 
