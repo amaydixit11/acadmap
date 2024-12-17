@@ -81,7 +81,8 @@ _For more detailed usage instructions, refer to the [Documentation](https://gith
 - [x] Responsive Design
 - [x] File Upload and Download
 - [x] Add Dark Mode
-- [ ] Implement Users
+- [x] Add Upload Context
+- [x] Implement Users
 - [ ] Enable User Profiles
 - [ ] Introduce Gamification (e.g., Contributor Badges)
 - [ ] Implement Search Bar in Header
