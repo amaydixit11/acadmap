@@ -21,6 +21,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ResourceModel } from '@/models/resources';
 import { getRecordById } from '@/lib/supabase';
+import { useContributor } from '@/hooks/useContributor';
 
 interface ResourceCardProps {
   resource: ResourceModel;
@@ -33,18 +34,7 @@ const truncateText = (text: string, maxLength: number = 30) => {
 };
 
 export function ResourceCard({ resource }: ResourceCardProps) {
-  const [userName, setUserName] = useState<string | undefined>(resource.uploadedBy);
-
-  useEffect(() => {
-    const fetchUserName = async () => {
-      const profile = await getRecordById('profiles', resource.uploadedBy);
-      if (profile){
-        console.log("name: ", profile.name);
-      }
-      setUserName(profile?.name ?? resource.uploadedBy);
-    };
-    fetchUserName();
-  }, [resource.uploadedBy]);
+  const { selectedProfileName } = useContributor(resource.uploadedBy);
 
   const resourceIcons = {
     'document': FileText,
@@ -122,14 +112,14 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
         <CardFooter className="p-4 pt-0 flex mt-2 flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
           <div className="flex items-center space-x-2 w-full">
-            {userName && (
+            {selectedProfileName && (
               <Tooltip>
                 <TooltipTrigger>
                   <Badge variant="outline" className="text-xs max-w-full truncate dark:text-gray-400">
-                    {userName}
+                    {selectedProfileName}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>Uploaded by {userName}</TooltipContent>
+                <TooltipContent>Uploaded by {selectedProfileName}</TooltipContent>
               </Tooltip>
             )}
           </div>
