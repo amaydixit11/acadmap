@@ -4,6 +4,8 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { createProfileIfNotExist } from "@/lib/profile";
+import { getUserSessionData } from "@/lib/auth";
 
 export const OAuthAction = async () => {
   const supabase = await createClient();
@@ -19,6 +21,11 @@ export const OAuthAction = async () => {
   if (error) {
     console.error(error.message);
     return encodedRedirect("error", "/", "OAuth sign-in failed");
+  }
+  const user = (await getUserSessionData())?.user
+  if (user) {
+    const { id, user_metadata: { full_name, email, avatar_url } } = user;
+    createProfileIfNotExist(id, email, full_name, avatar_url);
   }
 
   if (data.url) {
