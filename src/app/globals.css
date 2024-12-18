@@ -67,3 +67,38 @@
     @apply bg-background text-foreground;
   }
 }
+.loading-spinner {
+  @apply animate-spin text-gray-400;
+}
+
+.scroll-progress {
+  @apply fixed bottom-0 left-0 right-0 h-1 bg-primary/20;
+}
+
+.scroll-progress-bar {
+  @apply h-full bg-primary transition-all duration-300;
+}
+
+.back-to-top {
+  @apply fixed bottom-6 right-6 p-2 rounded-full bg-primary/90 text-primary-foreground
+    shadow-lg opacity-0 translate-y-8 transition-all duration-300;
+}
+
+.back-to-top.visible {
+  @apply opacity-100 translate-y-0;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cookie-banner {
+  animation: slide-up 0.5s ease-out;
+}
