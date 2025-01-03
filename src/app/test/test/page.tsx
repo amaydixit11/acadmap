@@ -2,403 +2,340 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { 
-  Download, 
-  Users, 
-  FileText, 
-  BookOpen, 
-  ArrowRight, 
-  Star,
-  Upload,
-  Share2,
-  MapPin,
-  BookmarkCheck,
-  Medal,
-  Github,
-  Code,
-  Globe,
-  Heart,
-  DollarSign
+  Download, Users, FileText, BookOpen, ArrowRight, Star,
+  Upload, Share2, BookmarkCheck, Medal, Github, Code,
+  Globe, Heart, DollarSign, TrendingUp, Clock, Search,
+  Filter, TagIcon, ThumbsUp, AlertCircle, Bookmark,
+  ChevronRight, Compass, BarChart, BookMarked, Youtube,
+  PenTool, GraduationCap,
+  Mail,
+  FolderOpen,
+  UploadCloud,
+  DownloadCloud
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Department } from '@/types/courses';
 
-const fadeIn = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5 }
-};
+interface Stats {
+  title: string;
+  value: string;
+  icon: React.ElementType;
+}
 
-export default function AcadMapHomePage() {
-  const recentUploads = [
-    {
-      department: "Computer Science",
-      course: "Data Structures",
-      uploadedBy: "Sarah Chen (Senior)",
-      resourceType: "Comprehensive Notes",
-      downloads: 342
-    },
-    {
-      department: "Electrical Engineering",
-      course: "Digital Electronics",
-      uploadedBy: "Rohan Mehta (Senior)",
-      resourceType: "Exam Preparation Pack",
-      downloads: 278
-    },
-    {
-      department: "Mechanical Engineering",
-      course: "Thermodynamics",
-      uploadedBy: "Priya Patel (Senior)",
-      resourceType: "Lab Experiment Guides",
-      downloads: 215
-    }
+interface Feature {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  color: string;
+}
+
+export default function AcadMapHomePage(): JSX.Element {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
+
+  const stats: Stats[] = [
+    { title: "Total Resources", value: "1,000+", icon: FileText },
+    { title: "Active Users", value: "500+", icon: Users },
+    { title: "Departments", value: "15+", icon: Compass },
+    { title: "Contributors", value: "200+", icon: Heart }
   ];
 
-  const platformFeatures = [
+  const features: Feature[] = [
     {
-      icon: Download,
-      title: "Resource Library",
-      description: "Access curated study materials from senior students"
+      icon: FolderOpen,
+      title: "Course Catalog",
+      description: "Explore an organized directory of courses and their available resources.",
+      color: "from-teal-500 to-green-500"
     },
     {
-      icon: Upload,
-      title: "Contribute Resources",
-      description: "Share your knowledge and help future batches"
+      icon: DownloadCloud,
+      title: "Download Resources",
+      description: "Easily access past-year papers, lecture notes, and assignments.",
+      color: "from-blue-500 to-sky-500"
+    },
+    {
+      icon: UploadCloud,
+      title: "Upload Contributions",
+      description: "Share your notes, tutorials, and materials with future batches.",
+      color: "from-purple-500 to-pink-500"
     },
     {
       icon: Users,
-      title: "Community Support",
-      description: "Connect with seniors and peers across departments"
-    },
-    {
-        icon: Code,
-        title: "Open Source",
-        description: "Fully open-source platform. Contribute to our GitHub repository and help improve the project."
-      }
-
-  ];
-
-  const departmentStats = [
-    { 
-      name: "Computer Science",
-      resources: 250,
-      icon: BookOpen
-    },
-    { 
-      name: "Electrical Engineering",
-      resources: 180,
-      icon: Star
-    },
-    { 
-      name: "Mechanical Engineering",
-      resources: 150,
-      icon: Medal
+      title: "Collaborative Platform",
+      description: "Join a community-driven effort to build a shared academic repository.",
+      color: "from-yellow-500 to-orange-500"
     }
   ];
-  const openSourceHighlights = [
-    {
-      icon: Github,
-      title: "Community-Driven Development",
-      description: "Our project is open for contributions. Whether you're a developer, designer, or subject matter expert, there's a way to get involved.",
-      link: "https://github.com/acadmap/platform"
-    },
-    {
-      icon: Globe,
-      title: "Global Collaboration",
-      description: "Connect with students and developers worldwide. Help us build a truly global knowledge-sharing platform.",
-      link: "https://acadmap.org/community"
-    },
-    {
-      icon: Heart,
-      title: "Impact-Driven Mission",
-      description: "We believe in democratizing education. Every contribution helps make learning more accessible.",
-      link: "https://acadmap.org/mission"
-    }
-  ];
-
-  const contributionOpportunities = [
-    {
-      icon: Code,
-      title: "Code Contributions",
-      description: "Help improve our platform's features, fix bugs, and optimize performance.",
-      difficulty: "Technical"
-    },
-    {
-      icon: FileText,
-      title: "Documentation",
-      description: "Improve project docs, create tutorials, and help make our platform more user-friendly.",
-      difficulty: "Beginner Friendly"
-    },
-    {
-      icon: Users,
-      title: "Community Support",
-      description: "Answer questions, provide guidance, and help build our community.",
-      difficulty: "Easy"
-    }
-  ];
+  
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-blue-50 to-emerald-50 dark:from-violet-950 dark:via-blue-950 dark:to-emerald-950">
       {/* Hero Section */}
-      <motion.div 
-        className="container mx-auto px-4 py-16 md:py-24 text-center"
-        {...fadeIn}
-      >
-        <Badge 
-          variant="secondary" 
-          className="mx-auto mb-4 px-4 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
-        >
-          <Share2 className="mr-2 h-4 w-4" /> Peer-to-Peer Learning Platform
-        </Badge>
-
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black 
-          bg-clip-text text-transparent bg-gradient-to-r 
-          from-blue-700 via-indigo-700 to-purple-700
-          dark:from-blue-300 dark:via-indigo-300 dark:to-purple-300
-          mb-6 tracking-tight"
-        >
-          AcadMap: Knowledge Transfer Hub
-        </h1>
-
-        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 
-          max-w-3xl mx-auto mb-10 leading-relaxed"
-        >
-          A platform where senior students share their hard-earned knowledge, 
-          helping junior batches navigate academic challenges with curated resources.
-        </p>
-
-        <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
-          <Button 
-            size="lg" 
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-900 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
+        <div className="container mx-auto px-4 py-20 relative">
+          <Badge 
+            variant="secondary" 
+            className="mx-auto mb-4 px-4 py-1.5 bg-gradient-to-r from-violet-600 via-blue-600 to-emerald-600 text-white flex items-center justify-center max-w-fit"
           >
-            Browse Resources <Download className="ml-2" />
-          </Button>
-          <Button 
-            variant="outline"
-            size="lg"
-          >
-            Upload Resources <Upload className="ml-2" />
-          </Button>
-        </div>
+            <Share2 className="mr-2 h-4 w-4" /> IIT Bhilai's Knowledge Hub
+          </Badge>
 
-        {/* Platform Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {platformFeatures.map((feature) => (
-            <div 
-              key={feature.title} 
-              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-all"
-            >
-              <feature.icon className="mx-auto h-10 w-10 mb-4 text-blue-600" />
-              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-center
+            bg-clip-text text-transparent bg-gradient-to-r 
+            from-violet-600 via-blue-600 to-emerald-600
+            dark:from-violet-400 dark:via-blue-400 dark:to-emerald-400
+            mb-6 tracking-tight"
+          >
+            AcadMap
+          </h1>
+
+          <p className="text-xl md:text-2xl text-center text-gray-600 dark:text-gray-300 
+            max-w-3xl mx-auto mb-10 leading-relaxed"
+          >
+            Your one-stop destination for academic excellence at IIT Bhilai
+          </p>
+
+          {/* Enhanced Search Section */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="relative flex-grow">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search for courses, resources, or topics..."
+                  className="pl-10 pr-4 py-6 w-full rounded-xl border-2 border-gray-200 
+                    dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              <Select defaultValue="all">
+                <SelectTrigger className="w-[200px] h-[52px]">
+                  <SelectValue placeholder="Department" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Departments</SelectItem>
+                  {Object.entries(Department).map(([key, value]) => (
+                    <SelectItem key={key} value={key.toLowerCase()}>
+                      {value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button 
+                className="h-[52px] px-8 bg-gradient-to-r from-violet-600 to-blue-600 
+                  hover:from-violet-700 hover:to-blue-700"
+              >
+                Search
+              </Button>
             </div>
-          ))}
-        </div>
-      </motion.div>
+          </div>
 
-      {/* Recent Uploads Section */}
-      <div className="container mx-auto px-4 py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Recently Uploaded Resources</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Fresh study materials shared by seniors to help you excel in your courses
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {recentUploads.map((upload) => (
-            <Card 
-              key={upload.course} 
-              className="hover:shadow-lg transition-all group"
-            >
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <Badge variant="secondary">{upload.department}</Badge>
-                  <div className="flex items-center text-gray-500">
-                    <Download className="h-4 w-4 mr-1" />
-                    {upload.downloads}
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-2">{upload.course}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {upload.resourceType}
-                </p>
-                <div className="flex items-center">
-                  <BookmarkCheck className="h-5 w-5 mr-2 text-green-500" />
-                  <span className="text-gray-700 dark:text-gray-300">
-                    {upload.uploadedBy}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Department Resources */}
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Resources by Department</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Explore comprehensive resources across different departments
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {departmentStats.map((dept) => (
-            <Card 
-              key={dept.name}
-              className="border-none bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 shadow-md"
-            >
-              <CardContent className="p-6 flex items-center justify-between">
-                <div>
-                  <p className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-                    {dept.name}
-                  </p>
-                  <h3 className="text-3xl font-bold text-blue-600">
-                    {dept.resources}+ Resources
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+            {stats.map((stat) => (
+              <Card key={stat.title} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+                <CardContent className="p-6 text-center">
+                  <stat.icon className="h-8 w-8 mb-3 mx-auto text-blue-600" />
+                  <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+                    {stat.value}
                   </h3>
-                </div>
-                <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30">
-                  <dept.icon className="h-8 w-8 text-blue-600" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Call to Action */}
-      <div className="container mx-auto px-4 py-16 md:py-24 text-center">
-        <div className="bg-gradient-to-br from-blue-100 to-indigo-100 
-          dark:from-blue-900/30 dark:to-indigo-900/30
-          rounded-3xl p-12 max-w-4xl mx-auto"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold 
-            bg-clip-text text-transparent 
-            bg-gradient-to-r from-blue-700 to-indigo-700
-            dark:from-blue-300 dark:to-indigo-300
-            mb-6 leading-tight"
-          >
-            Bridge the Knowledge Gap
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Whether you're a senior looking to help future batches or a junior 
-            seeking valuable insights, AcadMap is your platform for seamless 
-            academic knowledge transfer.
-          </p>
-          <div className="flex justify-center space-x-4">
-            <Button 
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-            >
-              Start Exploring <ArrowRight className="ml-2" />
-            </Button>
-            <Button 
-              variant="outline"
-              size="lg"
-            >
-              Learn How It Works
-            </Button>
+                  <p className="text-gray-600 dark:text-gray-400">{stat.title}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Open Source & Community-Driven</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            AcadMap is more than a platform—it's a collaborative ecosystem where everyone can contribute
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-16">
+        {/* Features Section */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold mb-4">Everything You Need to Excel</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            Comprehensive resources to support your academic journey
           </p>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {features.map((feature) => (
+              <Card 
+                key={feature.title}
+                className="group hover:shadow-lg transition-all duration-300"
+              >
+                <CardContent className="p-6 text-center">
+                  <div className={`w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-r ${feature.color} 
+                    flex items-center justify-center transform group-hover:scale-110 transition-transform`}>
+                    <feature.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {openSourceHighlights.map((highlight) => (
-            <Card 
-              key={highlight.title} 
-              className="hover:shadow-lg transition-all group"
-            >
-              <CardContent className="p-6 text-center">
-                <highlight.icon className="mx-auto h-12 w-12 mb-4 text-blue-600" />
-                <h3 className="text-xl font-bold mb-2">{highlight.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {highlight.description}
-                </p>
-                <Link href={highlight.link} target="_blank">
-                  <Button variant="outline" className="w-full">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+
+        {/* Department Breakdown */}
+        <div className="my-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Resources by Department</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Explore materials across different branches of study
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Computer Science",
+                icon: Code,
+                color: "from-blue-600 to-indigo-600",
+                resources: 450,
+                popular: ["Data Structures", "Algorithms", "Database Systems"]
+              },
+              {
+                name: "Electrical Engineering",
+                icon: Globe,
+                color: "from-purple-600 to-pink-600",
+                resources: 380,
+                popular: ["Circuit Theory", "Digital Electronics", "Power Systems"]
+              },
+              {
+                name: "Mechanical Engineering",
+                icon: BarChart,
+                color: "from-emerald-600 to-teal-600",
+                resources: 320,
+                popular: ["Thermodynamics", "Fluid Mechanics", "Machine Design"]
+              }
+            ].map((dept) => (
+              <Card 
+                key={dept.name}
+                className="group hover:shadow-xl transition-all duration-300"
+              >
+                <CardContent className="p-6">
+                  <div className={`w-16 h-16 mb-6 rounded-xl bg-gradient-to-r ${dept.color}
+                    flex items-center justify-center transform group-hover:scale-110 transition-transform`}>
+                    <dept.icon className="h-8 w-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold mb-2">{dept.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {dept.resources}+ resources available
+                  </p>
+                  
+                  <div className="space-y-2">
+                    <p className="font-semibold">Popular Courses:</p>
+                    {dept.popular.map((course) => (
+                      <div 
+                        key={course}
+                        className="flex items-center text-gray-600 dark:text-gray-300"
+                      >
+                        <ChevronRight className="h-4 w-4 mr-2 text-blue-600" />
+                        {course}
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button 
+                    className="w-full mt-6 bg-gradient-to-r from-gray-800 to-gray-900 
+                      dark:from-gray-700 dark:to-gray-800"
+                  >
+                    Explore Department
                   </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Contribution Opportunities Section */}
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">How Can You Contribute?</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Multiple ways to make an impact, regardless of your skills or experience level
-          </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {contributionOpportunities.map((opportunity) => (
-            <Card 
-              key={opportunity.title}
-              className="border-none bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 shadow-md"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-center mb-4">
-                  <opportunity.icon className="h-8 w-8 mr-4 text-blue-600" />
-                  <h3 className="text-xl font-bold">{opportunity.title}</h3>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {opportunity.description}
-                </p>
-                <Badge variant="secondary">
-                  {opportunity.difficulty}
-                </Badge>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Sponsorship and Support Section */}
-      <div className="container mx-auto px-4 py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="bg-gradient-to-br from-blue-100 to-indigo-100 
-          dark:from-blue-900/30 dark:to-indigo-900/30
-          rounded-3xl p-12 max-w-4xl mx-auto text-center"
+        {/* Call to Action */}
+        <div className="bg-gradient-to-br from-violet-100 to-blue-100 
+          dark:from-violet-900/30 dark:to-blue-900/30
+          rounded-3xl p-12 text-center"
         >
-          <h2 className="text-3xl md:text-4xl font-bold 
-            bg-clip-text text-transparent 
-            bg-gradient-to-r from-blue-700 to-indigo-700
-            dark:from-blue-300 dark:to-indigo-300
-            mb-6 leading-tight"
-          >
-            Support Our Mission
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Ready to Contribute?
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Help us continue developing AcadMap and make knowledge sharing accessible to everyone
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            Share your knowledge and help build a stronger academic community at IIT Bhilai
           </p>
-          <div className="flex justify-center space-x-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="bg-gradient-to-r from-violet-600 to-blue-600 
+                hover:from-violet-700 hover:to-blue-700"
             >
-              <Github className="mr-2" /> View on GitHub
+              Upload Resources <Upload className="ml-2" />
             </Button>
             <Button 
               variant="outline"
               size="lg"
+              className="border-2"
             >
-              <DollarSign className="mr-2" /> Sponsor Project
+              Join Community <Users className="ml-2" />
             </Button>
+            <Button 
+              variant="outline"
+              size="lg"
+              className="border-2"
+            >
+              View Guidelines <FileText className="ml-2" />
+            </Button>
+          </div>
+        </div>
+
+
+        {/* FAQ Section */}
+        <div className="my-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Everything you need to know about AcadMap
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {[
+              {
+                q: "How can I contribute resources?",
+                a: "Simply create an account, verify your IIT Bhilai email, and use the upload feature to share your materials."
+              },
+              {
+                q: "Are the resources verified?",
+                a: "Yes, all resources go through a review process by department moderators before being published."
+              },
+              {
+                q: "Can I request specific materials?",
+                a: "Absolutely! You can create a resource request that will be visible to seniors who might have the materials."
+              },
+              {
+                q: "How is content quality maintained?",
+                a: "Through user ratings, reviews, and our moderation system that ensures high-quality content."
+              }
+            ].map((faq) => (
+              <Card key={faq.q} className="hover:shadow-md transition-all">
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-bold mb-2">{faq.q}</h4>
+                  <p className="text-gray-600 dark:text-gray-300">{faq.a}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
