@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { Course, demoCourse } from '@/types/courses'
+import { Course } from '@/types/courses'
 import CoursePage from '../../../components/courses/CoursePage'
 import { getCourses } from '@/lib/courses'
 import { getUserSessionData } from '@/lib/auth'
@@ -15,7 +15,7 @@ export default async function CoursePageWrapper({ params }: PageProps) {
 
   try {
     const courses: Course[] = await getCourses()
-    const course: Course = courses.find((c) => c.id === id) ?? demoCourse
+    const course: Course | undefined = courses.find((c) => c.id === id)
 
     if (!course) {
       notFound()

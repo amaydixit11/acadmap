@@ -1,15 +1,29 @@
-export interface TimeTableCourse {
-    courseCode: string;
-    courseName: string;
-    ltp: string;
-    credits: number;
-    discipline: string;
-    program: string;
-    lectureSlot: string;
-    tutorialSlot: string;
-    labSlot: string;
-    instructor: string;
-  }
+import { Course } from "./courses";
+export interface TimeTableParsedCourseRaw {
+  'Course Code': string;
+  'Course Name': string;
+  'L-T-P': string;
+  'Credits': string;
+  'Discipline': string;
+  'Program': string;
+  'Slot Lecture\\Venue'?: string;
+  'Tutorial Slot\\Venue'?: string;
+  'Lab slot\\Venue'?: string;
+  'Instructor'?: string;
+}
+
+export interface TimeTableCourse{
+  code: string
+  title: string
+  ltp: string
+  credits: Number
+  discipline: string
+  program: string
+  lectureSlot: string
+  tutorialSlot: string
+  labSlot: string
+  instructor: string
+}
   
   export interface TimeTableCourseSlot {
     slot: string;
@@ -34,7 +48,7 @@ export interface TimeTableCourse {
     type: 'lecture' | 'tut' | 'lab';
   }
 
-  export const timeTableSlots = [
+  export const timeTableSlots: TimeTableTimeSlot[] = [
     { day: 'Monday', time: '08:30-09:25', slots: ['A'] },
     { day: 'Monday', time: '09:30-10:25', slots: ['B', 'N'] },
     { day: 'Monday', time: '10:30-11:25', slots: ['C', 'N'] },

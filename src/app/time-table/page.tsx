@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TimeTableCourse } from "@/types/time-table";
+import { TimeTableParsedCourse } from "@/types/time-table";
 import { parseCSV } from "@/lib/time-table";
 import { TimeTableCourseList } from "@/components/time-table/course-list";
 import Timetable from "@/components/time-table/timetable";
 // import '/file.csv'
 
 export default function Home() {
-  const [courses, setCourses] = useState<TimeTableCourse[]>([]);
-  const [selectedCourses, setSelectedCourses] = useState<TimeTableCourse[]>([]);
+  const [courses, setCourses] = useState<TimeTableParsedCourse[]>([]);
+  const [selectedCourses, setSelectedCourses] = useState<TimeTableParsedCourse[]>([]);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -30,11 +30,11 @@ export default function Home() {
     loadCourses();
   }, []);
 
-  const handleCourseSelect = (course: TimeTableCourse) => {
+  const handleCourseSelect = (course: TimeTableParsedCourse) => {
     setSelectedCourses((prev) => {
-      const isSelected = prev.some((c) => c.courseCode === course.courseCode);
+      const isSelected = prev.some((c) => c.code === course.code);
       if (isSelected) {
-        return prev.filter((c) => c.courseCode !== course.courseCode);
+        return prev.filter((c) => c.code !== course.code);
       }
       return [...prev, course];
     });
@@ -48,7 +48,7 @@ export default function Home() {
         {courses.length > 0 && (
           <Tabs defaultValue="courses" className="w-full">
             <TabsList className="grid w-full max-w-md grid-cols-2">
-              <TabsTrigger value="courses">TimeTableCourse Selection</TabsTrigger>
+              <TabsTrigger value="courses">Course Selection</TabsTrigger>
               <TabsTrigger value="timetable">Generated Timetable</TabsTrigger>
             </TabsList>
             <TabsContent value="courses" className="mt-6">

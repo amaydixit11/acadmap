@@ -71,7 +71,7 @@ export function getCoursesForSlot(
           if (
             parsedSlot.letter === slotLetter &&
             (parsedSlot.numbers.includes(occurrenceNumber) || slotStr === slotLetter)
-          ) {coursesInSlot.push({ courseCode: course.courseCode, venue: venue, type: type });
+          ) {coursesInSlot.push({ courseCode: course.code, venue: venue, type: type });
             break;
           }
         }
@@ -87,37 +87,38 @@ export function getCoursesForSlot(
 }
 
 
-export const parseCSV = (file: File): Promise<TimeTableParsedCourse[]> => {
+
+export const parseCSV = (csvText: string): Promise<TimeTableParsedCourse[]> => {
   return new Promise((resolve, reject) => {
-    Papa.parse(file, {
+    Papa.parse(csvText, {
       header: true,
       complete: (results) => {
         const courses: TimeTableParsedCourse[] = results.data.map((row: any) => {
-          const [lectureSlot, lectureVenue] = row['Slot Lecture\\Venue']?.split('\\') || ['NA', 'NA'];
-          const [tutorialSlot, tutorialVenue] = row['Tutorial Slot\\Venue']?.split('\\') || ['NA', 'NA'];
-          const [labSlot, labVenue] = row['Lab slot\\Venue']?.split('\\') || ['NA', 'NA'];
+          const [lectureSlot, lectureVenue]: [string, string] = row['Slot Lecture\\Venue']?.split('\\') || ['NA', 'NA'];
+          const [tutorialSlot, tutorialVenue]: [string, string] = row['Tutorial Slot\\Venue']?.split('\\') || ['NA', 'NA'];
+          const [labSlot, labVenue]: [string, string] = row['Lab slot\\Venue']?.split('\\') || ['NA', 'NA'];
 
           return {
-            courseCode: row['Course Code'],
-            courseName: row['Course Name'],
+            code: row['Course Code'],
+            title: row['Course Name'],
             ltp: row['L-T-P'],
             credits: parseInt(row['Credits']),
             discipline: row['Discipline'],
             program: row['Program'],
-            lectureSlot,
-            tutorialSlot,
-            labSlot,
+            lectureSlot: lectureSlot,
+            tutorialSlot: tutorialSlot,
+            labSlot: labSlot,
             instructor: row['Instructor'],
-            lectureVenue,
-            tutorialVenue,
-            labVenue
+            lectureVenue: lectureVenue,
+            tutorialVenue: tutorialVenue,
+            labVenue: labVenue,
           };
         });
         resolve(courses);
       },
-      error: (error) => {
+      error: (error: Error) => {
         reject(error);
-      }
+      },
     });
   });
 };

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/tooltip";
 import { AlertCircle, MapPin, BookOpen } from 'lucide-react';
 import { getCoursesForSlot } from '@/lib/time-table';
-import { TimeTableParsedCourse, timeTableSlots } from '@/types/time-table';
+import { TimeTableParsedCourse, TimeTableSlotInfo, timeTableSlots } from '@/types/time-table';
 
 interface TimetableProps {
   selectedCourses: TimeTableParsedCourse[];
@@ -39,7 +39,7 @@ function hashCode(str: string) {
   return str.split('').reduce((h, c) => Math.imul(31, h) + c.charCodeAt(0) | 0, 0);
 }
 
-const CourseCard = ({ course, colorScheme }: { course: TimeTableParsedCourse; colorScheme: typeof colors.blue }) => (
+const CourseCard = ({ course, colorScheme }: { course: TimeTableSlotInfo; colorScheme: typeof colors.blue }) => (
   <TooltipProvider>
     <Tooltip>
       <TooltipTrigger className="w-full">
@@ -67,7 +67,7 @@ const CourseCard = ({ course, colorScheme }: { course: TimeTableParsedCourse; co
       </TooltipTrigger>
       <TooltipContent side="right" className="p-3 max-w-xs">
         <div className="space-y-2">
-          <div className="font-semibold">{course.instructor}</div>
+          <div className="font-semibold">{course.courseCode}</div>
         </div>
       </TooltipContent>
     </Tooltip>
@@ -78,11 +78,17 @@ export function Timetable({ selectedCourses }: TimetableProps) {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const times = Array.from(new Set(timeTableSlots.map(slot => slot.time))).sort();
 
-  const getCourseColor = (courseCode: string) => {
-    const colorKeys = Object.keys(colors);
-    return colors[colorKeys[Math.abs(hashCode(courseCode)) % colorKeys.length]];
-  };
+  type ColorKey = keyof typeof colors;
 
+  // Ensure the keys are an array for predictable order
+  const colorKeys: ColorKey[] = Object.keys(colors) as ColorKey[];
+  
+  const getCourseColor = (courseCode: string) => {
+    // Ensure `hashCode` function is defined correctly
+    const colorIndex = Math.abs(hashCode(courseCode)) % colorKeys.length;
+    return colors[colorKeys[colorIndex]]; // TypeScript will know the keys are valid here
+  };
+  
   return (
     <div className="rounded-xl border shadow-lg overflow-x-auto bg-white">
       <Table>

@@ -1,9 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { FeatureCards, BottomHighlights, Hero } from "@/components/home";
-import { CommunitySection } from "@/components/home/CommunitySection";
-import { OpenSourceSection } from "@/components/home/OpenSource";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";

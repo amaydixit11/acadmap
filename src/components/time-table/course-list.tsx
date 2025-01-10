@@ -22,47 +22,37 @@ export function TimeTableCourseList({
   selectedCourses,
   onCourseSelect,
 }: TimeTableCourseListProps) {
-  // const sortedCourses = [...courses].sort((a, b) =>
+
+  const sortedCourses = [...courses].sort((a: TimeTableParsedCourse, b: TimeTableParsedCourse) => {
     
-  //   a.courseCode.localeCompare(b.courseCode)
-  // );
-  // const sortedCourses = [...courses].sort((a, b) => {
-  //   const courseCodeA = a.courseCode.slice(3, 5);
-  //   const courseCodeB = b.courseCode.slice(3, 5);
+    const cleanCode = (code: string): string => code.split('/')[0];
   
-  //   if (courseCodeA > courseCodeB) return 1; // Sort a after b
-  //   else if (courseCodeA < courseCodeB) return -1; // Sort b after a
-  //   return a.courseCode.localeCompare(b.courseCode); // If equal, compare the full courseCode
-  // });
-  const sortedCourses = [...courses].sort((a, b) => {
-    // Preprocess to ignore everything after '/' in course codes
-    const cleanCode = (code) => code.split('/')[0];
+    const cleanA: string = cleanCode(a.code);
+    const cleanB: string = cleanCode(b.code);
   
-    const cleanA = cleanCode(a.courseCode);
-    const cleanB = cleanCode(b.courseCode);
-  
-    const regexAAADDD = /^[A-Z]{3}\d{3}$/;
-    const regexAADDD = /^[A-Z]{2}\d{3}$/;
+    const regexAAADDD = /^[A-Z]{3}\d{3}$/; 
+    const regexAADDD = /^[A-Z]{2}\d{3}$/;  
   
     const isATypeAAADDD = regexAAADDD.test(cleanA);
     const isBTypeAAADDD = regexAAADDD.test(cleanB);
   
-    // Step 1: Prioritize AAADDD courses
-    if (isATypeAAADDD && !isBTypeAAADDD) return -1; // a is AAADDD, b is AADDD
-    if (!isATypeAAADDD && isBTypeAAADDD) return 1;  // a is AADDD, b is AAADDD
+    
+    if (isATypeAAADDD && !isBTypeAAADDD) return -1; 
+    if (!isATypeAAADDD && isBTypeAAADDD) return 1;  
   
-    // Step 2: Sort within the same type
-    const numA = Math.floor(parseInt(cleanA.match(/\d{3}$/)[0], 10)/100);
-    const numB = Math.floor(parseInt(cleanB.match(/\d{3}$/)[0], 10)/100);
+    
+    const numA = parseInt(cleanA.match(/\d{3}$/)?.[0] || "0", 10); 
+    const numB = parseInt(cleanB.match(/\d{3}$/)?.[0] || "0", 10);
   
-    if (numA !== numB) return numA - numB; // Sort by the numeric part
+    if (numA !== numB) return numA - numB; 
   
-    // Step 3: Sort alphabetically by the letter part
-    const lettersA = cleanA.match(/^[A-Z]+/)[0]; // Extract letters (AAA or AA)
-    const lettersB = cleanB.match(/^[A-Z]+/)[0];
+    
+    const lettersA = cleanA.match(/^[A-Z]+/)?.[0] || ""; 
+    const lettersB = cleanB.match(/^[A-Z]+/)?.[0] || "";
   
-    return lettersA.localeCompare(lettersB); // Sort alphabetically
+    return lettersA.localeCompare(lettersB); 
   });
+  
   
   return (
     <div className="rounded-md border overflow-x-auto">
@@ -82,19 +72,19 @@ export function TimeTableCourseList({
         </TableHeader>
         <TableBody>
           {sortedCourses.map((course) => (
-            <TableRow key={course.courseCode}>
+            <TableRow key={course.code}>
               <TableCell>
                 <Checkbox
                   checked={selectedCourses.some(
-                    (c) => c.courseCode === course.courseCode
+                    (c) => c.code === course.code
                   )}
                   onCheckedChange={() => onCourseSelect(course)}
                 />
               </TableCell>
-              <TableCell>{course.courseCode}</TableCell>
-              <TableCell>{course.courseName}</TableCell>
+              <TableCell>{course.code}</TableCell>
+              <TableCell>{course.title}</TableCell>
               <TableCell>{course.ltp}</TableCell>
-              <TableCell>{course.credits}</TableCell>
+              <TableCell>{course.credits.toString()}</TableCell>
               <TableCell>
                 {/* {course.lectureSlot !== 'NA' && ( */}
                   {/* <> */}
