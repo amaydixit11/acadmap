@@ -6,6 +6,7 @@ import { BottomHighlights } from "@/components/home/BottomHighlights";
 import { CommunitySection } from "@/components/home/CommunitySection";
 import { OpenSourceSection } from "@/components/home/OpenSource";
 import { motion } from "framer-motion";
+import CourseDropdown from "@/components/home/CourseDropdown";
 
 export default function HomePage() {
   return (

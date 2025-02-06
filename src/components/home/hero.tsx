@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion, useAnimationControls } from "framer-motion";
+import CourseDropdown from "./CourseDropdown";
 
 export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
@@ -121,6 +122,8 @@ export default function Hero() {
         </motion.div>
 
         {/* Enhanced CTA Buttons */}
+        {/* <CourseDropdown /> */}
+
         <motion.div 
           variants={itemVariants}
           className={cn(

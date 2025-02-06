@@ -12,8 +12,8 @@ export const navigationConfig: NavigationItem[] = [
     icon: FileText,
   },
   {
-    title: "Contributors",
-    href: "/contributors",
+    title: "Resource",
+    href: "/resources",
     icon: Users,
   },
   {
