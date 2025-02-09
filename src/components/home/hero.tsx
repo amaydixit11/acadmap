@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion, useAnimationControls } from "framer-motion";
-import PDFViewer from "../pdf-viewer";
+// import PDFViewer from "../pdf-viewer";
 // import CourseDropdown from "./CourseDropdown";
 
 export default function Hero() {

@@ -25,7 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ResourceModel } from '@/models/resources';
 import { useContributor } from '@/hooks/useContributor';
-import PDFViewer from '@/components/pdf-viewer';
+import {PDFViewer} from '@/components/pdf-viewer';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface ResourceCardProps {
