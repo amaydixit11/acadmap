@@ -151,7 +151,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                 {isLoading ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
-                  resource.url.endsWith('.pdf') ? <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" /> : <Download className="mr-2 h-4 w-4 group-hover/btn:animate-bounce" />
+                  <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
                 )}
                 {resource.url.endsWith('.pdf') ? 'View PDF' : 'Download'}
               </>
