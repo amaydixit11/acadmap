@@ -82,7 +82,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
           >
             <div className="w-full h-full flex flex-col items-center justify-center p-4 space-y-4">
               <p className="text-center text-gray-600">
-                Unable to display PDF directly. Please use the download button below to view the document.
+                Unable to display PDF directly, Displaying the pdf is not available on Mobiles yet. Please use the download button below to view the document.
               </p>
               <Button 
                 onClick={() => window.open(pdfUrl, '_blank')}
