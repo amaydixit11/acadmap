@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion, useAnimationControls } from "framer-motion";
+import PDFViewer from "../pdf-viewer";
 // import CourseDropdown from "./CourseDropdown";
 
 export default function Hero() {
@@ -181,6 +182,12 @@ export default function Hero() {
           </Button>
         </motion.div>
       </motion.div>
+      {/* <iframe 
+        src="https://raw.githubusercontent.com/acadmap/CSL252-2025/main/lecture/Algorithm_tutorial_problem.pdf" 
+        width="100%" 
+        height="600px">
+      </iframe> */}
+
     </div>
   );
 }

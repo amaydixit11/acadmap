@@ -173,3 +173,5 @@ export async function fetchRepositoryContributors(repoName: string) {
 
     return response.json();
 }
+
+export async function fetchResourceBASE64(){}

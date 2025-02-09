@@ -8,4 +8,5 @@ export interface ResourceModel {
     uploadedBy: string;
     description ?: string;
     year: number;
+    git_url?: string;
   } 

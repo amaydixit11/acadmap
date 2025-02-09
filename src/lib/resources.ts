@@ -45,7 +45,8 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
                 category: folder.name,
                 url: file.download_url,
                 uploadedBy: getUploaderName(file.sha),
-                year: Number(repo.name.slice(7,))
+                year: Number(repo.name.slice(7,)),
+                git_url: file.git_url,
             }));
             
             resources.push(...repoResources);
