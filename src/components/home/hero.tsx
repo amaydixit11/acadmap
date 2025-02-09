@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion, useAnimationControls } from "framer-motion";
-import CourseDropdown from "./CourseDropdown";
+// import CourseDropdown from "./CourseDropdown";
 
 export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
