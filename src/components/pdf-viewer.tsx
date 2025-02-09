@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Loader2 } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 
 interface PDFViewerProps {
   url: string;
@@ -29,6 +29,7 @@ export function PDFViewer({ url }: PDFViewerProps) {
         const data = await response.json();
         const base64 = data.content;
 
+        // Create blob URL
         const byteCharacters = atob(base64);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -70,22 +71,30 @@ export function PDFViewer({ url }: PDFViewerProps) {
   }
 
   return (
-    <div className="w-full h-full bg-white">
+    <div className="w-full h-full flex flex-col bg-white">
       {pdfUrl && (
         <>
-          <iframe 
-            src={pdfUrl} 
-            className="w-full h-full" 
-            title="PDF Viewer" 
-          />
-          <embed 
-            src={pdfUrl} 
-            type="application/pdf" 
-            className="w-full h-full" 
-          />
+          {/* Mobile-friendly object tag for PDF rendering */}
+          <object
+            data={pdfUrl}
+            type="application/pdf"
+            className="w-full h-full min-h-[500px]"
+          >
+            <div className="w-full h-full flex flex-col items-center justify-center p-4 space-y-4">
+              <p className="text-center text-gray-600">
+                Unable to display PDF directly. Please use the download button below to view the document.
+              </p>
+              <Button 
+                onClick={() => window.open(pdfUrl, '_blank')}
+                className="flex items-center space-x-2"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download PDF</span>
+              </Button>
+            </div>
+          </object>
         </>
       )}
     </div>
-
   );
 }

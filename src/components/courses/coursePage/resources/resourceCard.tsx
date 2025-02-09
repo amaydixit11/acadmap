@@ -63,8 +63,10 @@ export function ResourceCard({ resource }: ResourceCardProps) {
   const ResourceIcon = resourceIcons[resource.type] || Paperclip;
   const CategoryIcon = categoryIcons[resource.category] || Paperclip;
 
-  const handleResourceAction = async () => {
-    if (resource.url.endsWith('.pdf') && resource.git_url) {
+  const handleResourceAction = async (download: boolean) => {
+    if (download){
+      window.open(resource.url, '_blank', 'noopener,noreferrer');
+    } else if (resource.url.endsWith('.pdf') && resource.git_url) {
       setIsLoading(true);
       setIsPDFOpen(true);
     } else if (resource.type === 'link') {
@@ -137,7 +139,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           <Button 
             size="sm"
             variant="default"
-            onClick={handleResourceAction}
+            onClick={() => handleResourceAction(false)}
             disabled={isLoading}
             className="w-full md:w-auto group/btn dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
           >
@@ -157,6 +159,16 @@ export function ResourceCard({ resource }: ResourceCardProps) {
               </>
             )}
           </Button>
+          {/* <Button 
+            size="sm"
+            variant="default"
+            onClick={() => handleResourceAction(true)}
+            disabled={isLoading}
+            className="w-full md:w-auto group/btn dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+          >
+            <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
+            Download
+          </Button> */}
         </CardFooter>
 
         <Dialog 
@@ -183,7 +195,9 @@ export function ResourceCard({ resource }: ResourceCardProps) {
                 />
               )}
             </div>
+
           </DialogContent>
+
         </Dialog>
       </Card>
     </TooltipProvider>
