@@ -50,7 +50,7 @@ export function OpenSourceSection() {
       title: "View Source Code",
       description: "Explore our codebase, submit issues, and contribute to the development process.",
       buttonText: "GitHub Repository",
-      href: "https://github.com/yourusername/acadmap",
+      href: "https://github.com/amaydixit11/acadmap",
       gradient: "from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400"
     },
     {
