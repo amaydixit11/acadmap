@@ -159,7 +159,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
               </>
             )}
           </Button>
-          {/* <Button 
+          <Button 
             size="sm"
             variant="default"
             onClick={() => handleResourceAction(true)}
@@ -168,7 +168,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           >
             <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
             Download
-          </Button> */}
+          </Button>
         </CardFooter>
 
         <Dialog 
