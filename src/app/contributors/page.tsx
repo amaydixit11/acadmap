@@ -25,47 +25,6 @@ interface Contributor extends ProfileModel {
 }
 
 const contributorsData: Contributor[] = [
-  {
-    id: "1",
-    email: "rohan.sharma@example.com",
-    name: "Rohan Sharma",
-    role: 'student',
-    department: "CSE",
-    batch: "2024",
-    contributionCount: 42,
-    // topContributions: ["DSA Lecture Notes", "Machine Learning Assignments", "OS Tutorial Solutions"],
-    mobile: "+91 9876543210",
-    linkedin_url: "https://linkedin.com/in/rohansharma",
-    profile_image: "/api/placeholder/200/200",
-    bio: "Passionate about technology and knowledge sharing"
-  },
-  {
-    id: "2", 
-    email: "priya.patel@example.com",
-    name: "Priya Patel",
-    role: 'alumni',
-    department: "DSAI",
-    batch: "2023",
-    contributionCount: 35,
-    // topContributions: ["Data Science Notebooks", "AI Project Reports", "Statistics Tutorials"],
-    mobile: "+91 8765432109",
-    linkedin_url: "https://linkedin.com/in/priyapatel",
-    profile_image: "/api/placeholder/200/200",
-    bio: "Data scientist and continuous learner"
-  },
-  {
-    id: "3",
-    email: "aditya.kumar@example.com",
-    name: "Aditya Kumar",
-    role: 'student',
-    department: "ECE",
-    batch: "2025",
-    contributionCount: 28,
-    // topContributions: ["Signal Processing Notes", "Circuit Design Assignments", "Electronics Lab Manuals"],
-    mobile: "+91 7654321098",
-    profile_image: "/api/placeholder/200/200",
-    bio: "Electronics enthusiast with a passion for sharing knowledge"
-  }
 ];
 
 export default function ContributorsPage() {
@@ -98,6 +57,10 @@ export default function ContributorsPage() {
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
+      <div className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 text-center p-3 rounded-md mb-6">
+        🚧 This page is still under construction. Stay tuned for updates! 🚧
+      </div>
+
       <div className="text-center mb-12">
         <Badge 
           variant="secondary" 

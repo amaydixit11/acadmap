@@ -117,8 +117,8 @@ export default function Hero() {
             "text-gray-600 dark:text-gray-300",
             "max-w-2xl leading-relaxed font-medium"
           )}>
-            Navigate your academic journey with confidence through our collaborative 
-            platform powered by peer insights and shared success.
+            Tired of asking your mentor for previous year questions?  <br />
+            AcadMap makes it easy to find and share academic resources effortlessly.
           </p>
         </motion.div>
 
