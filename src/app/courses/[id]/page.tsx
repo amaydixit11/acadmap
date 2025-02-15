@@ -16,12 +16,12 @@ export default async function CoursePageWrapper({ params }: PageProps) {
   try {
     const courses: Course[] = await getCourses()
     const course: Course | undefined = courses.find((c) => c.id === id)
-
+    
     if (!course) {
       notFound()
     }
-
     return <CoursePage course={course} user={user} />
+
   } catch (error) {
     throw error
   }
