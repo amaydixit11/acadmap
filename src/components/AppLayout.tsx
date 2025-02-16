@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from "next-themes";
 import { Analytics } from '@vercel/analytics/next';
-import "../app/globals.css";
+// import "../app/globals.css";
 import Header from "@/components/layout/header/header";
 import Footer from "@/components/layout/footer/Footer";
 import { FilterProvider } from "@/context/FiltersContext";

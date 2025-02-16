@@ -20,7 +20,9 @@ import {
   Microscope,
   X,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Calendar,
+  User
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ResourceModel } from '@/models/resources';
@@ -78,97 +80,81 @@ export function ResourceCard({ resource }: ResourceCardProps) {
 
   return (
     <TooltipProvider>
-      <Card 
-        className={cn(
-          "group/card w-full transition-all duration-300 hover:shadow-lg hover:border-primary/50 border-2 border-transparent",
-          "bg-white text-black dark:bg-neutral-900 dark:text-white"
-        )}
-      >
-        <CardHeader className="flex flex-col space-y-2 p-4 pb-0 md:pb-2">
-          <div className="flex items-start space-x-3 w-full min-w-0">
-            <Tooltip>
-              <TooltipTrigger>
-                <ResourceIcon 
-                  className="w-5 h-5 text-muted-foreground flex-shrink-0 group-hover/card:text-primary dark:text-gray-400 dark:group-hover/card:text-primary mt-0.5"
-                />
-              </TooltipTrigger>
-              <TooltipContent>{resource.type}</TooltipContent>
-            </Tooltip>
-
+      <Card className="group relative overflow-hidden bg-white dark:bg-neutral-900 border-2 transition-all duration-300 hover:shadow-lg hover:border-primary/50">
+        {/* Decorative background - hidden on small screens */}
+        <div className="hidden sm:block absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 bg-primary/5 rounded-full transition-transform group-hover:scale-150" />
+        
+        <CardHeader className="p-3 sm:p-4">
+          <div className="flex items-start gap-2 sm:gap-4">
+            {/* Icon container - smaller on mobile */}
+            <div className="p-1.5 sm:p-2 bg-primary/10 rounded-lg dark:bg-primary/5">
+              <ResourceIcon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+            </div>
+            
             <div className="flex-1 min-w-0">
               <Tooltip>
                 <TooltipTrigger className="w-full">
-                  <h3 className="font-semibold text-sm md:text-base truncate text-gray-800 dark:text-gray-100 group-hover/card:text-primary dark:group-hover/card:text-primary text-left">
-                    {truncateText(resource.title, 35)}
+                  <h3 className="font-semibold text-base sm:text-lg text-left truncate text-gray-800 dark:text-gray-100">
+                    {resource.title}
                   </h3>
                 </TooltipTrigger>
                 <TooltipContent>{resource.title}</TooltipContent>
               </Tooltip>
 
-              <div className="flex flex-wrap gap-2 mt-2">
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Badge variant="secondary" className="flex items-center text-xs dark:bg-gray-800 dark:text-white">
-                      <CategoryIcon className="mr-1 h-3 w-3 text-gray-600 dark:text-gray-400" />
-                      {resource.category}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>Resource Category</TooltipContent>
-                </Tooltip>
+              {/* Metadata section - stack on mobile, flex on larger screens */}
+              <div className="flex flex-col gap-1.5 mt-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
+                  <div className="flex items-center gap-1">
+                    <CategoryIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span className="capitalize">{resource.category}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span>{resource.year}</span>
+                  </div>
+                </div>
 
-                <Badge variant="outline" className="text-xs dark:text-gray-400">{resource.year}</Badge>
+                {selectedProfileName && (
+                  <div className="flex items-center gap-1">
+                    <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                    <span className="truncate">{selectedProfileName}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </CardHeader>
 
-        <CardFooter className="p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
-          <div className="w-full md:w-auto">
-            {selectedProfileName && (
-              <Tooltip>
-                <TooltipTrigger>
-                  <Badge variant="outline" className="text-xs w-full md:w-auto truncate dark:text-gray-400">
-                    {selectedProfileName}
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent>Uploaded by {selectedProfileName}</TooltipContent>
-              </Tooltip>
-            )}
-          </div>
-
+        <CardFooter className="p-3 sm:p-4 pt-0">
+          {/* Button container - stack on extra small screens */}
+          <div className="flex flex-col xs:flex-row gap-2 w-full">
           <Button 
             size="sm"
-            variant="default"
+            variant="secondary"
             onClick={() => handleResourceAction(false)}
             disabled={isLoading}
-            className="w-full md:w-auto group/btn dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+            className="hidden sm:flex w-full xs:flex-1 text-xs sm:text-sm bg-primary/10 hover:bg-primary/20 dark:bg-primary/5 dark:hover:bg-primary/10"
           >
-            {resource.type === 'link' ? (
-              <>
-                <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
-                Open Link
-              </>
+            {isLoading ? (
+              <Loader2 className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin" />
             ) : (
-              <>
-                {isLoading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
-                )}
-                {resource.url.endsWith('.pdf') ? 'View PDF' : 'Download'}
-              </>
+              <ExternalLink className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" />
             )}
+            {resource.type === 'link' ? 'Open Link' : resource.url.endsWith('.pdf') ? 'View PDF' : 'Open'}
           </Button>
-          <Button 
-            size="sm"
-            variant="default"
-            onClick={() => handleResourceAction(true)}
-            disabled={isLoading}
-            className="w-full md:w-auto group/btn dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-          >
-            <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:animate-pulse" />
-            Download
-          </Button>
+            
+            <Button 
+              size="sm"
+              variant="default"
+              onClick={() => handleResourceAction(true)}
+              disabled={isLoading}
+              className="w-full xs:flex-1 text-xs sm:text-sm"
+            >
+              <Download className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              Download
+            </Button>
+          </div>
         </CardFooter>
 
         <Dialog 
@@ -179,8 +165,8 @@ export function ResourceCard({ resource }: ResourceCardProps) {
           }}
         >
           <DialogContent className="w-[95vw] max-w-6xl h-[90vh] p-0">
-            <DialogHeader className="p-2 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
-              <DialogTitle className="text-sm font-medium truncate px-2">
+            <DialogHeader className="p-2 sm:p-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b">
+              <DialogTitle className="text-base sm:text-lg font-medium truncate">
                 {resource.title}
               </DialogTitle>
               <DialogDescription className="sr-only">
@@ -188,16 +174,12 @@ export function ResourceCard({ resource }: ResourceCardProps) {
               </DialogDescription>
             </DialogHeader>
             
-            <div className="flex-1 w-full h-[calc(90vh-4rem)]">
+            <div className="flex-1 w-full h-[calc(90vh-5rem)]">
               {resource.git_url && (
-                <PDFViewer 
-                  url={resource.git_url} 
-                />
+                <PDFViewer url={resource.git_url} />
               )}
             </div>
-
           </DialogContent>
-
         </Dialog>
       </Card>
     </TooltipProvider>
