@@ -88,6 +88,7 @@ _For more detailed usage instructions, refer to the [Documentation](https://gith
 - [ ] Implement Search Bar in Header
 - [ ] Add Upvote Features For Resources
 - [ ] Expand Features for Group Discussions
+- [ ] Add Course Feedback Feature
 
 See the [open issues](https://github.com/amaydixit11/acadmap/issues) for more details on future developments.
 
