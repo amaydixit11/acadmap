@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,10 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { TimeTableParsedCourse } from "@/types/time-table";
 import { Search, X, Filter, ChevronDown, ChevronUp } from "lucide-react";
@@ -47,11 +44,11 @@ export function TimeTableCourseList({
     const checkMobileView = () => {
       setIsMobileView(window.innerWidth < 768);
     };
-    
+
     checkMobileView();
-    window.addEventListener('resize', checkMobileView);
-    
-    return () => window.removeEventListener('resize', checkMobileView);
+    window.addEventListener("resize", checkMobileView);
+
+    return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
   const sortedAndFilteredCourses = [...courses]
@@ -65,8 +62,10 @@ export function TimeTableCourseList({
           const tutorialVenue = course.tutorialVenue || "NA";
           const labVenue = course.labVenue || "NA";
           return (
-            (lectureVenue !== "NA" && lectureVenue.toLowerCase().includes(term)) ||
-            (tutorialVenue !== "NA" && tutorialVenue.toLowerCase().includes(term)) ||
+            (lectureVenue !== "NA" &&
+              lectureVenue.toLowerCase().includes(term)) ||
+            (tutorialVenue !== "NA" &&
+              tutorialVenue.toLowerCase().includes(term)) ||
             (labVenue !== "NA" && labVenue.toLowerCase().includes(term))
           );
         case "code":
@@ -78,8 +77,10 @@ export function TimeTableCourseList({
           const tutorialSlot = course.tutorialSlot || "NA";
           const labSlot = course.labSlot || "NA";
           return (
-            (lectureSlot !== "NA" && lectureSlot.toLowerCase().includes(term)) ||
-            (tutorialSlot !== "NA" && tutorialSlot.toLowerCase().includes(term)) ||
+            (lectureSlot !== "NA" &&
+              lectureSlot.toLowerCase().includes(term)) ||
+            (tutorialSlot !== "NA" &&
+              tutorialSlot.toLowerCase().includes(term)) ||
             (labSlot !== "NA" && labSlot.toLowerCase().includes(term))
           );
         default:
@@ -87,46 +88,48 @@ export function TimeTableCourseList({
       }
     })
     .sort((a, b) => {
-      const cleanCode = (code: string): string => code.split('/')[0];
+      const cleanCode = (code: string): string => code.split("/")[0];
       const cleanA = cleanCode(a.code);
       const cleanB = cleanCode(b.code);
-      
+
       const regexAAADDD = /^[A-Z]{3}\d{3}$/;
       const isATypeAAADDD = regexAAADDD.test(cleanA);
       const isBTypeAAADDD = regexAAADDD.test(cleanB);
-      
+
       if (isATypeAAADDD && !isBTypeAAADDD) return -1;
       if (!isATypeAAADDD && isBTypeAAADDD) return 1;
-      
+
       const numA = parseInt(cleanA.match(/\d{3}$/)?.[0] || "0", 10);
       const numB = parseInt(cleanB.match(/\d{3}$/)?.[0] || "0", 10);
-      
+
       if (numA !== numB) return numA - numB;
-      
+
       const lettersA = cleanA.match(/^[A-Z]+/)?.[0] || "";
       const lettersB = cleanB.match(/^[A-Z]+/)?.[0] || "";
-      
+
       return lettersA.localeCompare(lettersB);
     });
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
       const coursesToAdd = sortedAndFilteredCourses.filter(
-        course => !selectedCourses.some(selected => selected.code === course.code)
+        (course) =>
+          !selectedCourses.some((selected) => selected.code === course.code)
       );
-      coursesToAdd.forEach(course => onCourseSelect(course));
+      coursesToAdd.forEach((course) => onCourseSelect(course));
     } else {
-      sortedAndFilteredCourses.forEach(course => {
-        if (selectedCourses.some(selected => selected.code === course.code)) {
+      sortedAndFilteredCourses.forEach((course) => {
+        if (selectedCourses.some((selected) => selected.code === course.code)) {
           onCourseSelect(course);
         }
       });
     }
   };
 
-  const allFilteredSelected = sortedAndFilteredCourses.length > 0 && 
-    sortedAndFilteredCourses.every(course => 
-      selectedCourses.some(selected => selected.code === course.code)
+  const allFilteredSelected =
+    sortedAndFilteredCourses.length > 0 &&
+    sortedAndFilteredCourses.every((course) =>
+      selectedCourses.some((selected) => selected.code === course.code)
     );
 
   const clearSearch = () => {
@@ -150,7 +153,9 @@ export function TimeTableCourseList({
                 />
                 <div>
                   <div className="font-medium">{course.code}</div>
-                  <div className="text-sm text-muted-foreground">{course.title}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {course.title}
+                  </div>
                 </div>
               </div>
               <Button
@@ -165,7 +170,7 @@ export function TimeTableCourseList({
                 )}
               </Button>
             </div>
-            
+
             {expandedCourse === course.code && (
               <div className="mt-4 space-y-2 text-sm">
                 <div className="grid grid-cols-2 gap-2">
@@ -174,33 +179,38 @@ export function TimeTableCourseList({
                   <div className="text-muted-foreground">Credits:</div>
                   <div>{course.credits.toString()}</div>
                 </div>
-                
+
                 {course.lectureSlot !== "NA" && (
                   <div>
                     <div className="text-muted-foreground">Lecture:</div>
                     <div>{`${course.lectureSlot} (${course.lectureVenue})`}</div>
                   </div>
                 )}
-                
+
                 {course.tutorialSlot !== "NA" && (
                   <div>
                     <div className="text-muted-foreground">Tutorial:</div>
                     <div>{`${course.tutorialSlot} (${course.tutorialVenue})`}</div>
                   </div>
                 )}
-                
+
                 {course.labSlot !== "NA" && (
                   <div>
                     <div className="text-muted-foreground">Lab:</div>
                     <div>{`${course.labSlot} (${course.labVenue})`}</div>
                   </div>
                 )}
-                
+
                 <div>
                   <div className="text-muted-foreground">Instructor:</div>
-                  <div>{course.instructor.split(',').map((instructor, index) => (
-                    <div key={index}>{instructor.trim()}</div>
-                  ))}</div>
+                  <div>
+                    {(course?.instructor ?? "")
+                      .split(",")
+                      .filter(Boolean)
+                      .map((instructor, index) => (
+                        <div key={index}>{instructor.trim()}</div>
+                      ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -245,18 +255,27 @@ export function TimeTableCourseList({
               <TableCell>{course.ltp}</TableCell>
               <TableCell>{course.credits.toString()}</TableCell>
               <TableCell>
-                {course.lectureSlot === "NA" ? "-" : `${course.lectureSlot} (${course.lectureVenue})`}
+                {course.lectureSlot === "NA"
+                  ? "-"
+                  : `${course.lectureSlot} (${course.lectureVenue})`}
               </TableCell>
               <TableCell>
-                {course.tutorialSlot === "NA" ? "-" : `${course.tutorialSlot} (${course.tutorialVenue})`}
+                {course.tutorialSlot === "NA"
+                  ? "-"
+                  : `${course.tutorialSlot} (${course.tutorialVenue})`}
               </TableCell>
               <TableCell>
-                {course.labSlot === "NA" ? "-" : `${course.labSlot} (${course.labVenue})`}
+                {course.labSlot === "NA"
+                  ? "-"
+                  : `${course.labSlot} (${course.labVenue})`}
               </TableCell>
               <TableCell>
-                {course.instructor.split(',').map((instructor, index) => (
-                  <div key={index}>{instructor.trim()}</div>
-                ))}
+                {(course?.instructor ?? "")
+                  .split(",")
+                  .filter(Boolean)
+                  .map((instructor, index) => (
+                    <div key={index}>{instructor.trim()}</div>
+                  ))}
               </TableCell>
             </TableRow>
           ))}
@@ -264,7 +283,7 @@ export function TimeTableCourseList({
       </Table>
     </div>
   );
-  
+
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -286,7 +305,7 @@ export function TimeTableCourseList({
             </button>
           )}
         </div>
-        
+
         <div className="flex gap-2 items-center">
           <Filter className="h-4 w-4 text-muted-foreground" />
           <Select
