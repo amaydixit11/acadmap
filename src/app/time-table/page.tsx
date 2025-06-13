@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +9,9 @@ import Timetable from "@/components/time-table/timetable";
 
 export default function Home() {
   const [courses, setCourses] = useState<TimeTableParsedCourse[]>([]);
-  const [selectedCourses, setSelectedCourses] = useState<TimeTableParsedCourse[]>([]);
+  const [selectedCourses, setSelectedCourses] = useState<
+    TimeTableParsedCourse[]
+  >([]);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -56,9 +58,9 @@ export default function Home() {
                     <TabsTrigger value="timetable">Timetable</TabsTrigger>
                   </TabsList>
                 </div>
-                
-                <TabsContent 
-                  value="courses" 
+
+                <TabsContent
+                  value="courses"
                   className="mt-2 sm:mt-4 px-2 sm:px-4"
                 >
                   <TimeTableCourseList
@@ -67,12 +69,9 @@ export default function Home() {
                     onCourseSelect={handleCourseSelect}
                   />
                 </TabsContent>
-                
-                <TabsContent 
-                  value="timetable" 
-                  className="mt-2 sm:mt-4"
-                >
-                  <div className="max-w-full overflow-x-auto">
+
+                <TabsContent value="timetable" className="mt-2 sm:mt-4">
+                  <div className="max-w-screen overflow-x-auto">
                     <Timetable selectedCourses={selectedCourses} />
                   </div>
                 </TabsContent>

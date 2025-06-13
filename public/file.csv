@@ -13,7 +13,7 @@ BMT899,Phd Thesis,X-X-X,12 to 15,BSBM,PhD,NA,NA,NA,DPGC_BSBM
 CS300,Principles Of Programming Languages,3-0-0,6,CSE,BTech,D,NA,NA,"Dr. Amit Kumar Dhar, Dr. I. Vinod Reddy"
 CS499,Thesis (Btech),X-X-X,6 to 12,CSE,BTech,NA,NA,NA,DUGC_CSE
 CS799,Thesis (Phd) Old,X-X-X,30,CSE,PhD,NA,NA,NA,DPGC_CSE
-CSL301,Operating Systems,3-0-2,4,CSE,BTech,B,NA,Ǫ12,Dr. Dhiman Saha
+CSL301,Operating Systems,3-0-2,4,CSE,BTech,B,NA,Q12,Dr. Dhiman Saha
 CSL304,Artificial Intelligence,3-0-2,4,CSE,BTech,A,NA,O23,Dr. Soumajit Pramanik
 CSL502,Foundation Of Computer Science,3-0-0,3,CSE,MTech,M,NA,NA,Dr. Rishi Ranjan Singh
 CSL504/CS502,Graph Theory And Applications,3-0-0,3/6,CSE,NA,D,NA,NA,Dr. Barun Gorain
@@ -30,18 +30,18 @@ CST899,Thesis (Phd) New,X-X-X,9 to12,CSE,PhD,NA,NA,NA,DPGC_CSE
 DSL5XX,Advanced Programming For DSAI,2-0-2,3,CSE,NA,M12,NA,P23,"Dr. Vishwesh Jatala, Dr. Gagan Raj Gupta"
 CSL302,Compiler Design,3-0-2,4,CSE & DSAI,BTech,C,NA,W12,Dr. Vishwesh Jatala
 CSL503,Computer Systems Engineering,2-0-2,3,CSE & DSAI,MTech,I12,NA,S12,"Dr. SK Subidh Ali, Prof. Santosh Biswas"
-CSL100/IC100/MAL400,Introduction To Programming,2-1-3,4.5,CSE & DSAI & MA,BTech/MSC,B12,B3,OWǪSU,Dr. Gagan Raj Gupta
+CSL100/IC100/MAL400,Introduction To Programming,2-1-3,4.5,CSE & DSAI & MA,BTech/MSC,B12,B3,OWQSU,Dr. Gagan Raj Gupta
 CSL201/MAL503,Discrete Mathematics,3-1-0,4,CSE & DSAI & MA,BTech/MSC,A,X,NA,Dr. Barun Gorain
 CSL303/MAL505,Database Management Systems,3-0-2,4,CSE & DSAI & MA,BTech/MSC,F,NA,U23,Dr. Amit Kumar Dhar
 CSL202/MAL504,Data Structures,2-1-2,4,CSE/MA,BTech/MSC,C12,C3,NA,Dr. SK Subidh Ali
 CY799,Thesis (Phd) Old,X-X-X,30,CY,PhD,NA,NA,NA,DPGC_CY
 CYL010,Chemistry-1,3-1-0,4,CY,BTech,A,E1,NA,"Dr. Mehboob Alam, Dr. Rukmankesh, Dr. Hemanta Kumar Kisan (IC)"
-CYL011,Chemistry Lab-I,0-0-3,1.5,CY,BTech,NA,NA,Ǫ,"Dr. Mehboob Alam, Dr. Rukmankesh (IC), Dr. Hemanta Kumar Kisan"
+CYL011,Chemistry Lab-I,0-0-3,1.5,CY,BTech,NA,NA,Q,"Dr. Mehboob Alam, Dr. Rukmankesh (IC), Dr. Hemanta Kumar Kisan"
 CYL100,Applied Chemistry,3-0-0,3,CY,BTech,A,NA,NA,"Dr Sanjib Banerjee (IC), Dr. Suchetan Pal"
 CYL101,Environmental Science,1-0-0,1,CY,BTech,E1,NA,NA,Dr. Raghavender Medishetty
 CYL400,Chemical Kinetics And Surface Science,3-0-0,3,CY,MSc,I,NA,NA,Dr. Satyajit Gupta
 CYL401,Coordination Chemistry,3-0-0,3,CY,MSc,J,NA,NA,Dr. Raghavender Medishetty
-CYL500,Ǫuantum Chemistry,3-0-0,3,CY,MSc,K,NA,NA,Dr. Mehboob Alam
+CYL500,Quantum Chemistry,3-0-0,3,CY,MSc,K,NA,NA,Dr. Mehboob Alam
 CYL501,Stereochemistry And Reaction Mechanism,3-0-0,3,CY,MSc,L,NA,NA,Dr. Hemanta Kumar Kisan
 CYL507,Chemistry Of Main Group Elements,3-0-0,3,CY,NA,M,NA,NA,Dr. Arup Mukhurjee
 CYL508,Molecular Spectroscopy And Computational Chemistry,3-0-0,3,CY,NA,B,NA,NA,"Dr. Satyajit Gupta, Dr. Mehboob Alam"
@@ -49,7 +49,7 @@ CYL600,Advanced Organic Chemistry,3-0-0,3,CY,MSc,F,NA,NA,Dr. Ganapathy D
 CYL601,Organometallic Chemistry,3-0-0,3,CY,MSc,H,NA,NA,Dr. Arup Mukhurjee
 CYL604,Solid State Chemistry,3-0-0,3,CY,NA,G,NA,NA,Dr. Katchala Nanaji
 CYL605,Epr Spectroscopy And Application,3-0-0,3,CY,NA,H,NA,NA,Dr. R Mayilmurugan
-CYP102,Chemistry Lab,0-0-3,1.5,CY,BTech,NA,NA,OWǪSU,"Dr. Sanjib(IC), Dr. R Mayilmurugan (IC), Dr. Hemanta Kumar Kisan"
+CYP102,Chemistry Lab,0-0-3,1.5,CY,BTech,NA,NA,OWQSU,"Dr. Sanjib(IC), Dr. R Mayilmurugan (IC), Dr. Hemanta Kumar Kisan"
 CYP502,Organic And Inorganic Laboratory,0-0-6,3,CY,MSc,NA,NA,"P12, R12","Dr. Ganapathy D, Dr. Katchala Nanaji"
 CYP503,Physical And Computational Laboratory,0-0-6,3,CY,MSc,NA,NA,"T23, V23","Dr. Satyajit Gupta(IC), Dr. Suchetan Pal, Dr. Mehboob Alam, Dr. Ruk"
 CYT699,MSc Thesis,X-X-X,6,CY,MSc,NA,NA,NA,DPGC_CY
@@ -161,7 +161,7 @@ MEL624/ME624,Energy Conservation And Management,3-0-0,3/6,ME,NA,M,NA,NA,"Dr. Uda
 MEL636/ME636,Structural Dynamics,3-0-0,3/6,ME,NA,J,NA,NA,Dr. Ganesh Kolappan Geetha
 MEL659/ME553,Advanced Materials And Processing,3-0-0,3/6,ME,NA,B,NA,NA,Dr. Jose Immenual R
 MEP371,Thermal And Fluid Engineering Lab,0-0-3,1.5,ME,BTech,NA,NA,W,Dr. Nagesh Devidas Patil
-MEP381,Manufacturing And Metrology Lab,0-0-3,1.5,ME,BTech,NA,NA,Ǫ,Dr. Rahul Jain
+MEP381,Manufacturing And Metrology Lab,0-0-3,1.5,ME,BTech,NA,NA,Q,Dr. Rahul Jain
 MET799,Thesis (Mtech),X-X-X,9 to 12,ME,MTech,NA,NA,NA,DPGC_ME
 MET895,Phd Candidacy,X-X-X,0,ME,PhD,NA,NA,NA,DPGC_ME
 MET899,Thesis (Phd) New,X-X-X,9 to 12,ME,PhD,NA,NA,NA,DPGC_ME
@@ -212,12 +212,12 @@ PHL101,Physics For Engineers,3-1-0,4,PH,BTech,C,G2,NA,"Dr. Mahavir Sharma, Dr. P
 PHL403,Mathematical Physics,3-0-0,3,PH,MSc,A,NA,NA,"Dr. Sudhanwa Patra, Dr. Mahavir Sharma"
 PHL404,Electronics,3-0-0,3,PH,MSc,C,NA,NA,Dr. Anjali Chaudhary
 PHL501,Classical Mechanics,3-0-0,3,PH,MSc,D,NA,NA,Dr. Dhruv Pratap Singh
-PHL502,Ǫuantum Mechanics,3-0-0,3,PH,MSc,B,NA,NA,Dr. Sesha Vempati
-PHP102,Physics Lab,0-0-3,1.5,PH,BTech,NA,NA,OWǪSU,Dr. Avijit Saha
+PHL502,Quantum Mechanics,3-0-0,3,PH,MSc,B,NA,NA,Dr. Sesha Vempati
+PHP102,Physics Lab,0-0-3,1.5,PH,BTech,NA,NA,OWQSU,Dr. Avijit Saha
 PHP505,Electrodynamics,3-0-0,3,PH,MSc,J,NA,NA,Dr. Praveen
 PHP506,Electronics Laboratory,0-0-6,3,PH,MSc,NA,NA,"U,O",Dr. Bhaskar
 PHT699,Thesis (Msc ),X-X-X,6,PH,MSc,NA,NA,NA,DPGC_PH
 PHT895,Phd Candidacy,X-X-X,0,PH,PhD,NA,NA,NA,DPGC_PH
 PHT899,Thesis (Phd) New,X-X-X,9 to 12,PH,PhD,NA,NA,NA,DPGC_PH
 PH6XX,Fundamentals Of Nanoscience And Nanotechnology,3-0-0,3,PH/MSME,NA,C,NA,NA,Dr. Avijit Pal
-PH6XX,Ǫuantum Materials And Devices: Fundamentals And Applic,3-0-0,3,PH/MSME,NA,D,NA,NA,Dr. Bhaskar
+PH6XX,Quantum Materials And Devices: Fundamentals And Applic,3-0-0,3,PH/MSME,NA,D,NA,NA,Dr. Bhaskar

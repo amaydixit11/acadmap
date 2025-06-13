@@ -36,7 +36,7 @@ export function TimeTableCourseList({
   onCourseSelect,
 }: TimeTableCourseListProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<FilterType>("venue");
+  const [filterType, setFilterType] = useState<FilterType>("code");
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
   const [isMobileView, setIsMobileView] = useState(false);
 
