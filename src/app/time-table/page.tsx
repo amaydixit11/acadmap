@@ -12,6 +12,7 @@ export default function Home() {
   const [selectedCourses, setSelectedCourses] = useState<
     TimeTableParsedCourse[]
   >([]);
+  const [isCompact, setIsCompact] = useState(true);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -57,6 +58,22 @@ export default function Home() {
                     <TabsTrigger value="courses">Courses</TabsTrigger>
                     <TabsTrigger value="timetable">Timetable</TabsTrigger>
                   </TabsList>
+
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="compact-mode"
+                      checked={isCompact}
+                      onChange={(e) => setIsCompact(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    />
+                    <label
+                      htmlFor="compact-mode"
+                      className="text-sm font-medium text-gray-700 cursor-pointer select-none"
+                    >
+                      Compact View
+                    </label>
+                  </div>
                 </div>
 
                 <TabsContent
@@ -71,8 +88,11 @@ export default function Home() {
                 </TabsContent>
 
                 <TabsContent value="timetable" className="mt-2 sm:mt-4">
-                  <div className="max-w-screen overflow-x-auto">
-                    <Timetable selectedCourses={selectedCourses} />
+                  <div className="max-w-full overflow-x-auto">
+                    <Timetable
+                      selectedCourses={selectedCourses}
+                      isCompact={isCompact}
+                    />
                   </div>
                 </TabsContent>
               </Tabs>
