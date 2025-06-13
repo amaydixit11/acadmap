@@ -115,7 +115,14 @@ const CourseCard = ({
             hover:scale-[1.01] hover:shadow-sm text-s`}
         >
           {isCompact ? (
-            <div className="font-semibold text-center">{course.courseCode}</div>
+            <div>
+              <div className="font-semibold text-center">
+                {course.courseCode}
+              </div>
+              <div className="text-xs font-semibold text-center">
+                {course.courseName}
+              </div>
+            </div>
           ) : (
             <>
               <div className="font-semibold mb-1 truncate">

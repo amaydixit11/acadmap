@@ -46,6 +46,7 @@ export interface TimeTableCourse{
     courseCode: string;
     venue: string;
     type: 'lecture' | 'tut' | 'lab';
+    courseName?: string;
   }
 
   export const timeTableSlots: TimeTableTimeSlot[] = [

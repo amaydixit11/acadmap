@@ -71,7 +71,7 @@ export function getCoursesForSlot(
           if (
             parsedSlot.letter === slotLetter &&
             (parsedSlot.numbers.includes(occurrenceNumber) || slotStr === slotLetter)
-          ) {coursesInSlot.push({ courseCode: course.code, venue: venue, type: type });
+          ) {coursesInSlot.push({ courseCode: course.code, venue: venue, type: type, courseName:course.title });
             break;
           }
         }
