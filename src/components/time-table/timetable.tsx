@@ -111,40 +111,42 @@ const CourseCard = ({
       <TooltipTrigger className="w-full">
         <div
           className={cn(
-            isCompact ? "p-1" : "p-2",
+            isCompact ? "p-1" : "p-2 sm:p-3",
             "h-full transition-all duration-200 group",
             colorScheme.bg,
             colorScheme.hover,
             colorScheme.text,
             "rounded-md border-l-2",
             colorScheme.border,
-            "hover:scale-[1.01] hover:shadow-sm dark:hover:shadow-black/20 text-s"
+            "hover:scale-[1.01] hover:shadow-sm dark:hover:shadow-black/20"
           )}
         >
           {isCompact ? (
-            <div>
-              <div className={`font-semibold text-center ${colorScheme.text}`}>
+            <div className="space-y-1">
+              <div
+                className={`font-semibold text-center text-xs sm:text-sm ${colorScheme.text}`}
+              >
                 {course.courseCode}
               </div>
               <div
-                className={`text-xs font-semibold text-center ${colorScheme.text}`}
+                className={`text-xs font-medium text-center leading-tight ${colorScheme.text}`}
               >
                 {course.courseName}
               </div>
             </div>
           ) : (
             <>
-              <div className="font-semibold mb-1 truncate">
+              <div className="font-semibold mb-1 truncate text-xs sm:text-sm">
                 <BookOpen className="w-3 h-3 inline mr-1 opacity-75" />
                 {course.courseCode}
               </div>
-              <div className="text-s opacity-90 truncate">
+              <div className="text-xs sm:text-sm opacity-90 truncate">
                 <MapPin className="w-3 h-3 inline mr-1 opacity-75" />
                 {course.venue}
               </div>
               <div className="flex items-center gap-1 mt-1">
                 <AlertCircle className="w-2 h-2 opacity-75 flex-shrink-0" />
-                <span className="text-s font-medium uppercase tracking-wide opacity-75 truncate">
+                <span className="text-xs font-medium uppercase tracking-wide opacity-75 truncate">
                   {course.type}
                 </span>
               </div>
@@ -155,15 +157,23 @@ const CourseCard = ({
       <TooltipContent
         side="top"
         className={cn(
-          "p-3 max-w-xs",
+          "p-3 max-w-xs z-50",
           "bg-white dark:bg-black",
           "border border-gray-200 dark:border-gray-700",
           "shadow-md dark:shadow-black/50"
         )}
       >
         <div className="space-y-2">
-          <div className={cn("font-semibold", "text-gray-900 dark:text-white")}>
+          <div
+            className={cn(
+              "font-semibold text-sm",
+              "text-gray-900 dark:text-white"
+            )}
+          >
             {course.courseCode}
+          </div>
+          <div className={cn("text-sm", "text-gray-700 dark:text-gray-300")}>
+            {course.courseName}
           </div>
           <div className={cn("text-sm", "text-gray-700 dark:text-gray-300")}>
             {course.venue}
@@ -208,95 +218,110 @@ export function Timetable({
         "w-full rounded-xl border shadow-lg transition-all duration-300",
         "bg-white dark:bg-black",
         "border-gray-200 dark:border-gray-700",
-        "shadow-gray-200/50 dark:shadow-black/50"
+        "shadow-gray-200/50 dark:shadow-black/50",
+        "overflow-hidden" // Prevent content overflow
       )}
     >
-      <Table className="w-full table-fixed">
-        <TableHeader>
-          <TableRow
-            className={cn("border-b", "border-gray-200 dark:border-gray-700")}
-          >
-            <TableHead
-              className={cn(
-                "w-24 font-bold text-center transition-colors duration-300",
-                "bg-gray-100/95 dark:bg-gray-900/95",
-                "backdrop-blur-sm",
-                "text-gray-800 dark:text-white"
-              )}
+      {/* Mobile-optimized scrollable container */}
+      <div className="overflow-x-auto">
+        <Table className="w-full min-w-[600px] sm:min-w-full">
+          <TableHeader>
+            <TableRow
+              className={cn("border-b", "border-gray-200 dark:border-gray-700")}
             >
-              Time/Day
-            </TableHead>
-            {times.map((time) => (
               <TableHead
-                key={time}
                 className={cn(
-                  "text-center font-semibold px-1 transition-colors duration-300",
+                  "w-16 sm:w-24 font-bold text-center transition-colors duration-300 sticky left-0 z-20",
                   "bg-gray-100/95 dark:bg-gray-900/95",
                   "backdrop-blur-sm",
-                  "text-gray-800 dark:text-white"
+                  "text-gray-800 dark:text-white",
+                  "text-xs sm:text-sm"
                 )}
               >
-                <div className="text-xs sm:text-sm">{time}</div>
+                <div className="px-1">Time</div>
               </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {days.map((day) => (
-            <TableRow
-              key={day}
-              className={cn(
-                "transition-colors duration-200 border-b",
-                "hover:bg-gray-50/50 dark:hover:bg-gray-900/30",
-                "border-gray-200/50 dark:border-gray-700/50"
-              )}
-            >
-              <TableCell
+              {times.map((time) => (
+                <TableHead
+                  key={time}
+                  className={cn(
+                    "text-center font-semibold px-1 sm:px-2 transition-colors duration-300 min-w-[80px] sm:min-w-[120px]",
+                    "bg-gray-100/95 dark:bg-gray-900/95",
+                    "backdrop-blur-sm",
+                    "text-gray-800 dark:text-white"
+                  )}
+                >
+                  <div className="text-xs sm:text-sm whitespace-nowrap">
+                    {time}
+                  </div>
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {days.map((day) => (
+              <TableRow
+                key={day}
                 className={cn(
-                  "sticky left-0 z-10 font-medium transition-colors duration-300",
-                  "bg-gray-50/95 dark:bg-gray-900/95",
-                  "backdrop-blur-sm",
-                  "text-gray-700 dark:text-gray-200"
+                  "transition-colors duration-200 border-b",
+                  "hover:bg-gray-50/50 dark:hover:bg-gray-900/30",
+                  "border-gray-200/50 dark:border-gray-700/50"
                 )}
               >
-                {day}
-              </TableCell>
-              {times.map((time) => {
-                const courses = getCoursesForSlot(day, time, selectedCourses);
-                return (
-                  <TableCell
-                    key={`${day}-${time}`}
-                    className={cn(
-                      "p-2 relative",
-                      isCompact ? "min-h-[60px]" : "min-h-[120px]"
-                    )}
-                  >
-                    <div className="space-y-2">
-                      {courses.map((course, idx) => (
-                        <CourseCard
-                          key={`${course.courseCode}-${idx}`}
-                          course={course}
-                          colorScheme={getCourseColor(course.courseCode)}
-                          isCompact={isCompact}
-                        />
-                      ))}
-                      {courses.length === 0 && (
-                        <div
-                          className={cn(
-                            isCompact ? "h-[60px]" : "h-[120px]",
-                            "rounded-lg border-2 border-dashed transition-colors duration-300",
-                            "border-gray-200 dark:border-gray-700"
-                          )}
-                        />
+                <TableCell
+                  className={cn(
+                    "sticky left-0 z-10 font-medium transition-colors duration-300",
+                    "bg-gray-50/95 dark:bg-gray-900/95",
+                    "backdrop-blur-sm",
+                    "text-gray-700 dark:text-gray-200",
+                    "text-xs sm:text-sm px-1 sm:px-4"
+                  )}
+                >
+                  <div className="text-center sm:text-left">
+                    <span className="sm:hidden">{day.slice(0, 3)}</span>
+                    <span className="hidden sm:inline">{day}</span>
+                  </div>
+                </TableCell>
+                {times.map((time) => {
+                  const courses = getCoursesForSlot(day, time, selectedCourses);
+                  return (
+                    <TableCell
+                      key={`${day}-${time}`}
+                      className={cn(
+                        "p-1 sm:p-2 relative",
+                        isCompact
+                          ? "min-h-[50px] sm:min-h-[60px]"
+                          : "min-h-[80px] sm:min-h-[120px]"
                       )}
-                    </div>
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                    >
+                      <div className="space-y-1 sm:space-y-2">
+                        {courses.map((course, idx) => (
+                          <CourseCard
+                            key={`${course.courseCode}-${idx}`}
+                            course={course}
+                            colorScheme={getCourseColor(course.courseCode)}
+                            isCompact={isCompact}
+                          />
+                        ))}
+                        {courses.length === 0 && (
+                          <div
+                            className={cn(
+                              isCompact
+                                ? "h-[50px] sm:h-[60px]"
+                                : "h-[80px] sm:h-[120px]",
+                              "rounded-lg border-2 border-dashed transition-colors duration-300",
+                              "border-gray-200 dark:border-gray-700"
+                            )}
+                          />
+                        )}
+                      </div>
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
