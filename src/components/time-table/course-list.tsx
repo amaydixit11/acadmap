@@ -21,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { TimeTableParsedCourse } from "@/types/time-table";
 import { Search, X, Filter, ChevronDown, ChevronUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface TimeTableCourseListProps {
   courses: TimeTableParsedCourse[];
@@ -141,19 +142,48 @@ export function TimeTableCourseList({
   };
 
   const MobileView = () => (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {sortedAndFilteredCourses.map((course) => (
-        <Card key={course.code} className="w-full">
-          <CardContent className="p-4">
+        <Card
+          key={course.code}
+          className={cn(
+            "w-full transition-all duration-200",
+            "bg-white/70 dark:bg-gray-900/70",
+            "backdrop-blur-sm",
+            "border border-gray-200/50 dark:border-gray-700/50",
+            "hover:shadow-md dark:hover:shadow-black/50",
+            "hover:bg-white/90 dark:hover:bg-gray-900/90",
+            selectedCourses.some((c) => c.code === course.code) &&
+              "ring-2 ring-blue-500/30 dark:ring-blue-400/40"
+          )}
+        >
+          <CardContent className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Checkbox
                   checked={selectedCourses.some((c) => c.code === course.code)}
                   onCheckedChange={() => onCourseSelect(course)}
+                  className={cn(
+                    "data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500",
+                    "data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-500",
+                    "border-gray-300 dark:border-gray-600"
+                  )}
                 />
                 <div>
-                  <div className="font-medium">{course.code}</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div
+                    className={cn(
+                      "font-semibold text-sm",
+                      "text-gray-900 dark:text-gray-100"
+                    )}
+                  >
+                    {course.code}
+                  </div>
+                  <div
+                    className={cn(
+                      "text-xs",
+                      "text-gray-700 dark:text-gray-300"
+                    )}
+                  >
                     {course.title}
                   </div>
                 </div>
@@ -162,6 +192,12 @@ export function TimeTableCourseList({
                 variant="ghost"
                 size="sm"
                 onClick={() => toggleCourseExpand(course.code)}
+                className={cn(
+                  "h-8 w-8 p-0",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30",
+                  "text-gray-600 dark:text-gray-400",
+                  "hover:text-gray-900 dark:hover:text-gray-100"
+                )}
               >
                 {expandedCourse === course.code ? (
                   <ChevronUp className="h-4 w-4" />
@@ -172,43 +208,133 @@ export function TimeTableCourseList({
             </div>
 
             {expandedCourse === course.code && (
-              <div className="mt-4 space-y-2 text-sm">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="text-muted-foreground">L-T-P:</div>
-                  <div>{course.ltp}</div>
-                  <div className="text-muted-foreground">Credits:</div>
-                  <div>{course.credits.toString()}</div>
+              <div
+                className={cn(
+                  "mt-3 space-y-2 text-sm",
+                  "p-3 rounded-lg",
+                  "bg-gray-50/50 dark:bg-gray-800/20",
+                  "border border-gray-200/30 dark:border-gray-700/30"
+                )}
+              >
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div
+                    className={cn(
+                      "text-gray-600 dark:text-gray-400",
+                      "font-medium"
+                    )}
+                  >
+                    L-T-P:
+                  </div>
+                  <div className="text-gray-900 dark:text-gray-100">
+                    {course.ltp}
+                  </div>
+                  <div
+                    className={cn(
+                      "text-gray-600 dark:text-gray-400",
+                      "font-medium"
+                    )}
+                  >
+                    Credits:
+                  </div>
+                  <div className="text-gray-900 dark:text-gray-100">
+                    {course.credits.toString()}
+                  </div>
                 </div>
 
                 {course.lectureSlot !== "NA" && (
-                  <div>
-                    <div className="text-muted-foreground">Lecture:</div>
-                    <div>{`${course.lectureSlot} (${course.lectureVenue})`}</div>
+                  <div className="space-y-1">
+                    <div
+                      className={cn(
+                        "text-blue-600 dark:text-blue-400",
+                        "font-medium text-xs"
+                      )}
+                    >
+                      Lecture:
+                    </div>
+                    <div
+                      className={cn(
+                        "text-blue-900 dark:text-blue-100",
+                        "px-2 py-1 rounded",
+                        "bg-blue-100 dark:bg-blue-800/40",
+                        "text-xs"
+                      )}
+                    >
+                      {`${course.lectureSlot} (${course.lectureVenue})`}
+                    </div>
                   </div>
                 )}
 
                 {course.tutorialSlot !== "NA" && (
-                  <div>
-                    <div className="text-muted-foreground">Tutorial:</div>
-                    <div>{`${course.tutorialSlot} (${course.tutorialVenue})`}</div>
+                  <div className="space-y-1">
+                    <div
+                      className={cn(
+                        "text-emerald-600 dark:text-emerald-400",
+                        "font-medium text-xs"
+                      )}
+                    >
+                      Tutorial:
+                    </div>
+                    <div
+                      className={cn(
+                        "text-emerald-900 dark:text-emerald-100",
+                        "px-2 py-1 rounded",
+                        "bg-emerald-100 dark:bg-emerald-800/40",
+                        "text-xs"
+                      )}
+                    >
+                      {`${course.tutorialSlot} (${course.tutorialVenue})`}
+                    </div>
                   </div>
                 )}
 
                 {course.labSlot !== "NA" && (
-                  <div>
-                    <div className="text-muted-foreground">Lab:</div>
-                    <div>{`${course.labSlot} (${course.labVenue})`}</div>
+                  <div className="space-y-1">
+                    <div
+                      className={cn(
+                        "text-purple-600 dark:text-purple-400",
+                        "font-medium text-xs"
+                      )}
+                    >
+                      Lab:
+                    </div>
+                    <div
+                      className={cn(
+                        "text-purple-900 dark:text-purple-100",
+                        "px-2 py-1 rounded",
+                        "bg-purple-100 dark:bg-purple-800/40",
+                        "text-xs"
+                      )}
+                    >
+                      {`${course.labSlot} (${course.labVenue})`}
+                    </div>
                   </div>
                 )}
 
-                <div>
-                  <div className="text-muted-foreground">Instructor:</div>
-                  <div>
+                <div className="space-y-1">
+                  <div
+                    className={cn(
+                      "text-gray-600 dark:text-gray-400",
+                      "font-medium text-xs"
+                    )}
+                  >
+                    Instructor:
+                  </div>
+                  <div className="space-y-1">
                     {(course?.instructor ?? "")
                       .split(",")
                       .filter(Boolean)
                       .map((instructor, index) => (
-                        <div key={index}>{instructor.trim()}</div>
+                        <div
+                          key={index}
+                          className={cn(
+                            "text-white dark:text-gray-100",
+                            "px-2 py-1 rounded",
+                            "bg-gray-600 dark:bg-gray-700/60",
+                            "text-xs"
+                          )}
+                        >
+                          {instructor.trim()}
+                        </div>
                       ))}
                   </div>
                 </div>
@@ -221,121 +347,371 @@ export function TimeTableCourseList({
   );
 
   const DesktopView = () => (
-    <div className="rounded-md border overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[50px]">
-              <Checkbox
-                checked={allFilteredSelected}
-                onCheckedChange={handleSelectAll}
-              />
-            </TableHead>
-            <TableHead className="min-w-[85px]">Code</TableHead>
-            <TableHead className="min-w-[85px]">Name</TableHead>
-            <TableHead className="min-w-[85px]">L-T-P</TableHead>
-            <TableHead className="min-w-[85px]">Credits</TableHead>
-            <TableHead className="min-w-[85px]">Lecture</TableHead>
-            <TableHead className="min-w-[85px]">Tutorial</TableHead>
-            <TableHead className="min-w-[85px]">Lab</TableHead>
-            <TableHead className="min-w-[85px]">Instructor</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sortedAndFilteredCourses.map((course) => (
-            <TableRow key={course.code}>
-              <TableCell>
+    <div
+      className={cn(
+        "rounded-lg border overflow-hidden",
+        "bg-white/70 dark:bg-gray-900/70",
+        "backdrop-blur-sm",
+        "border-gray-200/50 dark:border-gray-700/50",
+        "shadow-sm dark:shadow-black/50"
+      )}
+    >
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow
+              className={cn(
+                "bg-gray-50/50 dark:bg-gray-800/30",
+                "hover:bg-gray-100/50 dark:hover:bg-gray-800/40",
+                "border-b border-gray-200/50 dark:border-gray-700/50"
+              )}
+            >
+              <TableHead className="w-[40px] py-2">
                 <Checkbox
-                  checked={selectedCourses.some((c) => c.code === course.code)}
-                  onCheckedChange={() => onCourseSelect(course)}
+                  checked={allFilteredSelected}
+                  onCheckedChange={handleSelectAll}
+                  className={cn(
+                    "data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500",
+                    "data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-500",
+                    "border-gray-300 dark:border-gray-600"
+                  )}
                 />
-              </TableCell>
-              <TableCell className="font-medium">{course.code}</TableCell>
-              <TableCell>{course.title}</TableCell>
-              <TableCell>{course.ltp}</TableCell>
-              <TableCell>{course.credits.toString()}</TableCell>
-              <TableCell>
-                {course.lectureSlot === "NA"
-                  ? "-"
-                  : `${course.lectureSlot} (${course.lectureVenue})`}
-              </TableCell>
-              <TableCell>
-                {course.tutorialSlot === "NA"
-                  ? "-"
-                  : `${course.tutorialSlot} (${course.tutorialVenue})`}
-              </TableCell>
-              <TableCell>
-                {course.labSlot === "NA"
-                  ? "-"
-                  : `${course.labSlot} (${course.labVenue})`}
-              </TableCell>
-              <TableCell>
-                {(course?.instructor ?? "")
-                  .split(",")
-                  .filter(Boolean)
-                  .map((instructor, index) => (
-                    <div key={index}>{instructor.trim()}</div>
-                  ))}
-              </TableCell>
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[70px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Code
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[120px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Name
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[70px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                L-T-P
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[50px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Credits
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[80px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Lecture
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[80px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Tutorial
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[80px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Lab
+              </TableHead>
+              <TableHead
+                className={cn(
+                  "min-w-[100px] font-semibold py-2 text-xs",
+                  "text-gray-900 dark:text-gray-100"
+                )}
+              >
+                Instructor
+              </TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {sortedAndFilteredCourses.map((course) => (
+              <TableRow
+                key={course.code}
+                className={cn(
+                  "transition-colors duration-200",
+                  "hover:bg-gray-50/30 dark:hover:bg-gray-800/20",
+                  "border-b border-gray-200/30 dark:border-gray-700/30",
+                  selectedCourses.some((c) => c.code === course.code) &&
+                    "bg-gray-100/50 dark:bg-gray-800/30"
+                )}
+              >
+                <TableCell className="py-2">
+                  <Checkbox
+                    checked={selectedCourses.some(
+                      (c) => c.code === course.code
+                    )}
+                    onCheckedChange={() => onCourseSelect(course)}
+                    className={cn(
+                      "data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500",
+                      "data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-500",
+                      "border-gray-300 dark:border-gray-600"
+                    )}
+                  />
+                </TableCell>
+                <TableCell
+                  className={cn(
+                    "font-semibold py-2 text-sm",
+                    "text-gray-900 dark:text-gray-100"
+                  )}
+                >
+                  {course.code}
+                </TableCell>
+                <TableCell className="text-gray-800 dark:text-gray-200 py-2 text-sm">
+                  {course.title}
+                </TableCell>
+                <TableCell className="text-gray-700 dark:text-gray-300 py-2 text-sm">
+                  {course.ltp}
+                </TableCell>
+                <TableCell className="text-gray-700 dark:text-gray-300 py-2 text-sm">
+                  {course.credits.toString()}
+                </TableCell>
+                <TableCell className="py-2">
+                  {course.lectureSlot === "NA" ? (
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      -
+                    </span>
+                  ) : (
+                    <div
+                      className={cn(
+                        "px-2 py-1 rounded text-xs",
+                        "bg-orange-100 dark:bg-orange-800/40",
+                        "text-orange-800 dark:text-orange-200",
+                        "border border-orange-200 dark:border-orange-600"
+                      )}
+                    >
+                      {`${course.lectureSlot} (${course.lectureVenue})`}
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell className="py-2">
+                  {course.tutorialSlot === "NA" ? (
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      -
+                    </span>
+                  ) : (
+                    <div
+                      className={cn(
+                        "px-2 py-1 rounded text-xs",
+                        "bg-emerald-100 dark:bg-emerald-800/40",
+                        "text-emerald-800 dark:text-emerald-200",
+                        "border border-emerald-200 dark:border-emerald-600"
+                      )}
+                    >
+                      {`${course.tutorialSlot} (${course.tutorialVenue})`}
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell className="py-2">
+                  {course.labSlot === "NA" ? (
+                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                      -
+                    </span>
+                  ) : (
+                    <div
+                      className={cn(
+                        "px-2 py-1 rounded text-xs",
+                        "bg-purple-100 dark:bg-purple-800/40",
+                        "text-purple-800 dark:text-purple-200",
+                        "border border-purple-200 dark:border-purple-600"
+                      )}
+                    >
+                      {`${course.labSlot} (${course.labVenue})`}
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell className="py-2">
+                  <div className="space-y-1">
+                    {(course?.instructor ?? "")
+                      .split(",")
+                      .filter(Boolean)
+                      .map((instructor, index) => (
+                        <div
+                          key={index}
+                          className={cn(
+                            "text-xs",
+                            "px-2 py-1 rounded",
+                            "bg-blue-100 dark:bg-blue-800/40",
+                            "text-blue-800 dark:text-blue-200",
+                            "border border-blue-200 dark:border-blue-600"
+                          )}
+                        >
+                          {instructor.trim()}
+                        </div>
+                      ))}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      {/* Search and Filter Controls */}
+      <div
+        className={cn(
+          "flex flex-col gap-3 sm:flex-row sm:items-center",
+          "p-3 rounded-lg",
+          "bg-white/50 dark:bg-gray-900/50",
+          "backdrop-blur-sm",
+          "border border-gray-200/50 dark:border-gray-700/50",
+          "shadow-sm dark:shadow-black/50"
+        )}
+      >
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search
+            className={cn(
+              "absolute left-3 top-2.5 h-4 w-4",
+              "text-gray-500 dark:text-gray-400"
+            )}
+          />
           <Input
             type="text"
             placeholder={`Search by ${filterType}...`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-8 pr-8"
+            className={cn(
+              "pl-10 pr-10 h-9",
+              "bg-white/70 dark:bg-gray-900/70",
+              "border-gray-300 dark:border-gray-600",
+              "text-gray-900 dark:text-gray-100",
+              "placeholder:text-gray-500 dark:placeholder:text-gray-400",
+              "focus:ring-blue-500 dark:focus:ring-blue-400",
+              "focus:border-blue-500 dark:focus:border-blue-400"
+            )}
           />
           {searchTerm && (
             <button
               onClick={clearSearch}
-              className="absolute right-2 top-2.5 text-muted-foreground hover:text-foreground"
+              className={cn(
+                "absolute right-3 top-2.5",
+                "text-gray-500 dark:text-gray-400",
+                "hover:text-gray-700 dark:hover:text-gray-200",
+                "transition-colors duration-200"
+              )}
             >
               <X className="h-4 w-4" />
             </button>
           )}
         </div>
 
-        <div className="flex gap-2 items-center">
-          <Filter className="h-4 w-4 text-muted-foreground" />
+        <div className="flex gap-3 items-center">
+          <Filter
+            className={cn("h-4 w-4", "text-gray-500 dark:text-gray-400")}
+          />
           <Select
             value={filterType}
             onValueChange={(value: FilterType) => setFilterType(value)}
           >
-            <SelectTrigger className="w-[140px]">
+            <SelectTrigger
+              className={cn(
+                "w-[130px] h-9",
+                "bg-white/70 dark:bg-gray-900/70",
+                "border-gray-300 dark:border-gray-600",
+                "text-gray-900 dark:text-gray-100"
+              )}
+            >
               <SelectValue placeholder="Filter type" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="venue">Venue</SelectItem>
-              <SelectItem value="code">Course Code</SelectItem>
-              <SelectItem value="instructor">Instructor</SelectItem>
-              <SelectItem value="slot">Time Slot</SelectItem>
+            <SelectContent
+              className={cn(
+                "bg-white dark:bg-gray-900",
+                "border-gray-200 dark:border-gray-700",
+                "shadow-lg dark:shadow-black/50"
+              )}
+            >
+              <SelectItem
+                value="venue"
+                className={cn(
+                  "text-gray-900 dark:text-gray-100",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30"
+                )}
+              >
+                Venue
+              </SelectItem>
+              <SelectItem
+                value="code"
+                className={cn(
+                  "text-gray-900 dark:text-gray-100",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30"
+                )}
+              >
+                Course Code
+              </SelectItem>
+              <SelectItem
+                value="instructor"
+                className={cn(
+                  "text-gray-900 dark:text-gray-100",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30"
+                )}
+              >
+                Instructor
+              </SelectItem>
+              <SelectItem
+                value="slot"
+                className={cn(
+                  "text-gray-900 dark:text-gray-100",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30"
+                )}
+              >
+                Time Slot
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
+        <div className="flex items-center gap-3">
+          <span
+            className={cn(
+              "text-sm font-medium",
+              "text-gray-600 dark:text-gray-400"
+            )}
+          >
             {sortedAndFilteredCourses.length} courses
           </span>
           {searchTerm && (
-            <Button variant="outline" size="sm" onClick={clearSearch}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={clearSearch}
+              className={cn(
+                "h-8 text-xs",
+                "border-gray-300 dark:border-gray-600",
+                "text-gray-700 dark:text-gray-300",
+                "hover:bg-gray-100 dark:hover:bg-gray-800/30",
+                "hover:text-gray-900 dark:hover:text-gray-100"
+              )}
+            >
               Clear filter
             </Button>
           )}
         </div>
       </div>
 
+      {/* Course List */}
       {isMobileView ? <MobileView /> : <DesktopView />}
     </div>
   );

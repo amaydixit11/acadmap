@@ -21,6 +21,7 @@ import {
   TimeTableSlotInfo,
   timeTableSlots,
 } from "@/types/time-table";
+import { cn } from "@/lib/utils";
 
 interface TimetableProps {
   selectedCourses: TimeTableParsedCourse[];
@@ -29,64 +30,64 @@ interface TimetableProps {
 
 const colors = {
   blue: {
-    bg: "bg-blue-50/90",
-    hover: "hover:bg-blue-100",
-    text: "text-blue-800",
-    border: "border-l-blue-500",
+    bg: "bg-blue-50/90 dark:bg-blue-900/30",
+    hover: "hover:bg-blue-100 dark:hover:bg-blue-800/40",
+    text: "text-blue-800 dark:text-blue-200",
+    border: "border-l-blue-500 dark:border-l-blue-400",
   },
   emerald: {
-    bg: "bg-emerald-50/90",
-    hover: "hover:bg-emerald-100",
-    text: "text-emerald-800",
-    border: "border-l-emerald-500",
+    bg: "bg-emerald-50/90 dark:bg-emerald-900/30",
+    hover: "hover:bg-emerald-100 dark:hover:bg-emerald-800/40",
+    text: "text-emerald-800 dark:text-emerald-200",
+    border: "border-l-emerald-500 dark:border-l-emerald-400",
   },
   purple: {
-    bg: "bg-purple-50/90",
-    hover: "hover:bg-purple-100",
-    text: "text-purple-800",
-    border: "border-l-purple-500",
+    bg: "bg-purple-50/90 dark:bg-purple-900/30",
+    hover: "hover:bg-purple-100 dark:hover:bg-purple-800/40",
+    text: "text-purple-800 dark:text-purple-200",
+    border: "border-l-purple-500 dark:border-l-purple-400",
   },
   amber: {
-    bg: "bg-amber-50/90",
-    hover: "hover:bg-amber-100",
-    text: "text-amber-800",
-    border: "border-l-amber-500",
+    bg: "bg-amber-50/90 dark:bg-amber-900/30",
+    hover: "hover:bg-amber-100 dark:hover:bg-amber-800/40",
+    text: "text-amber-800 dark:text-amber-200",
+    border: "border-l-amber-500 dark:border-l-amber-400",
   },
   pink: {
-    bg: "bg-pink-50/90",
-    hover: "hover:bg-pink-100",
-    text: "text-pink-800",
-    border: "border-l-pink-500",
+    bg: "bg-pink-50/90 dark:bg-pink-900/30",
+    hover: "hover:bg-pink-100 dark:hover:bg-pink-800/40",
+    text: "text-pink-800 dark:text-pink-200",
+    border: "border-l-pink-500 dark:border-l-pink-400",
   },
   cyan: {
-    bg: "bg-cyan-50/90",
-    hover: "hover:bg-cyan-100",
-    text: "text-cyan-800",
-    border: "border-l-cyan-500",
+    bg: "bg-cyan-50/90 dark:bg-cyan-900/30",
+    hover: "hover:bg-cyan-100 dark:hover:bg-cyan-800/40",
+    text: "text-cyan-800 dark:text-cyan-200",
+    border: "border-l-cyan-500 dark:border-l-cyan-400",
   },
   red: {
-    bg: "bg-red-50/90",
-    hover: "hover:bg-red-100",
-    text: "text-red-800",
-    border: "border-l-red-500",
+    bg: "bg-red-50/90 dark:bg-red-900/30",
+    hover: "hover:bg-red-100 dark:hover:bg-red-800/40",
+    text: "text-red-800 dark:text-red-200",
+    border: "border-l-red-500 dark:border-l-red-400",
   },
   indigo: {
-    bg: "bg-indigo-50/90",
-    hover: "hover:bg-indigo-100",
-    text: "text-indigo-800",
-    border: "border-l-indigo-500",
+    bg: "bg-indigo-50/90 dark:bg-indigo-900/30",
+    hover: "hover:bg-indigo-100 dark:hover:bg-indigo-800/40",
+    text: "text-indigo-800 dark:text-indigo-200",
+    border: "border-l-indigo-500 dark:border-l-indigo-400",
   },
   orange: {
-    bg: "bg-orange-50/90",
-    hover: "hover:bg-orange-100",
-    text: "text-orange-800",
-    border: "border-l-orange-500",
+    bg: "bg-orange-50/90 dark:bg-orange-900/30",
+    hover: "hover:bg-orange-100 dark:hover:bg-orange-800/40",
+    text: "text-orange-800 dark:text-orange-200",
+    border: "border-l-orange-500 dark:border-l-orange-400",
   },
   teal: {
-    bg: "bg-teal-50/90",
-    hover: "hover:bg-teal-100",
-    text: "text-teal-800",
-    border: "border-l-teal-500",
+    bg: "bg-teal-50/90 dark:bg-teal-900/30",
+    hover: "hover:bg-teal-100 dark:hover:bg-teal-800/40",
+    text: "text-teal-800 dark:text-teal-200",
+    border: "border-l-teal-500 dark:border-l-teal-400",
   },
 };
 
@@ -109,17 +110,25 @@ const CourseCard = ({
     <Tooltip>
       <TooltipTrigger className="w-full">
         <div
-          className={`${isCompact ? "p-1" : "p-2"} h-full transition-all duration-200 group
-            ${colorScheme.bg} ${colorScheme.hover} ${colorScheme.text} 
-            rounded-md border-l-2 ${colorScheme.border}
-            hover:scale-[1.01] hover:shadow-sm text-s`}
+          className={cn(
+            isCompact ? "p-1" : "p-2",
+            "h-full transition-all duration-200 group",
+            colorScheme.bg,
+            colorScheme.hover,
+            colorScheme.text,
+            "rounded-md border-l-2",
+            colorScheme.border,
+            "hover:scale-[1.01] hover:shadow-sm dark:hover:shadow-black/20 text-s"
+          )}
         >
           {isCompact ? (
             <div>
-              <div className="font-semibold text-center">
+              <div className={`font-semibold text-center ${colorScheme.text}`}>
                 {course.courseCode}
               </div>
-              <div className="text-xs font-semibold text-center">
+              <div
+                className={`text-xs font-semibold text-center ${colorScheme.text}`}
+              >
                 {course.courseName}
               </div>
             </div>
@@ -143,11 +152,30 @@ const CourseCard = ({
           )}
         </div>
       </TooltipTrigger>
-      <TooltipContent side="top" className="p-3 max-w-xs">
+      <TooltipContent
+        side="top"
+        className={cn(
+          "p-3 max-w-xs",
+          "bg-white dark:bg-black",
+          "border border-gray-200 dark:border-gray-700",
+          "shadow-md dark:shadow-black/50"
+        )}
+      >
         <div className="space-y-2">
-          <div className="font-semibold">{course.courseCode}</div>
-          <div className="text-sm">{course.venue}</div>
-          <div className="text-sm capitalize">{course.type}</div>
+          <div className={cn("font-semibold", "text-gray-900 dark:text-white")}>
+            {course.courseCode}
+          </div>
+          <div className={cn("text-sm", "text-gray-700 dark:text-gray-300")}>
+            {course.venue}
+          </div>
+          <div
+            className={cn(
+              "text-sm capitalize",
+              "text-gray-600 dark:text-gray-400"
+            )}
+          >
+            {course.type}
+          </div>
         </div>
       </TooltipContent>
     </Tooltip>
@@ -175,17 +203,38 @@ export function Timetable({
   };
 
   return (
-    <div className="w-full rounded-xl border shadow-lg bg-white">
+    <div
+      className={cn(
+        "w-full rounded-xl border shadow-lg transition-all duration-300",
+        "bg-white dark:bg-black",
+        "border-gray-200 dark:border-gray-700",
+        "shadow-gray-200/50 dark:shadow-black/50"
+      )}
+    >
       <Table className="w-full table-fixed">
         <TableHeader>
-          <TableRow>
-            <TableHead className="w-24 font-bold bg-gray-100/95 backdrop-blur-sm text-gray-800 text-center">
+          <TableRow
+            className={cn("border-b", "border-gray-200 dark:border-gray-700")}
+          >
+            <TableHead
+              className={cn(
+                "w-24 font-bold text-center transition-colors duration-300",
+                "bg-gray-100/95 dark:bg-gray-900/95",
+                "backdrop-blur-sm",
+                "text-gray-800 dark:text-white"
+              )}
+            >
               Time/Day
             </TableHead>
             {times.map((time) => (
               <TableHead
                 key={time}
-                className="text-center font-semibold bg-gray-100/95 backdrop-blur-sm text-gray-800 px-1"
+                className={cn(
+                  "text-center font-semibold px-1 transition-colors duration-300",
+                  "bg-gray-100/95 dark:bg-gray-900/95",
+                  "backdrop-blur-sm",
+                  "text-gray-800 dark:text-white"
+                )}
               >
                 <div className="text-xs sm:text-sm">{time}</div>
               </TableHead>
@@ -194,8 +243,22 @@ export function Timetable({
         </TableHeader>
         <TableBody>
           {days.map((day) => (
-            <TableRow key={day} className="hover:bg-gray-50/50">
-              <TableCell className="sticky left-0 z-10 font-medium text-gray-700 bg-gray-50/95 backdrop-blur-sm">
+            <TableRow
+              key={day}
+              className={cn(
+                "transition-colors duration-200 border-b",
+                "hover:bg-gray-50/50 dark:hover:bg-gray-900/30",
+                "border-gray-200/50 dark:border-gray-700/50"
+              )}
+            >
+              <TableCell
+                className={cn(
+                  "sticky left-0 z-10 font-medium transition-colors duration-300",
+                  "bg-gray-50/95 dark:bg-gray-900/95",
+                  "backdrop-blur-sm",
+                  "text-gray-700 dark:text-gray-200"
+                )}
+              >
                 {day}
               </TableCell>
               {times.map((time) => {
@@ -203,7 +266,10 @@ export function Timetable({
                 return (
                   <TableCell
                     key={`${day}-${time}`}
-                    className={`p-2 relative ${isCompact ? "min-h-[60px]" : "min-h-[120px]"}`}
+                    className={cn(
+                      "p-2 relative",
+                      isCompact ? "min-h-[60px]" : "min-h-[120px]"
+                    )}
                   >
                     <div className="space-y-2">
                       {courses.map((course, idx) => (
@@ -216,7 +282,11 @@ export function Timetable({
                       ))}
                       {courses.length === 0 && (
                         <div
-                          className={`${isCompact ? "h-[60px]" : "h-[120px]"} rounded-lg border-2 border-dashed border-gray-200`}
+                          className={cn(
+                            isCompact ? "h-[60px]" : "h-[120px]",
+                            "rounded-lg border-2 border-dashed transition-colors duration-300",
+                            "border-gray-200 dark:border-gray-700"
+                          )}
                         />
                       )}
                     </div>
