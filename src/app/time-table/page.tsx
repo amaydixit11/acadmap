@@ -127,7 +127,7 @@ export default function Home() {
                     </TabsTrigger>
                   </TabsList>
 
-                  {/* <div
+                  <div
                     className={cn(
                       "flex items-center justify-center space-x-2",
                       "p-3 rounded-lg",
@@ -162,7 +162,7 @@ export default function Home() {
                     >
                       Compact View
                     </label>
-                  </div> */}
+                  </div>
                 </div>
 
                 <TabsContent
