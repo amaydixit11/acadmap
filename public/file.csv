@@ -1,4 +1,4 @@
-CourseCode,CourseName,L-T-P,Credits,Discipline,Program,SlotLecture\Venue,TutorialSlot\Venue,Labslot\Venue,Instructor
+Course Code,Course Name,L-T-P,Credits,Discipline,Program,Slot Lecture\Venue,Tutorial Slot\Venue,Lab slot\Venue,Instructor
 BML511,PHYSIOLOGY,2-0-0,2,BSBM,MTech,H12\SD-2202\203,NA,NA,DPGC_BSBM
 TPL601,BIOMEDICAL IMAGINGANDSIGNAL ANALYSES,3-0-0,3,BSBM,MTech,I\SD-2202\203,NA,NA,DPGC_BSBM
 BML512,MOLECULARBIOLOGY,3-0-0,3,BSBM,MTech,J\SD-2 202\203,NA,NA,Dr.Arun KumarUpadhyay
