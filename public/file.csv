@@ -1,4 +1,4 @@
-Course Code,Course Name,L-T-P,Credits,Discipline,Program,Course category,Slot Lecture\Venue,Tutorial Slot\Venue,Lab Slot\Venue,Instructor
+Course Code,Course Name,L-T-P,Credits,Discipline,Program,Course category,Slot Lecture\Venue,Tutorial Slot\Venue,Lab slot\Venue,Instructor
 BML101,Biology for Engineers,3-0-0,3,BSBM/BMD,BTech,PC,A,,,Dr. Arun Kumar Upadhyay
 BML551,Instrumentation in Biomedical Engineering,3-0-0,3,BSBM/BMD,MTech,PC,B,,,DPGC_BSBM
 BML651,Magnetic Resonance Imaging and Contrast Agents,2-0-0,2,BSBM/BMD,MTech,PE,M,,,DPGC_BSBM
@@ -201,5 +201,6 @@ PHT699,Thesis,X-X-X,18,PH,MSc,PE,NA,NA,,DPGC
 PHT895,PhD Candidacy,X-X-X,0,PH,PhD,PC,,,,DPGC
 PHT899,PhD Thesis,X-X-X,12,PH,PhD,PC,,,,DPGC
 TPNXXX,Advanced Micro-and-Nanofabrication and Electrical Characterization,3-0-0,3,PH,,,I,,,Dr. Bhaskar
+
 
 
