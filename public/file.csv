@@ -73,7 +73,7 @@ ECL531,Integrated Circuit Technology,3-0-0,3,ECE/MV,MTech,,J,,,Dr. Manish Pandey
 EE599,MTech Thesis,,3,EE,MTech,,,,,DPGC EECS
 EE799,PhD Thesis,,3,EE,PhD,,,,,DPGC EECS
 EEL101,Basic Electrical Engineering,3-0-2,6 to 12,EE,BTech,PC,D,,,Dr. Shashank Kurm/Dr. Lalit Sahu/Dr. Shashank Kurm(L)/Dr. Krishna Murari (L)/Dr. Nitin Khanna(EEL205 Control Systems
-EEL205,Control Systems,3-1-2,30,EE,BTech,PC,A,,H1,Dr. Krishna Murari/Dr. Shashank Kurm
+EEL205,Control Systems,3-1-2,3,EE,BTech,PC,A,,H1,Dr. Krishna Murari/Dr. Shashank Kurm
 EEL206,Electrical Machines-I,3-0-0,4,EE,BTech,PC,B,,,Dr. Lalit Sahu
 EEL207,Power System Analysis,3-0-0,2,EE,BTech,PC,E,,,Dr. Krishna Murari
 EEL208,Sensors and Instrumentation,3-0-0,3,EE,BTech,PC,F,,,Dr. Saikat Sahu
@@ -201,6 +201,7 @@ PHT699,Thesis,X-X-X,18,PH,MSc,PE,NA,NA,,DPGC
 PHT895,PhD Candidacy,X-X-X,0,PH,PhD,PC,,,,DPGC
 PHT899,PhD Thesis,X-X-X,12,PH,PhD,PC,,,,DPGC
 TPNXXX,Advanced Micro-and-Nanofabrication and Electrical Characterization,3-0-0,3,PH,,,I,,,Dr. Bhaskar
+
 
 
 
