@@ -196,8 +196,9 @@ PHL607,Experimental and Measurement Techniques,3-0-0,3,PH,,,C,,,Dr. Dhruv Pratap
 PHL610,Science and Technology of Thin Films,3-0-0,3,PH,,,K,,,Dr. Anjali Choudhary
 PHP021,Physics lab-II (Prep course),0-0-3,1.5,PH,BTech (prep),PREP,,,P,Dr. Sesha Vempati
 PHP102,Physics lab,0-0-3,1.5,PH,BTech,PC,NA,,OWQSU,Dr. Praveen Kumar
-PHP511,General Physics Laboratory,0-0-6,3,PH,MSc,PC,NA,NA,"O,S",Dr. Dhruv Pratap Singh
-PHT699,Thesis,X-X-X,18,PH,MSc,PE,NA,NA,NA,DPGC
+PHP511,General Physics Laboratory,0-0-6,3,PH,MSc,PC,NA,NA,OS,Dr. Dhruv Pratap Singh
+PHT699,Thesis,X-X-X,18,PH,MSc,PE,NA,NA,,DPGC
 PHT895,PhD Candidacy,X-X-X,0,PH,PhD,PC,,,,DPGC
 PHT899,PhD Thesis,X-X-X,12,PH,PhD,PC,,,,DPGC
 TPNXXX,Advanced Micro-and-Nanofabrication and Electrical Characterization,3-0-0,3,PH,,,I,,,Dr. Bhaskar
+
