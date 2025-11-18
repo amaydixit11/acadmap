@@ -149,7 +149,7 @@ MEL651,Additive Manufacturing,3-0-0,3,ME,MTech,,I,,,Dr. Rahul Jain
 MEL658,Mechanical behavior and Testing of Materials,3-0-0,3,ME,,,A,,,Dr. Jose Immenual R
 MEL656/ME557,Material Processing with Laser,3-0-0,3/6,ME,,,B,,,Dr. Kaushik Bandyopadhyay
 MEP102,Digital fabrication,1-0.5-3,3,ME,BTech,,G3,H3,OWQSU,Dr. Jose Immenual R
-MEP302,Engineering and Machine Drawing,0-0-4,2,ME,BTech,,,,TBA,Dr. Kaushik Bandyopadhyay
+MEP302,Engineering and Machine Drawing,0-0-4,2,ME,BTech,,,,,Dr. Kaushik Bandyopadhyay
 MEP376,Solid Mechanics and Dynamics Lab,0-0-2,1,ME,BTech,,,O12,,Dr. Anshul Faye and Dr. Ganesh Kolappan Geetha
 MET799,MTech Thesis,,9 to 15,ME,MTech,,,,,DPGC ME
 MET895,PhD Candidacy,,0,ME,PhD,,,,,DPGC ME
@@ -201,4 +201,5 @@ PHT699,Thesis,X-X-X,18,PH,MSc,PE,NA,NA,,DPGC
 PHT895,PhD Candidacy,X-X-X,0,PH,PhD,PC,,,,DPGC
 PHT899,PhD Thesis,X-X-X,12,PH,PhD,PC,,,,DPGC
 TPNXXX,Advanced Micro-and-Nanofabrication and Electrical Characterization,3-0-0,3,PH,,,I,,,Dr. Bhaskar
+
 
