@@ -415,7 +415,7 @@ export function TimeTableCourseList({
                   "text-gray-900 dark:text-gray-100"
                 )}
               >
-                Lecture
+                Lecture (Room)
               </TableHead>
               <TableHead
                 className={cn(
@@ -423,7 +423,7 @@ export function TimeTableCourseList({
                   "text-gray-900 dark:text-gray-100"
                 )}
               >
-                Tutorial
+                Tutorial (Room)
               </TableHead>
               <TableHead
                 className={cn(
@@ -431,7 +431,7 @@ export function TimeTableCourseList({
                   "text-gray-900 dark:text-gray-100"
                 )}
               >
-                Lab
+                Lab (Room)
               </TableHead>
               <TableHead
                 className={cn(
