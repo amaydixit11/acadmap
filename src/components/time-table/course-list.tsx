@@ -249,7 +249,7 @@ export function TimeTableCourseList({
                         "font-medium text-xs"
                       )}
                     >
-                      Lecture:
+                      Lecture (Room):
                     </div>
                     <div
                       className={cn(
@@ -272,7 +272,7 @@ export function TimeTableCourseList({
                         "font-medium text-xs"
                       )}
                     >
-                      Tutorial:
+                      Tutorial (Room):
                     </div>
                     <div
                       className={cn(
@@ -295,7 +295,7 @@ export function TimeTableCourseList({
                         "font-medium text-xs"
                       )}
                     >
-                      Lab:
+                      Lab (Room):
                     </div>
                     <div
                       className={cn(
