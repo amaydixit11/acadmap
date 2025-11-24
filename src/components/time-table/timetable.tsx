@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 interface TimetableProps {
   selectedCourses: TimeTableParsedCourse[];
   isCompact?: boolean;
+  viewSlots?: boolean;
 }
 
 const colors = {
@@ -195,6 +196,7 @@ const CourseCard = ({
 export function Timetable({
   selectedCourses,
   isCompact = false,
+  viewSlots = false,
 }: TimetableProps) {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const times = Array.from(
@@ -295,8 +297,7 @@ export function Timetable({
                     >
                       <div className="space-y-1 sm:space-y-2">
                         <div className="">
-                          {/* show slot of the cell */}
-                          {timeTableSlots.map((cell) => {
+                          {viewSlots && timeTableSlots.map((cell) => {
                             if (cell.day === day && cell.time === time) {
                               return (
                                 <span

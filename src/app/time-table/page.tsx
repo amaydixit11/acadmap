@@ -16,6 +16,7 @@ export default function Home() {
     TimeTableParsedCourse[]
   >([]);
   const [isCompact, setIsCompact] = useState(true);
+  const [viewSlots, setViewSlots] = useState(true);
   const [clashes, setClashes] = useState<SlotClash[]>([]);
 
   useEffect(() => {
@@ -144,16 +145,19 @@ export default function Home() {
                         "hover:bg-gray-50 dark:hover:bg-gray-700",
                         "transition-all duration-200",
                         "text-xs sm:text-sm",
-                        clashes.length > 0 && "data-[state=active]:text-red-600 dark:data-[state=active]:text-red-400"
+                        clashes.length > 0 &&
+                          "data-[state=active]:text-red-600 dark:data-[state=active]:text-red-400"
                       )}
                     >
                       <span className="flex items-center gap-1">
                         Clashes
                         {clashes.length > 0 && (
-                          <span className={cn(
-                            "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-semibold",
-                            "bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400"
-                          )}>
+                          <span
+                            className={cn(
+                              "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-semibold",
+                              "bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400"
+                            )}
+                          >
                             {clashes.length}
                           </span>
                         )}
@@ -196,6 +200,31 @@ export default function Home() {
                     >
                       Compact View
                     </label>
+                    <input
+                      type="checkbox"
+                      id="slots"
+                      checked={viewSlots}
+                      onChange={(e) => setViewSlots(e.target.checked)}
+                      className={cn(
+                        "w-4 h-4 rounded",
+                        "text-blue-600 dark:text-blue-400",
+                        "bg-gray-100 dark:bg-gray-700",
+                        "border-gray-300 dark:border-gray-600",
+                        "focus:ring-blue-500 dark:focus:ring-blue-400",
+                        "focus:ring-2 transition-colors duration-200"
+                      )}
+                    />
+                    <label
+                      htmlFor="slots"
+                      className={cn(
+                        "text-sm font-medium cursor-pointer select-none",
+                        "text-gray-700 dark:text-gray-300",
+                        "hover:text-gray-900 dark:hover:text-gray-100",
+                        "transition-colors duration-200"
+                      )}
+                    >
+                      View Slots
+                    </label>
                   </div>
                 </div>
 
@@ -232,6 +261,7 @@ export default function Home() {
                     <Timetable
                       selectedCourses={selectedCourses}
                       isCompact={isCompact}
+                      viewSlots={viewSlots}
                     />
                   </div>
                 </TabsContent>
@@ -247,7 +277,11 @@ export default function Home() {
                     "transition-all duration-300"
                   )}
                 >
-                  <ClashesTab clashes={clashes} selectedCourses={selectedCourses} allCourses={courses} />
+                  <ClashesTab
+                    clashes={clashes}
+                    selectedCourses={selectedCourses}
+                    allCourses={courses}
+                  />
                 </TabsContent>
               </Tabs>
             </div>
