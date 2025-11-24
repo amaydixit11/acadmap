@@ -29,67 +29,265 @@ interface TimetableProps {
   viewSlots?: boolean;
 }
 
+// const colors = {
+//   blue: {
+//     bg: "bg-blue-50/90 dark:bg-blue-900/30",
+//     hover: "hover:bg-blue-100 dark:hover:bg-blue-800/40",
+//     text: "text-blue-800 dark:text-blue-200",
+//     border: "border-l-blue-500 dark:border-l-blue-400",
+//   },
+//   emerald: {
+//     bg: "bg-emerald-50/90 dark:bg-emerald-900/30",
+//     hover: "hover:bg-emerald-100 dark:hover:bg-emerald-800/40",
+//     text: "text-emerald-800 dark:text-emerald-200",
+//     border: "border-l-emerald-500 dark:border-l-emerald-400",
+//   },
+//   purple: {
+//     bg: "bg-purple-50/90 dark:bg-purple-900/30",
+//     hover: "hover:bg-purple-100 dark:hover:bg-purple-800/40",
+//     text: "text-purple-800 dark:text-purple-200",
+//     border: "border-l-purple-500 dark:border-l-purple-400",
+//   },
+//   amber: {
+//     bg: "bg-amber-50/90 dark:bg-amber-900/30",
+//     hover: "hover:bg-amber-100 dark:hover:bg-amber-800/40",
+//     text: "text-amber-800 dark:text-amber-200",
+//     border: "border-l-amber-500 dark:border-l-amber-400",
+//   },
+//   pink: {
+//     bg: "bg-pink-50/90 dark:bg-pink-900/30",
+//     hover: "hover:bg-pink-100 dark:hover:bg-pink-800/40",
+//     text: "text-pink-800 dark:text-pink-200",
+//     border: "border-l-pink-500 dark:border-l-pink-400",
+//   },
+//   cyan: {
+//     bg: "bg-cyan-50/90 dark:bg-cyan-900/30",
+//     hover: "hover:bg-cyan-100 dark:hover:bg-cyan-800/40",
+//     text: "text-cyan-800 dark:text-cyan-200",
+//     border: "border-l-cyan-500 dark:border-l-cyan-400",
+//   },
+//   red: {
+//     bg: "bg-red-50/90 dark:bg-red-900/30",
+//     hover: "hover:bg-red-100 dark:hover:bg-red-800/40",
+//     text: "text-red-800 dark:text-red-200",
+//     border: "border-l-red-500 dark:border-l-red-400",
+//   },
+//   indigo: {
+//     bg: "bg-indigo-50/90 dark:bg-indigo-900/30",
+//     hover: "hover:bg-indigo-100 dark:hover:bg-indigo-800/40",
+//     text: "text-indigo-800 dark:text-indigo-200",
+//     border: "border-l-indigo-500 dark:border-l-indigo-400",
+//   },
+//   orange: {
+//     bg: "bg-orange-50/90 dark:bg-orange-900/30",
+//     hover: "hover:bg-orange-100 dark:hover:bg-orange-800/40",
+//     text: "text-orange-800 dark:text-orange-200",
+//     border: "border-l-orange-500 dark:border-l-orange-400",
+//   },
+//   teal: {
+//     bg: "bg-teal-50/90 dark:bg-teal-900/30",
+//     hover: "hover:bg-teal-100 dark:hover:bg-teal-800/40",
+//     text: "text-teal-800 dark:text-teal-200",
+//     border: "border-l-teal-500 dark:border-l-teal-400",
+//   },
+// };
+
 const colors = {
+  // A - Blue
   blue: {
     bg: "bg-blue-50/90 dark:bg-blue-900/30",
     hover: "hover:bg-blue-100 dark:hover:bg-blue-800/40",
     text: "text-blue-800 dark:text-blue-200",
     border: "border-l-blue-500 dark:border-l-blue-400",
   },
+  // B - Emerald
   emerald: {
     bg: "bg-emerald-50/90 dark:bg-emerald-900/30",
     hover: "hover:bg-emerald-100 dark:hover:bg-emerald-800/40",
     text: "text-emerald-800 dark:text-emerald-200",
     border: "border-l-emerald-500 dark:border-l-emerald-400",
   },
+  // C - Purple
   purple: {
     bg: "bg-purple-50/90 dark:bg-purple-900/30",
     hover: "hover:bg-purple-100 dark:hover:bg-purple-800/40",
     text: "text-purple-800 dark:text-purple-200",
     border: "border-l-purple-500 dark:border-l-purple-400",
   },
+  // D - Amber
   amber: {
     bg: "bg-amber-50/90 dark:bg-amber-900/30",
     hover: "hover:bg-amber-100 dark:hover:bg-amber-800/40",
     text: "text-amber-800 dark:text-amber-200",
     border: "border-l-amber-500 dark:border-l-amber-400",
   },
+  // E - Pink
   pink: {
     bg: "bg-pink-50/90 dark:bg-pink-900/30",
     hover: "hover:bg-pink-100 dark:hover:bg-pink-800/40",
     text: "text-pink-800 dark:text-pink-200",
     border: "border-l-pink-500 dark:border-l-pink-400",
   },
+  // F - Cyan
   cyan: {
     bg: "bg-cyan-50/90 dark:bg-cyan-900/30",
     hover: "hover:bg-cyan-100 dark:hover:bg-cyan-800/40",
     text: "text-cyan-800 dark:text-cyan-200",
     border: "border-l-cyan-500 dark:border-l-cyan-400",
   },
+  // G - Red
   red: {
     bg: "bg-red-50/90 dark:bg-red-900/30",
     hover: "hover:bg-red-100 dark:hover:bg-red-800/40",
     text: "text-red-800 dark:text-red-200",
     border: "border-l-red-500 dark:border-l-red-400",
   },
+  // H - Indigo
   indigo: {
     bg: "bg-indigo-50/90 dark:bg-indigo-900/30",
     hover: "hover:bg-indigo-100 dark:hover:bg-indigo-800/40",
     text: "text-indigo-800 dark:text-indigo-200",
     border: "border-l-indigo-500 dark:border-l-indigo-400",
   },
+  // I - Orange
   orange: {
     bg: "bg-orange-50/90 dark:bg-orange-900/30",
     hover: "hover:bg-orange-100 dark:hover:bg-orange-800/40",
     text: "text-orange-800 dark:text-orange-200",
     border: "border-l-orange-500 dark:border-l-orange-400",
   },
+  // J - Teal
   teal: {
     bg: "bg-teal-50/90 dark:bg-teal-900/30",
     hover: "hover:bg-teal-100 dark:hover:bg-teal-800/40",
     text: "text-teal-800 dark:text-teal-200",
     border: "border-l-teal-500 dark:border-l-teal-400",
   },
+  // K - Lime
+  lime: {
+    bg: "bg-lime-50/90 dark:bg-lime-900/30",
+    hover: "hover:bg-lime-100 dark:hover:bg-lime-800/40",
+    text: "text-lime-800 dark:text-lime-200",
+    border: "border-l-lime-500 dark:border-l-lime-400",
+  },
+  // L - Fuchsia
+  fuchsia: {
+    bg: "bg-fuchsia-50/90 dark:bg-fuchsia-900/30",
+    hover: "hover:bg-fuchsia-100 dark:hover:bg-fuchsia-800/40",
+    text: "text-fuchsia-800 dark:text-fuchsia-200",
+    border: "border-l-fuchsia-500 dark:border-l-fuchsia-400",
+  },
+  // M - Sky
+  sky: {
+    bg: "bg-sky-50/90 dark:bg-sky-900/30",
+    hover: "hover:bg-sky-100 dark:hover:bg-sky-800/40",
+    text: "text-sky-800 dark:text-sky-200",
+    border: "border-l-sky-500 dark:border-l-sky-400",
+  },
+  // N - Rose
+  rose: {
+    bg: "bg-rose-50/90 dark:bg-rose-900/30",
+    hover: "hover:bg-rose-100 dark:hover:bg-rose-800/40",
+    text: "text-rose-800 dark:text-rose-200",
+    border: "border-l-rose-500 dark:border-l-rose-400",
+  },
+  // O - Violet
+  violet: {
+    bg: "bg-violet-50/90 dark:bg-violet-900/30",
+    hover: "hover:bg-violet-100 dark:hover:bg-violet-800/40",
+    text: "text-violet-800 dark:text-violet-200",
+    border: "border-l-violet-500 dark:border-l-violet-400",
+  },
+  // P - Yellow
+  yellow: {
+    bg: "bg-yellow-50/90 dark:bg-yellow-900/30",
+    hover: "hover:bg-yellow-100 dark:hover:bg-yellow-800/40",
+    text: "text-yellow-800 dark:text-yellow-200",
+    border: "border-l-yellow-500 dark:border-l-yellow-400",
+  },
+  // Q - Slate
+  slate: {
+    bg: "bg-slate-50/90 dark:bg-slate-900/30",
+    hover: "hover:bg-slate-100 dark:hover:bg-slate-800/40",
+    text: "text-slate-800 dark:text-slate-200",
+    border: "border-l-slate-500 dark:border-l-slate-400",
+  },
+  // R - Green
+  green: {
+    bg: "bg-green-50/90 dark:bg-green-900/30",
+    hover: "hover:bg-green-100 dark:hover:bg-green-800/40",
+    text: "text-green-800 dark:text-green-200",
+    border: "border-l-green-500 dark:border-l-green-400",
+  },
+  // S - Stone
+  stone: {
+    bg: "bg-stone-50/90 dark:bg-stone-900/30",
+    hover: "hover:bg-stone-100 dark:hover:bg-stone-800/40",
+    text: "text-stone-800 dark:text-stone-200",
+    border: "border-l-stone-500 dark:border-l-stone-400",
+  },
+  // T - Zinc
+  zinc: {
+    bg: "bg-zinc-50/90 dark:bg-zinc-900/30",
+    hover: "hover:bg-zinc-100 dark:hover:bg-zinc-800/40",
+    text: "text-zinc-800 dark:text-zinc-200",
+    border: "border-l-zinc-500 dark:border-l-zinc-400",
+  },
+  // U - Neutral
+  neutral: {
+    bg: "bg-neutral-50/90 dark:bg-neutral-900/30",
+    hover: "hover:bg-neutral-100 dark:hover:bg-neutral-800/40",
+    text: "text-neutral-800 dark:text-neutral-200",
+    border: "border-l-neutral-500 dark:border-l-neutral-400",
+  },
+  // V - Gray
+  gray: {
+    bg: "bg-gray-50/90 dark:bg-gray-900/30",
+    hover: "hover:bg-gray-100 dark:hover:bg-gray-800/40",
+    text: "text-gray-800 dark:text-gray-200",
+    border: "border-l-gray-500 dark:border-l-gray-400",
+  },
+  // W - Warmgray (using stone as alternative)
+  warmgray: {
+    bg: "bg-stone-100/90 dark:bg-stone-800/30",
+    hover: "hover:bg-stone-200 dark:hover:bg-stone-700/40",
+    text: "text-stone-900 dark:text-stone-100",
+    border: "border-l-stone-600 dark:border-l-stone-300",
+  },
+  // X - Coolgray (using slate as alternative)
+  coolgray: {
+    bg: "bg-slate-100/90 dark:bg-slate-800/30",
+    hover: "hover:bg-slate-200 dark:hover:bg-slate-700/40",
+    text: "text-slate-900 dark:text-slate-100",
+    border: "border-l-slate-600 dark:border-l-slate-300",
+  },
+};
+
+const slotColorMap: Record<string, keyof typeof colors> = {
+  'A': 'blue',
+  'B': 'emerald',
+  'C': 'purple',
+  'D': 'amber',
+  'E': 'pink',
+  'F': 'cyan',
+  'G': 'red',
+  'H': 'indigo',
+  'I': 'orange',
+  'J': 'teal',
+  'K': 'lime',
+  'L': 'fuchsia',
+  'M': 'sky',
+  'N': 'rose',
+  'O': 'violet',
+  'P': 'yellow',
+  'Q': 'slate',
+  'R': 'green',
+  'S': 'stone',
+  'T': 'zinc',
+  'U': 'neutral',
+  'V': 'gray',
+  'W': 'warmgray',
+  'X': 'coolgray',
 };
 
 function hashCode(str: string) {
@@ -208,10 +406,16 @@ export function Timetable({
   // Ensure the keys are an array for predictable order
   const colorKeys: ColorKey[] = Object.keys(colors) as ColorKey[];
 
-  const getCourseColor = (courseCode: string) => {
-    // Ensure `hashCode` function is defined correctly
-    const colorIndex = Math.abs(hashCode(courseCode)) % colorKeys.length;
-    return colors[colorKeys[colorIndex]]; // TypeScript will know the keys are valid here
+  // const getSlotColor = (courseCode: string) => {
+  //   // Ensure `hashCode` function is defined correctly
+  //   const colorIndex = Math.abs(hashCode(courseCode)) % colorKeys.length;
+  //   return colors[colorKeys[colorIndex]]; // TypeScript will know the keys are valid here
+  // };
+
+  const getSlotColor = (course: TimeTableSlotInfo) => {
+    const slotLetter = course.slotLetter as keyof typeof slotColorMap;
+    const colorKey = slotColorMap[slotLetter] || 'blue';
+    return colors[colorKey as keyof typeof colors];
   };
 
   return (
@@ -317,7 +521,7 @@ export function Timetable({
                           <CourseCard
                             key={`${course.courseCode}-${idx}`}
                             course={course}
-                            colorScheme={getCourseColor(course.courseCode)}
+                            colorScheme={getSlotColor(course)}
                             isCompact={isCompact}
                           />
                         ))}
