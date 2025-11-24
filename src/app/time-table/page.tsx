@@ -7,6 +7,8 @@ import { parseCSV } from "@/lib/time-table";
 import { TimeTableCourseList } from "@/components/time-table/course-list";
 import Timetable from "@/components/time-table/timetable";
 import { cn } from "@/lib/utils";
+import { detectClashes, SlotClash } from "@/lib/clashes";
+import { ClashesTab } from "@/components/time-table/clashesTab";
 
 export default function Home() {
   const [courses, setCourses] = useState<TimeTableParsedCourse[]>([]);
@@ -14,6 +16,12 @@ export default function Home() {
     TimeTableParsedCourse[]
   >([]);
   const [isCompact, setIsCompact] = useState(true);
+  const [clashes, setClashes] = useState<SlotClash[]>([]);
+
+  useEffect(() => {
+    const detectedClashes = detectClashes(selectedCourses);
+    setClashes(detectedClashes);
+  }, [selectedCourses]);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -95,7 +103,7 @@ export default function Home() {
                 <div className="mb-6 sm:mb-8 space-y-4">
                   <TabsList
                     className={cn(
-                      "grid w-full max-w-xs mx-auto grid-cols-2",
+                      "grid w-full max-w-md mx-auto grid-cols-3",
                       "bg-white dark:bg-gray-800",
                       "border border-gray-200 dark:border-gray-700",
                       "shadow-sm dark:shadow-gray-900/20"
@@ -108,7 +116,8 @@ export default function Home() {
                         "data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300",
                         "text-gray-700 dark:text-gray-300",
                         "hover:bg-gray-50 dark:hover:bg-gray-700",
-                        "transition-all duration-200"
+                        "transition-all duration-200",
+                        "text-xs sm:text-sm"
                       )}
                     >
                       Courses
@@ -120,10 +129,35 @@ export default function Home() {
                         "data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300",
                         "text-gray-700 dark:text-gray-300",
                         "hover:bg-gray-50 dark:hover:bg-gray-700",
-                        "transition-all duration-200"
+                        "transition-all duration-200",
+                        "text-xs sm:text-sm"
                       )}
                     >
                       Timetable
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="clashes"
+                      className={cn(
+                        "data-[state=active]:bg-blue-50 dark:data-[state=active]:bg-blue-900/30",
+                        "data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300",
+                        "text-gray-700 dark:text-gray-300",
+                        "hover:bg-gray-50 dark:hover:bg-gray-700",
+                        "transition-all duration-200",
+                        "text-xs sm:text-sm",
+                        clashes.length > 0 && "data-[state=active]:text-red-600 dark:data-[state=active]:text-red-400"
+                      )}
+                    >
+                      <span className="flex items-center gap-1">
+                        Clashes
+                        {clashes.length > 0 && (
+                          <span className={cn(
+                            "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-semibold",
+                            "bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400"
+                          )}>
+                            {clashes.length}
+                          </span>
+                        )}
+                      </span>
                     </TabsTrigger>
                   </TabsList>
 
@@ -200,6 +234,20 @@ export default function Home() {
                       isCompact={isCompact}
                     />
                   </div>
+                </TabsContent>
+
+                <TabsContent
+                  value="clashes"
+                  className={cn(
+                    "mt-2 sm:mt-4",
+                    "bg-white/30 dark:bg-gray-800/30",
+                    "backdrop-blur-sm rounded-lg",
+                    "border border-gray-200/50 dark:border-gray-700/50",
+                    "shadow-sm dark:shadow-gray-900/20",
+                    "transition-all duration-300"
+                  )}
+                >
+                  <ClashesTab clashes={clashes} selectedCourses={selectedCourses} allCourses={courses} />
                 </TabsContent>
               </Tabs>
             </div>

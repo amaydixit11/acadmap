@@ -14,7 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { AlertCircle, MapPin, BookOpen } from "lucide-react";
+import { AlertCircle, MapPin, BookOpen, AlertTriangle } from "lucide-react";
 import { getCoursesForSlot } from "@/lib/time-table";
 import {
   TimeTableParsedCourse,
@@ -294,6 +294,24 @@ export function Timetable({
                       )}
                     >
                       <div className="space-y-1 sm:space-y-2">
+                        <div className="">
+                          {/* show slot of the cell */}
+                          {timeTableSlots.map((cell) => {
+                            if (cell.day === day && cell.time === time) {
+                              return (
+                                <span
+                                  // key={cell.slots}
+                                  className={cn(
+                                    "sm:text-xs font-mono font-medium px-1 py-0.5 rounded",
+                                    "bg-gray-200/70 dark:bg-gray-800/70"
+                                  )}
+                                >
+                                  Slot {cell.slots}
+                                </span>
+                              );
+                            }
+                          })}
+                        </div>
                         {courses.map((course, idx) => (
                           <CourseCard
                             key={`${course.courseCode}-${idx}`}
@@ -312,6 +330,11 @@ export function Timetable({
                               "border-gray-200 dark:border-gray-700"
                             )}
                           />
+                        )}
+                        {courses.length > 1 && (
+                          <div className="absolute top-1 right-1">
+                            <AlertTriangle className="w-3 h-3 text-amber-500" />
+                          </div>
                         )}
                       </div>
                     </TableCell>
