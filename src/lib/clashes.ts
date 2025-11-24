@@ -224,7 +224,7 @@ export function generateVirtualTemplates(
       const scenarios: VirtualTemplate['scenarios'] = [];
 
       // Generate scenarios for each slot type
-      ['lecture', 'tutorial', 'lab'].forEach((type: 'lecture' | 'tutorial' | 'lab') => {
+      ['lecture', 'tutorial', 'lab'].forEach((type: string) => {
         const slotKey = type === 'lecture' ? 'lectureSlot' : 
                         type === 'tutorial' ? 'tutorialSlot' : 'labSlot';
         const venueKey = type === 'lecture' ? 'lectureVenue' : 
