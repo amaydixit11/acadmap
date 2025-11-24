@@ -22,6 +22,7 @@ import {
   timeTableSlots,
 } from "@/types/time-table";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface TimetableProps {
   selectedCourses: TimeTableParsedCourse[];
@@ -264,30 +265,30 @@ const colors = {
 };
 
 const slotColorMap: Record<string, keyof typeof colors> = {
-  'A': 'blue',
-  'B': 'emerald',
-  'C': 'purple',
-  'D': 'amber',
-  'E': 'pink',
-  'F': 'cyan',
-  'G': 'red',
-  'H': 'indigo',
-  'I': 'orange',
-  'J': 'teal',
-  'K': 'lime',
-  'L': 'fuchsia',
-  'M': 'sky',
-  'N': 'rose',
-  'O': 'violet',
-  'P': 'yellow',
-  'Q': 'slate',
-  'R': 'green',
-  'S': 'stone',
-  'T': 'zinc',
-  'U': 'neutral',
-  'V': 'gray',
-  'W': 'warmgray',
-  'X': 'coolgray',
+  A: "blue",
+  B: "emerald",
+  C: "purple",
+  D: "amber",
+  E: "pink",
+  F: "cyan",
+  G: "red",
+  H: "indigo",
+  I: "orange",
+  J: "teal",
+  K: "lime",
+  L: "fuchsia",
+  M: "sky",
+  N: "rose",
+  O: "violet",
+  P: "yellow",
+  Q: "slate",
+  R: "green",
+  S: "stone",
+  T: "zinc",
+  U: "neutral",
+  V: "gray",
+  W: "warmgray",
+  X: "coolgray",
 };
 
 function hashCode(str: string) {
@@ -300,58 +301,63 @@ const CourseCard = ({
   course,
   colorScheme,
   isCompact,
+  onClick,
 }: {
   course: TimeTableSlotInfo;
   colorScheme: typeof colors.blue;
   isCompact?: boolean;
+  onClick?: () => void;
 }) => (
   <TooltipProvider>
     <Tooltip>
       <TooltipTrigger className="w-full">
-        <div
-          className={cn(
-            isCompact ? "p-1" : "p-2 sm:p-3",
-            "h-full transition-all duration-200 group",
-            colorScheme.bg,
-            colorScheme.hover,
-            colorScheme.text,
-            "rounded-md border-l-2",
-            colorScheme.border,
-            "hover:scale-[1.01] hover:shadow-sm dark:hover:shadow-black/20"
-          )}
-        >
-          {isCompact ? (
-            <div className="space-y-1">
-              <div
-                className={`font-semibold text-center text-xs sm:text-sm ${colorScheme.text}`}
-              >
-                {course.courseCode}
+        <Link href={`/courses/${course.courseCode.toLowerCase().split("/")[0]}`}>
+          <div
+            className={cn(
+              isCompact ? "p-1" : "p-2 sm:p-3",
+              "h-full transition-all duration-200 group",
+              colorScheme.bg,
+              colorScheme.hover,
+              colorScheme.text,
+              "rounded-md border-l-2",
+              colorScheme.border,
+              "hover:scale-[1.01] hover:shadow-sm dark:hover:shadow-black/20"
+            )}
+            onClick={onClick}
+          >
+            {isCompact ? (
+              <div className="space-y-1">
+                <div
+                  className={`font-semibold text-center text-xs sm:text-sm ${colorScheme.text}`}
+                >
+                  {course.courseCode}
+                </div>
+                <div
+                  className={`text-xs font-medium text-center leading-tight ${colorScheme.text}`}
+                >
+                  {course.courseName}
+                </div>
               </div>
-              <div
-                className={`text-xs font-medium text-center leading-tight ${colorScheme.text}`}
-              >
-                {course.courseName}
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="font-semibold mb-1 truncate text-xs sm:text-sm">
-                <BookOpen className="w-3 h-3 inline mr-1 opacity-75" />
-                {course.courseCode}
-              </div>
-              <div className="text-xs sm:text-sm opacity-90 truncate">
-                <MapPin className="w-3 h-3 inline mr-1 opacity-75" />
-                {course.venue}
-              </div>
-              <div className="flex items-center gap-1 mt-1">
-                <AlertCircle className="w-2 h-2 opacity-75 flex-shrink-0" />
-                <span className="text-xs font-medium uppercase tracking-wide opacity-75 truncate">
-                  {course.type}
-                </span>
-              </div>
-            </>
-          )}
-        </div>
+            ) : (
+              <>
+                <div className="font-semibold mb-1 truncate text-xs sm:text-sm">
+                  <BookOpen className="w-3 h-3 inline mr-1 opacity-75" />
+                  {course.courseCode}
+                </div>
+                <div className="text-xs sm:text-sm opacity-90 truncate">
+                  <MapPin className="w-3 h-3 inline mr-1 opacity-75" />
+                  {course.venue}
+                </div>
+                <div className="flex items-center gap-1 mt-1">
+                  <AlertCircle className="w-2 h-2 opacity-75 flex-shrink-0" />
+                  <span className="text-xs font-medium uppercase tracking-wide opacity-75 truncate">
+                    {course.type}
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+        </Link>
       </TooltipTrigger>
       <TooltipContent
         side="top"
@@ -414,7 +420,7 @@ export function Timetable({
 
   const getSlotColor = (course: TimeTableSlotInfo) => {
     const slotLetter = course.slotLetter as keyof typeof slotColorMap;
-    const colorKey = slotColorMap[slotLetter] || 'blue';
+    const colorKey = slotColorMap[slotLetter] || "blue";
     return colors[colorKey as keyof typeof colors];
   };
 
@@ -501,21 +507,22 @@ export function Timetable({
                     >
                       <div className="space-y-1 sm:space-y-2">
                         <div className="">
-                          {viewSlots && timeTableSlots.map((cell) => {
-                            if (cell.day === day && cell.time === time) {
-                              return (
-                                <span
-                                  // key={cell.slots}
-                                  className={cn(
-                                    "sm:text-xs font-mono font-medium px-1 py-0.5 rounded",
-                                    "bg-gray-200/70 dark:bg-gray-800/70"
-                                  )}
-                                >
-                                  Slot {cell.slots}
-                                </span>
-                              );
-                            }
-                          })}
+                          {viewSlots &&
+                            timeTableSlots.map((cell) => {
+                              if (cell.day === day && cell.time === time) {
+                                return (
+                                  <span
+                                    // key={cell.slots}
+                                    className={cn(
+                                      "sm:text-xs font-mono font-medium px-1 py-0.5 rounded",
+                                      "bg-gray-200/70 dark:bg-gray-800/70"
+                                    )}
+                                  >
+                                    Slot {cell.slots}
+                                  </span>
+                                );
+                              }
+                            })}
                         </div>
                         {courses.map((course, idx) => (
                           <CourseCard
@@ -523,6 +530,8 @@ export function Timetable({
                             course={course}
                             colorScheme={getSlotColor(course)}
                             isCompact={isCompact}
+                            // replace the navigate with next navigater whatever it is
+                            // onClick={() => navigate(`/courses/${course.courseCode.toLowerCase()}`)}
                           />
                         ))}
                         {courses.length === 0 && (
