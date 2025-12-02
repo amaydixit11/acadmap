@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { ResourceModel } from '@/types/courses';
-import { fetchResourceModels } from '@/lib/resources';
+import { fetchResourceModels, getUploaderNames } from '@/lib/resources';
 
 export function useResources(courseCode?: string, resourceType?: string) {
   const [resources, setResources] = useState<ResourceModel[]>([]);
@@ -16,15 +16,20 @@ export function useResources(courseCode?: string, resourceType?: string) {
           resourceCategory: resourceType,
         });
   
-        // Resolve promises in `uploadedBy`
-        const resolvedResources = await Promise.all(
-          resources.map(async (resource) => ({
-            ...resource,
-            uploadedBy: await resource.uploadedBy,
-          }))
-        );
+        if (resources.length > 0) {
+          const resourceIds = resources.map(r => r.resourceId);
+          const uploaderMap = await getUploaderNames(resourceIds);
   
-        setResources(resolvedResources);
+          const resolvedResources = resources.map(resource => ({
+            ...resource,
+            uploadedBy: uploaderMap.get(resource.resourceId) || 'Anonymous',
+          }));
+          
+          setResources(resolvedResources);
+        } else {
+          setResources([]);
+        }
+
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err : new Error(String(err)));

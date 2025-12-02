@@ -40,7 +40,7 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
 
   const filteredAndSortedResources = resources
     .filter(r => 
-      (filters.selectedResourceType === 'all' ? r : r.category === filters.selectedResourceType) && 
+      (filters.selectedResourceType === 'all' || r.category === filters.selectedResourceType) && 
       (!filters.selectedYear || r.year === Number(filters.selectedYear))
     )
     .sort((a, b) => {

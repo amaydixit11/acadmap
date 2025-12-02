@@ -2,8 +2,7 @@ const GITHUB_API_URL = 'https://api.github.com';
 
 // Fetch all repositories in the organization, optionally filtered by courseCode
 export async function fetchOrganizationRepositories(courseCode?: string) {
-    const url = `${GITHUB_API_URL}/orgs/${process.env.NEXT_PUBLIC_GITHUB_ORG}/repos`;
-    // console.log(`Fetching from: ${url}`);
+    const url = `${GITHUB_API_URL}/orgs/${process.env.NEXT_PUBLIC_GITHUB_ORG}/repos?per_page=100`;
 
     const response = await fetch(url, {
         headers: {
