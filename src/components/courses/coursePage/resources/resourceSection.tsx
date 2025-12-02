@@ -16,6 +16,7 @@ import {
   SheetTitle, 
   SheetTrigger 
 } from "@/components/ui/sheet";
+import { useAuth } from "@/context/AuthContext";
 
 const RESOURCE_TYPES = [
   { value: "all", label: "All" },
@@ -33,6 +34,7 @@ interface ResourceSectionProps {
 }
 
 export function ResourceSection({ course, user }: ResourceSectionProps) {
+  const { isAuthenticated } = useAuth();
   const { filters, setResourceType, setYear, setSortOrder } = useResourceFilters();
   const { resources, isLoading, error } = useResources(course.code, filters.selectedResourceType);
 
@@ -91,7 +93,7 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
   return (
     <div className="container mx-auto px-4 py-6 space-y-6">
       <div className="flex flex-col space-y-4">
-      {user && (
+      {isAuthenticated && (
             <UploadResourcesButton
               onClick={() => uploadResource({
                 resourceType: filters.selectedResourceType, 
@@ -118,7 +120,7 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
             // className="flex-grow"
           />
 
-          {/* {user && (
+          {/* {isAuthenticated && (
             <UploadResourcesButton
               onClick={() => uploadResource({
                 resourceType: filters.selectedResourceType, 

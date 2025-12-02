@@ -6,7 +6,8 @@ import { SearchDialog } from "./SearchDialog";
 import { UserMenu } from "./UserMenu";
 import { AuthButtons } from "./AuthButtons";
 import { ModeToggle } from "@/components/mode-toggle";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { useSearch } from "@/hooks/useSearch";
 import { Logo } from "../Logo";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,8 @@ import { Star } from "lucide-react";
 import StarThisProject from "./StarThisProject";
 
 export default function Header() {
-  const { isAuthenticated, handleSignOut } = useAuth();
+  // const { isAuthenticated, handleSignOut } = useAuth();
+  const { isAuthenticated, signOut } = useAuth();
   const {
     searchQuery,
     setSearchQuery,
@@ -43,7 +45,8 @@ export default function Header() {
           <StarThisProject className="hidden lg:flex" />
 
           {isAuthenticated ? (
-            <UserMenu handleSignOut={handleSignOut} />
+            // <UserMenu handleSignOut={handleSignOut} />
+            <UserMenu handleSignOut={signOut} />
           ) : (
             <AuthButtons />
           )}
