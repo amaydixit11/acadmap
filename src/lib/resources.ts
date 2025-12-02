@@ -16,13 +16,10 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
     resources: ResourceModel[];
     count: number;
   }> {
-    // console.log('[fetchResourceModels] Fetching resources with options:', options);
     try {
       const repos = await fetchOrganizationRepositories(options.courseCode);
-      // console.log(`[fetchResourceModels] Found ${repos.length} repositories for course code: ${options.courseCode}`);
       const resources: ResourceModel[] = [];
       for (const repo of repos) {
-        // console.log(`[fetchResourceModels] Processing repo: ${repo.name}`);
         const nameParts = repo.name.split('-');
         const year = nameParts.length > 1 ? parseInt(nameParts[1]) : undefined;
         const category = determineResourceCategory(repo.name);
@@ -36,11 +33,10 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
         // }
   
         const contents = await fetchRepositoryContent(repo.name);
-        // console.log(`[fetchResourceModels] Found ${contents.length} folders/files in repo: ${repo.name}`);
+        // console.log("contents: ", JSON.stringify(contents))
         for (let folder of contents){
 
             const folderContents = await fetchRepositoryContent(repo.name, folder.path);
-            // console.log(`[fetchResourceModels] Found ${folderContents.length} items in folder: ${folder.path}`);
             const repoResources: ResourceModel[] = folderContents.map((file: any) => ({
                 reourceId: file.sha,
                 course_code: nameParts[0],
@@ -57,7 +53,6 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
         }
       }
   
-      // console.log(`[fetchResourceModels] Total resources fetched: ${resources.length}`);
       return {
         resources,
         count: resources.length
@@ -70,7 +65,6 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
 
   
   async function getUploaderName(resourceId: string): Promise<string> {
-    // console.log(`[getUploaderName] Fetching uploader name for resourceId: ${resourceId}`);
     const supabase = createClient();
   
     // Query the database
@@ -88,7 +82,6 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
   
     // Check if data exists and return the uploader's name or "Anonymous"
     const name = data?.[0]?.uploadedBy ?? 'Anonymous';
-    // console.log(`[getUploaderName] Found uploader name: ${name} for resourceId: ${resourceId}`);
     return name;
   }
 
@@ -173,7 +166,6 @@ export async function prefetchResourceModels(courseCode: string) {
         };
     } catch (error) {
         console.error('Error prefetching resources:', error);
-        console.error(`[prefetchResourceModels] Error prefetching resources for ${courseCode}:`, error);
         return {
         lectures: [],
         assignments: [],
@@ -193,7 +185,6 @@ interface UploadResourcesProps{
 }
 
 export function uploadResource({courseCode, resourceType, year}: UploadResourcesProps){
-  // console.log(`[uploadResource] Redirecting to upload page with params: courseCode=${courseCode}, resourceType=${resourceType}, year=${year}`);
   // const router = useRouter();
   const params = new URLSearchParams({
       courseCode: courseCode,
@@ -205,7 +196,6 @@ export function uploadResource({courseCode, resourceType, year}: UploadResources
 }
 
 export async function uploadResourceToDatabase(resource: ResourceModel): Promise<void> {
-  // console.log('[uploadResourceToDatabase] Uploading resource to database:', resource);
   try {
     const response = await insertRecord('resources', resource)
     // const supabase = createClient();
@@ -229,10 +219,10 @@ export async function uploadResourceToDatabase(resource: ResourceModel): Promise
     //   throw new Error(`Failed to upload resource: ${error.message}`);
     // }
 
-    console.log('Resource uploaded successfully:', data);
+    // console.log('Resource uploaded successfully:', data);
     // console.log('Resource uploaded successfully:', response);
   } catch (error) {
-    console.error('[uploadResourceToDatabase] Error uploading to Supabase:', error);
+    console.error('Error uploading to Supabase:', error);
     throw error;
   }
 }
