@@ -85,6 +85,31 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
     return name;
   }
 
+  export async function getUploaderNames(resourceIds: string[]): Promise<Map<string, string>> {
+    if (resourceIds.length === 0) {
+      // console.log('[getUploaderNames] No resource IDs provided, returning empty map.');
+      return new Map();
+    }
+  
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('resources')
+      .select('resourceId, uploadedBy')
+      .in('resourceId', resourceIds);
+  
+    if (error) {
+      console.error('[getUploaderNames] Error fetching uploader names:', error.message);
+      return new Map();
+    }
+  
+    const uploaderMap = new Map<string, string>();
+    data?.forEach(item => {
+      // console.log(`[getUploaderNames] Mapping resourceId ${item.resourceId} to uploader ${item.uploadedBy || 'Anonymous'}`);
+      uploaderMap.set(item.resourceId, item.uploadedBy || 'Anonymous');
+    });
+  
+    return uploaderMap;
+  }
 
 // Utility function to determine resource category based on repository name
 function determineResourceCategory(repoName: string): ResourceModel['category'] {
@@ -195,7 +220,7 @@ export async function uploadResourceToDatabase(resource: ResourceModel): Promise
     // }
 
     // console.log('Resource uploaded successfully:', data);
-    console.log('Resource uploaded successfully:', response);
+    // console.log('Resource uploaded successfully:', response);
   } catch (error) {
     console.error('Error uploading to Supabase:', error);
     throw error;

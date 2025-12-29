@@ -2,8 +2,7 @@ const GITHUB_API_URL = 'https://api.github.com';
 
 // Fetch all repositories in the organization, optionally filtered by courseCode
 export async function fetchOrganizationRepositories(courseCode?: string) {
-    const url = `${GITHUB_API_URL}/orgs/${process.env.NEXT_PUBLIC_GITHUB_ORG}/repos`;
-    // console.log(`Fetching from: ${url}`);
+    const url = `${GITHUB_API_URL}/orgs/${process.env.NEXT_PUBLIC_GITHUB_ORG}/repos?per_page=100`;
 
     const response = await fetch(url, {
         headers: {
@@ -29,12 +28,15 @@ export async function fetchRepositoryDetails(repoName: string) {
     // console.log(`Fetching repository details from: ${url}`);
 
     const response = await fetch(url, {
+        cache: 'no-store',
         headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
         },
     });
 
     if (!response.ok) {
+        const errorBody = await response.text();
+        console.error(`[fetchRepositoryDetails] Failed to fetch repository details for ${repoName}: ${response.statusText}`, { status: response.status, body: errorBody });
         throw new Error(`Failed to fetch repository details: ${response.statusText}`);
     }
 
@@ -49,13 +51,14 @@ export async function fetchRepositoryContent(repoName: string, path: string = ''
     try {
         // console.log(`[DEBUG] Sending request to GitHub API...`);
         const response = await fetch(url, {
+            cache: 'no-store',
             headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
             },
         });
 
         // console.log(`[DEBUG] Response status: ${response.status}`);
-        
+
         if (!response.ok) {
             console.error(`[ERROR] Failed to fetch repository content. Status: ${response.status}, StatusText: ${response.statusText}`);
             throw new Error(`Failed to fetch repository content: ${response.statusText}`);
@@ -90,6 +93,8 @@ export async function createRepository(repoName: string, description: string) {
     });
 
     if (!response.ok) {
+        const errorBody = await response.text();
+        console.error(`[createRepository] Failed to create repository ${repoName}: ${response.statusText}`, { status: response.status, body: errorBody });
         throw new Error(`Failed to create repository: ${response.statusText}`);
     }
 
@@ -121,6 +126,8 @@ export async function uploadFileToRepository({repoName, filePath, content, commi
     });
 
     if (!response.ok) {
+        const errorBody = await response.text();
+        console.error(`[uploadFileToRepository] Failed to upload file to ${filePath}: ${response.statusText}`, { status: response.status, body: errorBody });
         throw new Error(`Failed to upload file: ${response.statusText}`);
     }
 
@@ -150,6 +157,8 @@ export async function deleteFileFromRepository(
     });
 
     if (!response.ok) {
+        const errorBody = await response.text();
+        console.error(`[deleteFileFromRepository] Failed to delete file ${filePath}: ${response.statusText}`, { status: response.status, body: errorBody });
         throw new Error(`Failed to delete file: ${response.statusText}`);
     }
 
@@ -162,12 +171,15 @@ export async function fetchRepositoryContributors(repoName: string) {
     // console.log(`Fetching contributors from: ${url}`);
 
     const response = await fetch(url, {
+        cache: 'no-store',
         headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
         },
     });
 
     if (!response.ok) {
+        const errorBody = await response.text();
+        console.error(`[fetchRepositoryContributors] Failed to fetch contributors for ${repoName}: ${response.statusText}`, { status: response.status, body: errorBody });
         throw new Error(`Failed to fetch contributors: ${response.statusText}`);
     }
 

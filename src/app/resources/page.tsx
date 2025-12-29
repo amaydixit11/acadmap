@@ -340,19 +340,6 @@ export default function ResourcesPage() {
         </Dialog>
         </div>
 
-      {/* Loading State */}
-      {resources.length === 0 && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col items-center justify-center py-16"
-        >
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4" />
-          <p className="text-lg text-gray-600 dark:text-gray-300">Loading resources...</p>
-        </motion.div>
-      )}
-
       {/* Quick Stats */}
       <div className="container mx-auto px-4 pb-16">
         <motion.div 
