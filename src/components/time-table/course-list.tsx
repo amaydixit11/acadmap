@@ -29,7 +29,7 @@ interface TimeTableCourseListProps {
   onCourseSelect: (course: TimeTableParsedCourse) => void;
 }
 
-type FilterType = "venue" | "code" | "instructor" | "slot";
+type FilterType = "all" | "venue" | "code" | "name" | "instructor" | "slot";
 
 export function TimeTableCourseList({
   courses,
@@ -37,7 +37,7 @@ export function TimeTableCourseList({
   onCourseSelect,
 }: TimeTableCourseListProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<FilterType>("code");
+  const [filterType, setFilterType] = useState<FilterType>("all");
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -58,7 +58,30 @@ export function TimeTableCourseList({
       const term = searchTerm.toLowerCase();
 
       switch (filterType) {
-        case "venue":
+        case "all": {
+          // Search across all fields
+          const code = course.code || "";
+          const title = course.title || "";
+          const instructor = course.instructor || "";
+          const lectureVenue = course.lectureVenue || "NA";
+          const tutorialVenue = course.tutorialVenue || "NA";
+          const labVenue = course.labVenue || "NA";
+          const lectureSlot = course.lectureSlot || "NA";
+          const tutorialSlot = course.tutorialSlot || "NA";
+          const labSlot = course.labSlot || "NA";
+          return (
+            code.toLowerCase().includes(term) ||
+            title.toLowerCase().includes(term) ||
+            instructor.toLowerCase().includes(term) ||
+            (lectureVenue !== "NA" && lectureVenue.toLowerCase().includes(term)) ||
+            (tutorialVenue !== "NA" && tutorialVenue.toLowerCase().includes(term)) ||
+            (labVenue !== "NA" && labVenue.toLowerCase().includes(term)) ||
+            (lectureSlot !== "NA" && lectureSlot.toLowerCase().includes(term)) ||
+            (tutorialSlot !== "NA" && tutorialSlot.toLowerCase().includes(term)) ||
+            (labSlot !== "NA" && labSlot.toLowerCase().includes(term))
+          );
+        }
+        case "venue": {
           const lectureVenue = course.lectureVenue || "NA";
           const tutorialVenue = course.tutorialVenue || "NA";
           const labVenue = course.labVenue || "NA";
@@ -69,11 +92,14 @@ export function TimeTableCourseList({
               tutorialVenue.toLowerCase().includes(term)) ||
             (labVenue !== "NA" && labVenue.toLowerCase().includes(term))
           );
+        }
         case "code":
           return course.code.toLowerCase().includes(term);
+        case "name":
+          return (course.title || "").toLowerCase().includes(term);
         case "instructor":
-          return course.instructor.toLowerCase().includes(term);
-        case "slot":
+          return (course.instructor || "").toLowerCase().includes(term);
+        case "slot": {
           const lectureSlot = course.lectureSlot || "NA";
           const tutorialSlot = course.tutorialSlot || "NA";
           const labSlot = course.labSlot || "NA";
@@ -84,6 +110,7 @@ export function TimeTableCourseList({
               tutorialSlot.toLowerCase().includes(term)) ||
             (labSlot !== "NA" && labSlot.toLowerCase().includes(term))
           );
+        }
         default:
           return true;
       }
@@ -644,13 +671,13 @@ export function TimeTableCourseList({
               )}
             >
               <SelectItem
-                value="venue"
+                value="all"
                 className={cn(
                   "text-gray-900 dark:text-gray-100",
                   "hover:bg-gray-100 dark:hover:bg-gray-800/30"
                 )}
               >
-                Venue
+                All Fields
               </SelectItem>
               <SelectItem
                 value="code"
@@ -660,6 +687,15 @@ export function TimeTableCourseList({
                 )}
               >
                 Course Code
+              </SelectItem>
+              <SelectItem
+                value="name"
+                className={cn(
+                  "text-gray-900 dark:text-gray-100",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30"
+                )}
+              >
+                Course Name
               </SelectItem>
               <SelectItem
                 value="instructor"
@@ -678,6 +714,15 @@ export function TimeTableCourseList({
                 )}
               >
                 Time Slot
+              </SelectItem>
+              <SelectItem
+                value="venue"
+                className={cn(
+                  "text-gray-900 dark:text-gray-100",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800/30"
+                )}
+              >
+                Venue
               </SelectItem>
             </SelectContent>
           </Select>

@@ -16,7 +16,7 @@ export default function Home() {
     TimeTableParsedCourse[]
   >([]);
   const [isCompact, setIsCompact] = useState(true);
-  const [viewSlots, setViewSlots] = useState(true);
+  const [viewSlots, setViewSlots] = useState(false);
   const [clashes, setClashes] = useState<SlotClash[]>([]);
 
   useEffect(() => {
