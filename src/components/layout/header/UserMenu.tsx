@@ -12,6 +12,8 @@ import {
   Settings,
   LogOut,
   UserCircle,
+  Bookmark,
+  Calendar,
 } from "lucide-react";
 
 interface UserMenuProps {
@@ -32,6 +34,19 @@ export const UserMenu = ({ handleSignOut }: UserMenuProps) => (
           Profile
         </Link>
       </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/bookmarks" className="flex items-center">
+          <Bookmark className="mr-2 h-4 w-4" />
+          Bookmarks
+        </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/time-table" className="flex items-center">
+          <Calendar className="mr-2 h-4 w-4" />
+          My Timetables
+        </Link>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
         <Link href="/settings" className="flex items-center">
           <Settings className="mr-2 h-4 w-4" />

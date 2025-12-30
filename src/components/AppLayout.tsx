@@ -12,6 +12,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { AuthProvider } from "@/context/AuthContext";
+import { SearchProvider } from "@/context/SearchContext";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -57,11 +58,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       >
         <ToastProvider>
           <AuthProvider>
-            <FilterProvider>
-              <Header />
-              {children}
-              <Footer />
-            </FilterProvider>
+            <SearchProvider>
+              <FilterProvider>
+                <Header />
+                {children}
+                <Footer />
+              </FilterProvider>
+            </SearchProvider>
           </AuthProvider>
         </ToastProvider>
       </ThemeProvider>

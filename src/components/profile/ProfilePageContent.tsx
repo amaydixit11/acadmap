@@ -14,6 +14,8 @@ import { useProfileContext } from "@/context/ProfileContext";
 import ProfileHeader from "./ProfileHeader";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileForm from "./ProfileForm";
+import ProfileStats from "./ProfileStats";
+import ProfileSavedTimetables from "./ProfileSavedTimetables";
 import { AlertCircle } from "lucide-react";
 
 export const ProfilePageContent = () => {
@@ -65,7 +67,14 @@ export const ProfilePageContent = () => {
               {profile.role.charAt(0).toUpperCase() + profile.role.slice(1)}
             </Badge>
           </div>
+          
+          {/* User Stats */}
+          <ProfileStats userId={profile.id} className="mb-6" />
+          
           <ProfileForm />
+          
+          {/* Saved Timetables */}
+          <ProfileSavedTimetables className="mt-6" />
         </CardContent>
       </Card>
     </div>

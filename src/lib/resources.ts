@@ -38,7 +38,7 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
 
             const folderContents = await fetchRepositoryContent(repo.name, folder.path);
             const repoResources: ResourceModel[] = folderContents.map((file: any) => ({
-                reourceId: file.sha,
+                resourceId: file.sha,
                 course_code: nameParts[0],
                 title: file.name,
                 type: 'other',

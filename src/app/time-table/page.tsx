@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TimeTableParsedCourse } from "@/types/time-table";
 import { parseCSV } from "@/lib/time-table";
@@ -9,6 +9,7 @@ import Timetable from "@/components/time-table/timetable";
 import { cn } from "@/lib/utils";
 import { detectClashes, SlotClash } from "@/lib/clashes";
 import { ClashesTab } from "@/components/time-table/clashesTab";
+import { SavedTimetablesPanel } from "@/components/time-table/SavedTimetablesPanel";
 
 export default function Home() {
   const [courses, setCourses] = useState<TimeTableParsedCourse[]>([]);
@@ -51,6 +52,14 @@ export default function Home() {
       return [...prev, course];
     });
   };
+
+  // Load timetable from saved configuration
+  const handleLoadTimetable = useCallback((courseCodes: string[]) => {
+    const matchedCourses = courses.filter(c => 
+      courseCodes.includes(c.code)
+    );
+    setSelectedCourses(matchedCourses);
+  }, [courses]);
 
   return (
     <main
@@ -225,6 +234,13 @@ export default function Home() {
                     >
                       View Slots
                     </label>
+                    
+                    {/* Saved Timetables */}
+                    <div className="hidden sm:block h-4 w-px bg-gray-300 dark:bg-gray-600" />
+                    <SavedTimetablesPanel
+                      currentCourseCodes={selectedCourses.map(c => c.code)}
+                      onLoadTimetable={handleLoadTimetable}
+                    />
                   </div>
                 </div>
 
