@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 
 import {
   Table,
@@ -14,7 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { AlertCircle, MapPin, BookOpen, AlertTriangle, GripVertical, RotateCcw, X } from "lucide-react";
+import { AlertCircle, MapPin, BookOpen, AlertTriangle, GripVertical, RotateCcw, X, Download, Calendar } from "lucide-react";
 import { getCoursesForSlot } from "@/lib/time-table";
 import {
   TimeTableParsedCourse,
@@ -533,11 +533,15 @@ export function Timetable({
     new Set(timeTableSlots.map((slot) => slot.time))
   ).sort();
 
+  // Ref for screenshot capture
+  const timetableRef = useRef<HTMLDivElement>(null);
+
   // State for local position overrides (temporary, resets on refresh)
   const [slotOverrides, setSlotOverrides] = useState<SlotOverride[]>([]);
   const [hiddenTiles, setHiddenTiles] = useState<HiddenTile[]>([]);
   const [dragOverCell, setDragOverCell] = useState<{ day: string; time: string } | null>(null);
   const [isDragMode, setIsDragMode] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   
   // Track what's being dragged
   const [draggedItem, setDraggedItem] = useState<{
@@ -555,6 +559,167 @@ export function Timetable({
     const colorKey = slotColorMap[slotLetter] || "blue";
     return colors[colorKey as keyof typeof colors];
   };
+
+  // Screenshot download using canvas
+  const handleDownloadScreenshot = useCallback(async () => {
+    if (!timetableRef.current) return;
+    
+    setIsExporting(true);
+    try {
+      // Dynamic import html2canvas
+      const html2canvas = (await import('html2canvas')).default;
+      const canvas = await html2canvas(timetableRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 2, // Higher quality
+        useCORS: true,
+      });
+      
+      const link = document.createElement('a');
+      link.download = `timetable-${new Date().toISOString().split('T')[0]}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (error) {
+      console.error('Failed to capture screenshot:', error);
+      // Fallback: alert user
+      alert('Screenshot failed. Please try using your browser\'s screenshot feature.');
+    } finally {
+      setIsExporting(false);
+    }
+  }, []);
+
+  // Get current semester dates (approximate - user can adjust)
+  const getSemesterDates = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    // Assume current semester starts today and runs for 16 weeks
+    const startDate = new Date(year, now.getMonth(), now.getDate());
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 16 * 7); // 16 weeks
+    return { startDate, endDate };
+  };
+
+  // Generate ICS content
+  const generateICSContent = useCallback(() => {
+    const { startDate, endDate } = getSemesterDates();
+    const dayMap: Record<string, number> = {
+      'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5
+    };
+
+    let icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Acadmap//Timetable//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Course Timetable
+X-WR-TIMEZONE:Asia/Kolkata
+`;
+
+    // Collect all visible courses with their positions
+    const allCourses: { course: TimeTableSlotInfo; day: string; time: string }[] = [];
+    
+    days.forEach(day => {
+      times.forEach(time => {
+        const courses = getCoursesForSlot(day, time, selectedCourses);
+        
+        // Apply overrides and hidden tiles (same logic as getCoursesWithOverrides)
+        courses.forEach(course => {
+          // Check if hidden
+          const isHidden = hiddenTiles.some(
+            h => h.courseCode === course.courseCode && h.type === course.type && h.day === day && h.time === time
+          );
+          if (isHidden) return;
+          
+          // Check if moved away
+          const override = slotOverrides.find(
+            o => o.courseCode === course.courseCode && o.type === course.type
+          );
+          if (override && override.originalDay === day && override.originalTime === time) {
+            return; // This course was moved away
+          }
+          
+          allCourses.push({ course, day, time });
+        });
+        
+        // Add moved courses
+        slotOverrides.forEach(override => {
+          if (override.newDay === day && override.newTime === time) {
+            const isHidden = hiddenTiles.some(
+              h => h.courseCode === override.courseCode && h.type === override.type && h.day === day && h.time === time
+            );
+            if (isHidden) return;
+            
+            const originalCourse = getCoursesForSlot(
+              override.originalDay,
+              override.originalTime,
+              selectedCourses
+            ).find(c => c.courseCode === override.courseCode && c.type === override.type);
+            
+            if (originalCourse) {
+              allCourses.push({ course: originalCourse, day, time });
+            }
+          }
+        });
+      });
+    });
+
+    // Create events for each course
+    allCourses.forEach(({ course, day, time }) => {
+      const dayNumber = dayMap[day];
+      const [startTime, endTime] = time.split('-');
+      
+      // Find first occurrence of this day after startDate
+      const firstOccurrence = new Date(startDate);
+      const daysUntilTarget = (dayNumber - firstOccurrence.getDay() + 7) % 7;
+      firstOccurrence.setDate(firstOccurrence.getDate() + daysUntilTarget);
+      
+      // Parse times (format: "08:30")
+      const [startHour, startMin] = startTime.split(':').map(Number);
+      const [endHour, endMin] = endTime.split(':').map(Number);
+      
+      const eventStart = new Date(firstOccurrence);
+      eventStart.setHours(startHour, startMin, 0, 0);
+      
+      const eventEnd = new Date(firstOccurrence);
+      eventEnd.setHours(endHour, endMin, 0, 0);
+      
+      const formatDate = (d: Date) => {
+        return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      };
+      
+      const uid = `${course.courseCode}-${course.type}-${day}-${time}@acadmap`.replace(/\s+/g, '');
+      
+      icsContent += `BEGIN:VEVENT
+UID:${uid}
+DTSTAMP:${formatDate(new Date())}
+DTSTART:${formatDate(eventStart)}
+DTEND:${formatDate(eventEnd)}
+RRULE:FREQ=WEEKLY;UNTIL=${endDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+SUMMARY:${course.courseCode} (${course.type.toUpperCase()})
+DESCRIPTION:${course.courseName || course.courseCode}
+LOCATION:${course.venue || 'TBA'}
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Class in 15 minutes: ${course.courseCode}
+END:VALARM
+END:VEVENT
+`;
+    });
+
+    icsContent += 'END:VCALENDAR';
+    return icsContent;
+  }, [selectedCourses, slotOverrides, hiddenTiles, days, times]);
+
+  // Export to ICS
+  const handleExportICS = useCallback(() => {
+    const icsContent = generateICSContent();
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `timetable-${new Date().toISOString().split('T')[0]}.ics`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }, [generateICSContent]);
 
   // Handle drag start
   const handleDragStart = useCallback((
@@ -760,21 +925,56 @@ export function Timetable({
           </label>
         </div>
         
-        {(slotOverrides.length > 0 || hiddenTiles.length > 0) && (
+        <div className="flex items-center gap-2">
+          {/* Export buttons */}
           <button
-            onClick={handleReset}
+            onClick={handleDownloadScreenshot}
+            disabled={isExporting}
             className={cn(
               "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium",
-              "bg-amber-100 dark:bg-amber-900/30",
-              "text-amber-700 dark:text-amber-300",
-              "hover:bg-amber-200 dark:hover:bg-amber-800/40",
+              "bg-green-100 dark:bg-green-900/30",
+              "text-green-700 dark:text-green-300",
+              "hover:bg-green-200 dark:hover:bg-green-800/40",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
               "transition-colors duration-200"
             )}
+            title="Download as PNG image"
           >
-            <RotateCcw className="w-4 h-4" />
-            Reset ({slotOverrides.length + hiddenTiles.length} change{(slotOverrides.length + hiddenTiles.length) !== 1 ? 's' : ''})
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">{isExporting ? 'Saving...' : 'Screenshot'}</span>
           </button>
-        )}
+          
+          <button
+            onClick={handleExportICS}
+            className={cn(
+              "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium",
+              "bg-purple-100 dark:bg-purple-900/30",
+              "text-purple-700 dark:text-purple-300",
+              "hover:bg-purple-200 dark:hover:bg-purple-800/40",
+              "transition-colors duration-200"
+            )}
+            title="Export to calendar (.ics) with reminders"
+          >
+            <Calendar className="w-4 h-4" />
+            <span className="hidden sm:inline">Calendar</span>
+          </button>
+
+          {(slotOverrides.length > 0 || hiddenTiles.length > 0) && (
+            <button
+              onClick={handleReset}
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium",
+                "bg-amber-100 dark:bg-amber-900/30",
+                "text-amber-700 dark:text-amber-300",
+                "hover:bg-amber-200 dark:hover:bg-amber-800/40",
+                "transition-colors duration-200"
+              )}
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span className="hidden sm:inline">Reset ({slotOverrides.length + hiddenTiles.length})</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Info banner when in drag mode */}
@@ -796,6 +996,7 @@ export function Timetable({
       )}
 
       <div
+        ref={timetableRef}
         className={cn(
           "w-full rounded-xl border shadow-lg transition-all duration-300",
           "bg-white dark:bg-black",
