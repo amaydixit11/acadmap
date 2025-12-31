@@ -28,7 +28,8 @@ import {
   Loader2,
   ChevronDown,
   Clock,
-  Calendar
+  Calendar,
+  Share2
 } from "lucide-react";
 import { useSavedTimetables } from "@/hooks/useSavedTimetables";
 import { useAuth } from "@/context/AuthContext";
@@ -60,6 +61,7 @@ export function SavedTimetablesPanel({
     loadTimetable,
     deleteTimetable,
     setDefaultTimetable,
+    makePublic,
   } = useSavedTimetables();
 
   const handleSave = async () => {
@@ -219,6 +221,18 @@ export function SavedTimetablesPanel({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" side="right">
+                    <DropdownMenuItem 
+                      onClick={async () => {
+                        const success = await makePublic(tt.id);
+                        if (success) {
+                          const url = `${window.location.origin}/time-table/share/${tt.id}`;
+                          navigator.clipboard.writeText(url);
+                        }
+                      }}
+                    >
+                      <Share2 className="h-4 w-4 mr-2" />
+                      {(tt as any).is_public ? 'Copy Link' : 'Share'}
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setDefaultTimetable(tt.id)}>
                       <Star className="h-4 w-4 mr-2" />
                       Set as default

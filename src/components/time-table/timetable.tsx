@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo, useCallback, useRef } from "react";
 
 import {
@@ -133,6 +135,7 @@ const colors = {
     text: "text-purple-800 dark:text-purple-200",
     border: "border-l-purple-500 dark:border-l-purple-400",
   },
+  // D - Amber
   // D - Amber
   amber: {
     bg: "bg-amber-50/90 dark:bg-amber-900/30",
@@ -631,7 +634,10 @@ X-WR-TIMEZONE:Asia/Kolkata
           
           // Check if moved away
           const override = slotOverrides.find(
-            o => o.courseCode === course.courseCode && o.type === course.type
+            o => o.courseCode === course.courseCode && 
+                 o.type === course.type &&
+                 o.originalDay === day &&
+                 o.originalTime === time
           );
           if (override && override.originalDay === day && override.originalTime === time) {
             return; // This course was moved away
@@ -760,17 +766,20 @@ END:VEVENT
       return;
     }
 
-    // Find if there's an existing override for this course+type
+    // Find if there's an existing override that put this course HERE (at fromDay/fromTime)
     const existingIndex = slotOverrides.findIndex(
-      (o) => o.courseCode === course.courseCode && o.type === course.type
+      (o) => o.courseCode === course.courseCode && 
+             o.type === course.type &&
+             o.newDay === fromDay &&
+             o.newTime === fromTime
     );
 
-    // Get the original position (either from existing override or from the drag source)
+    // Get the original position
     let originalDay = fromDay;
     let originalTime = fromTime;
     
     if (existingIndex !== -1) {
-      // If we had an override, get the real original position
+      // If we are moving a tile that was ALREADY moved, preserve its original source
       originalDay = slotOverrides[existingIndex].originalDay;
       originalTime = slotOverrides[existingIndex].originalTime;
     }
@@ -778,7 +787,9 @@ END:VEVENT
     // Check if we're moving back to original position
     if (originalDay === targetDay && originalTime === targetTime) {
       // Remove the override (moving back to original)
-      setSlotOverrides((prev) => prev.filter((_, i) => i !== existingIndex));
+      if (existingIndex !== -1) {
+        setSlotOverrides((prev) => prev.filter((_, i) => i !== existingIndex));
+      }
     } else {
       // Add or update the override
       const newOverride: SlotOverride = {
@@ -847,12 +858,13 @@ END:VEVENT
       
       // Check if moved away
       const override = slotOverrides.find(
-        (o) => o.courseCode === course.courseCode && o.type === course.type
+        (o) => o.courseCode === course.courseCode && 
+               o.type === course.type &&
+               o.originalDay === day &&
+               o.originalTime === time
       );
-      // If there's an override, check if this is the original position
-      if (override) {
-        return !(override.originalDay === day && override.originalTime === time);
-      }
+      // If this specific slot has an override, it's moved away, so hide it
+      if (override) return false;
       return true;
     });
 

@@ -14,6 +14,7 @@ interface UseSavedTimetablesReturn {
   loadTimetable: (id: string) => SavedTimetable | null;
   deleteTimetable: (id: string) => Promise<boolean>;
   setDefaultTimetable: (id: string) => Promise<void>;
+  makePublic: (id: string) => Promise<boolean>;
   refreshTimetables: () => Promise<void>;
 }
 
@@ -196,6 +197,43 @@ export function useSavedTimetables(): UseSavedTimetablesReturn {
     }
   }, [user?.id]);
 
+  const makePublic = useCallback(async (id: string): Promise<boolean> => {
+    if (!user?.id) return false;
+
+    const supabase = createClient();
+
+    try {
+      const { error } = await supabase
+        .from('saved_timetables')
+        .update({ is_public: true } as any)
+        .eq('id', id)
+        .eq('user_id', user.id);
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Failed to make public",
+          description: error.message,
+        });
+        return false;
+      }
+
+      setTimetables(prev => prev.map(t => 
+        t.id === id ? { ...t, is_public: true } : t
+      ));
+
+      toast({
+        title: "Timetable is now public",
+        description: "Anyone with the link can view it.",
+      });
+
+      return true;
+    } catch (error) {
+      console.error('Error making timetable public:', error);
+      return false;
+    }
+  }, [user?.id]);
+
   return {
     timetables,
     isLoading,
@@ -204,6 +242,7 @@ export function useSavedTimetables(): UseSavedTimetablesReturn {
     loadTimetable,
     deleteTimetable,
     setDefaultTimetable,
+    makePublic,
     refreshTimetables,
   };
 }

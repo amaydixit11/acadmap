@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { CourseContent } from "@/components/courses/coursePage/courseContent";
 import { CourseSidebar } from "@/components/courses/coursePage/courseSidebar";
 import CourseHeader from "./coursePage/courseHeader";
+import { CourseReviewsSection } from "@/components/reviews/CourseReviewsSection";
+import { CourseStudyGroups } from "@/components/courses/CourseStudyGroups";
 
 interface CoursePageProps {
   course: Course;
@@ -20,19 +22,15 @@ export default function CoursePage({ course, user }: CoursePageProps) {
   return (
     <div className={cn(
       "min-h-screen",
-      // "bg-gradient-to-b from-gray-50 to-white",
       "bg-gray-50",
-      // "dark:from-black dark:to-neutral-900", // Dark mode gradient
-      // "dark:bg-neutral-900", // Dark mode gradient
       "dark:bg-neutral-950",
-      // "transition-colors duration-200" // Smooth transition for theme changes
       "rounded-lg"
     )}>
       <CourseHeader course={course} />
       
       <div className={cn(
         "container mx-auto px-4 pt-8 pb-16",
-        "dark:text-gray-100" // Default text color for dark mode
+        "dark:text-gray-100"
       )}>
         <div className={cn(
           "grid grid-cols-1 gap-2",
@@ -41,9 +39,15 @@ export default function CoursePage({ course, user }: CoursePageProps) {
         )}>
           {/* Course Content */}
           <div className={cn(
-            "lg:col-span-2 md:col-span-1 w-full",
+            "lg:col-span-2 md:col-span-1 w-full space-y-6",
           )}>
             <CourseContent course={course} user={user} />
+            
+            {/* Course Reviews */}
+            <CourseReviewsSection courseCode={course.id} />
+            
+            {/* Study Groups for this Course */}
+            <CourseStudyGroups courseCode={course.id} />
           </div>
           <div className="">
             <CourseSidebar course={course} />

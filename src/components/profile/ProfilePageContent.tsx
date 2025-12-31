@@ -16,13 +16,18 @@ import ProfileAvatar from "./ProfileAvatar";
 import ProfileForm from "./ProfileForm";
 import ProfileStats from "./ProfileStats";
 import ProfileSavedTimetables from "./ProfileSavedTimetables";
-import { AlertCircle } from "lucide-react";
+import { BadgeDisplay } from "@/components/gamification/BadgeDisplay";
+import { useBadges } from "@/hooks/useBadges";
+import { AlertCircle, Award } from "lucide-react";
 
 export const ProfilePageContent = () => {
   const {
     profile,
     loading,
   } = useProfileContext();
+  
+  // Get user badges
+  const { badges, isLoading: badgesLoading } = useBadges(profile?.id || null);
   
   if (loading) {
     return (
@@ -70,6 +75,15 @@ export const ProfilePageContent = () => {
           
           {/* User Stats */}
           <ProfileStats userId={profile.id} className="mb-6" />
+          
+          {/* User Badges */}
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold flex items-center gap-2 dark:text-white">
+              <Award className="w-5 h-5 text-amber-500" />
+              Badges
+            </h3>
+            <BadgeDisplay badges={badges} isLoading={badgesLoading} />
+          </div>
           
           <ProfileForm />
           
