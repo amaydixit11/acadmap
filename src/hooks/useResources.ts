@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ResourceModel } from '@/types/courses';
 import { fetchResourceModels, getUploaderNames } from '@/lib/resources';
 
@@ -7,9 +7,9 @@ export function useResources(courseCode?: string, resourceType?: string) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    async function fetchResources() {
+  const fetchResources = useCallback(async () => {
       setIsLoading(true);
+      setError(null);
       try {
         const { resources } = await fetchResourceModels({
           courseCode,
@@ -30,16 +30,17 @@ export function useResources(courseCode?: string, resourceType?: string) {
           setResources([]);
         }
 
-        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err : new Error(String(err)));
       } finally {
         setIsLoading(false);
       }
-    }
+  }, [courseCode]);
+
+  useEffect(() => {
   
     fetchResources();
-  }, [courseCode, resourceType]);
+  }, [courseCode, fetchResources]);
   
 
   const uniqueContributors = useMemo(

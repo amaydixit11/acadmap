@@ -36,7 +36,7 @@ interface ResourceSectionProps {
 export function ResourceSection({ course, user }: ResourceSectionProps) {
   const { isAuthenticated } = useAuth();
   const { filters, setResourceType, setYear, setSortOrder } = useResourceFilters();
-  const { resources, isLoading, error } = useResources(course.code, filters.selectedResourceType);
+  const { resources, isLoading, error } = useResources(course.code);
 
   const filteredAndSortedResources = resources
     .filter(r => 
@@ -50,7 +50,7 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
 
   const availableYears = [...new Set(
     resources
-      .filter(r => r.category === filters.selectedResourceType)
+      .filter(r => filters.selectedResourceType === 'all' || r.category === filters.selectedResourceType)
       .map(r => r.year)
       .filter(Boolean)
   )].sort((a, b) => filters.sortOrder === "desc" ? b - a : a - b);
@@ -142,8 +142,8 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
           {filteredAndSortedResources.length > 0 ? (
             filteredAndSortedResources.map((resource, index) => (
-              <ResourceCard 
-                key={index} 
+              <ResourceCard
+                key={resource.resourceId}
                 resource={resource} 
                 // className="w-full transition-all hover:shadow-lg" 
               />

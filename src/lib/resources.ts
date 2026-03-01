@@ -16,46 +16,61 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
     resources: ResourceModel[];
     count: number;
   }> {
+    console.log('[fetchResourceModels] Fetching resources with options:', options);
     try {
       const repos = await fetchOrganizationRepositories(options.courseCode);
-      const resources: ResourceModel[] = [];
-      for (const repo of repos) {
-        const nameParts = repo.name.split('-');
-        const year = nameParts.length > 1 ? parseInt(nameParts[1]) : undefined;
-        const category = determineResourceCategory(repo.name);
+      console.log(`[fetchResourceModels] Found ${repos.length} repositories for course code: ${options.courseCode}`);
+      let resources: Omit<ResourceModel, 'uploadedBy'>[] = [];
   
-        // Apply filters
-        // if (
-        //   (options.resourceCategory && category !== options.resourceCategory) ||
-        //   (options.year !== undefined && options.year !== null && year !== options.year)
-        // ) {
-        //   continue;
-        // }
+      // Process all repositories in parallel
+      const resourcePromises = repos.map(async (repo: any) => {
+        try {
+          const processedShas = new Set<string>();
+          console.log(`[fetchResourceModels] Processing repo: ${repo.name}`);
+          const nameParts = repo.name.split('-');
+          const rootContents = await fetchRepositoryContent(repo.name);
+          console.log(`[fetchResourceModels] Found ${rootContents.length} folders/files in repo: ${repo.name}`);
   
-        const contents = await fetchRepositoryContent(repo.name);
-        // console.log("contents: ", JSON.stringify(contents))
-        for (let folder of contents){
-
+          // Fetch contents of all subfolders in parallel
+          const folderPromises = rootContents.map(async (folder: any) => {
             const folderContents = await fetchRepositoryContent(repo.name, folder.path);
-            const repoResources: ResourceModel[] = folderContents.map((file: any) => ({
-                reourceId: file.sha,
+            console.log(`[fetchResourceModels] Found ${folderContents.length} items in folder: ${folder.path}`);
+            return folderContents.map((file: any) => {
+              if (processedShas.has(file.sha)) return null;
+              processedShas.add(file.sha);
+              return {
+                resourceId: file.sha,
                 course_code: nameParts[0],
                 title: file.name,
-                type: 'other',
+                type: 'other', // You might want to determine this based on file extension
                 category: folder.name,
                 url: file.download_url,
-                uploadedBy: getUploaderName(file.sha),
                 year: Number(repo.name.slice(7,)),
                 git_url: file.git_url,
-            }));
-            
-            resources.push(...repoResources);
-        }
-      }
+              };
+            }).filter(Boolean); // Remove nulls
+          });
   
+          return (await Promise.all(folderPromises)).flat();
+        } catch (error) {
+          console.error(`[fetchResourceModels] Failed to process repo ${repo.name}:`, error);
+          return []; // Return empty array on error to not fail the whole process
+        }
+      });
+  
+      resources = (await Promise.all(resourcePromises)).flat();
+      const resourceIds = resources.map(r => r.resourceId);
+      const uploaderMap = await getUploaderNames(resourceIds);
+
+      const finalResources: ResourceModel[] = resources.map(resource => ({
+        ...resource,
+        uploadedBy: uploaderMap.get(resource.resourceId) || 'Anonymous',
+      }));
+  
+      console.log(`[fetchResourceModels] Total resources fetched: ${finalResources.length}`);
       return {
-        resources,
-        count: resources.length
+        resources: finalResources,
+        count: finalResources.length
       };
     } catch (error) {
       console.error('Error fetching course resources:', error);
@@ -65,6 +80,7 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
 
   
   async function getUploaderName(resourceId: string): Promise<string> {
+    console.log(`[getUploaderName] Fetching uploader name for resourceId: ${resourceId}`);
     const supabase = createClient();
   
     // Query the database
@@ -82,12 +98,13 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
   
     // Check if data exists and return the uploader's name or "Anonymous"
     const name = data?.[0]?.uploadedBy ?? 'Anonymous';
+    console.log(`[getUploaderName] Found uploader name: ${name} for resourceId: ${resourceId}`);
     return name;
   }
 
   export async function getUploaderNames(resourceIds: string[]): Promise<Map<string, string>> {
     if (resourceIds.length === 0) {
-      // console.log('[getUploaderNames] No resource IDs provided, returning empty map.');
+      console.log('[getUploaderNames] No resource IDs provided, returning empty map.');
       return new Map();
     }
   
@@ -104,7 +121,7 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
   
     const uploaderMap = new Map<string, string>();
     data?.forEach(item => {
-      // console.log(`[getUploaderNames] Mapping resourceId ${item.resourceId} to uploader ${item.uploadedBy || 'Anonymous'}`);
+      console.log(`[getUploaderNames] Mapping resourceId ${item.resourceId} to uploader ${item.uploadedBy || 'Anonymous'}`);
       uploaderMap.set(item.resourceId, item.uploadedBy || 'Anonymous');
     });
   
@@ -166,6 +183,7 @@ export async function prefetchResourceModels(courseCode: string) {
         };
     } catch (error) {
         console.error('Error prefetching resources:', error);
+        console.error(`[prefetchResourceModels] Error prefetching resources for ${courseCode}:`, error);
         return {
         lectures: [],
         assignments: [],
@@ -185,6 +203,7 @@ interface UploadResourcesProps{
 }
 
 export function uploadResource({courseCode, resourceType, year}: UploadResourcesProps){
+  console.log(`[uploadResource] Redirecting to upload page with params: courseCode=${courseCode}, resourceType=${resourceType}, year=${year}`);
   // const router = useRouter();
   const params = new URLSearchParams({
       courseCode: courseCode,
@@ -196,6 +215,7 @@ export function uploadResource({courseCode, resourceType, year}: UploadResources
 }
 
 export async function uploadResourceToDatabase(resource: ResourceModel): Promise<void> {
+  console.log('[uploadResourceToDatabase] Uploading resource to database:', resource);
   try {
     const response = await insertRecord('resources', resource)
     // const supabase = createClient();
@@ -222,7 +242,7 @@ export async function uploadResourceToDatabase(resource: ResourceModel): Promise
     // console.log('Resource uploaded successfully:', data);
     // console.log('Resource uploaded successfully:', response);
   } catch (error) {
-    console.error('Error uploading to Supabase:', error);
+    console.error('[uploadResourceToDatabase] Error uploading to Supabase:', error);
     throw error;
   }
 }
