@@ -13,6 +13,8 @@ A platform to share and explore academic resources built for students of IIT Bhi
 <br/>
 <a href="https://acadmap.vercel.app">View Full Site</a>
 ·
+<a href="./API_DOCUMENTATION.md">API Reference</a>
+·
 <a href="https://github.com/amaydixit11/acadmap/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
 ·
 <a href="https://github.com/amaydixit11/acadmap/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
