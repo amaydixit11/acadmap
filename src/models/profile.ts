@@ -9,5 +9,8 @@ export interface ProfileModel {
     profile_image?: string; 
     bio?: string; 
     linkedin_url?: string; 
+    program?: 'BTech' | 'MSc' | 'MTech' | 'PhD';
+    selected_courses?: string[];
+    completed_courses?: string[];
   }
   

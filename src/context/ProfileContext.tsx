@@ -23,8 +23,8 @@ import { toast } from '@/hooks/use-toast';
     profileImage: File | null;
     
     setProfile: React.Dispatch<React.SetStateAction<ProfileModel | null>>;
-    handleInputChange: (key: keyof ProfileModel, value: string) => void;
-    handleSave: (profileFields: ProfileField[]) => Promise<void>;
+    handleInputChange: (key: keyof ProfileModel, value: any) => void;
+    handleSave: (profileFields: ProfileField[], profileOverride?: ProfileModel) => Promise<void>;
     handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleRemoveImage: () => void;
     toggleEditing: () => void;
@@ -136,11 +136,12 @@ import { toast } from '@/hooks/use-toast';
     }, [profile, validateField]);
   
     // Save profile
-    const handleSave = useCallback(async (profileFields: ProfileField[]) => {
-      if (!profile) return;
+    const handleSave = useCallback(async (profileFields: ProfileField[], profileOverride?: ProfileModel) => {
+      const dataToSave = profileOverride || profile;
+      if (!dataToSave) return;
   
-      // Validate profile first
-      if (!validateProfile(profileFields)) {
+      // Validate profile first (only if profileFields are provided)
+      if (profileFields.length > 0 && !validateProfile(profileFields)) {
         toast({
           variant: "destructive",
           title: "Validation Error",
@@ -151,7 +152,7 @@ import { toast } from '@/hooks/use-toast';
   
       try {
         // Prepare profile data for update
-        const profileData = { ...profile };
+        const profileData = { ...dataToSave };
         
         // Handle profile image upload if a new image is selected
         if (profileImage) {
@@ -160,10 +161,10 @@ import { toast } from '@/hooks/use-toast';
         }
   
         // Update profile
-        // Uncomment when backend is ready
-        // const updatedProfile = 
-        await updateUserProfile(profileData);
-        // setProfile(updatedProfile);
+        const updatedProfile = await updateUserProfile(profileData);
+        if (updatedProfile) {
+          setProfile(updatedProfile);
+        }
         
         setIsEditing(false);
         setProfileImage(null);
@@ -182,7 +183,7 @@ import { toast } from '@/hooks/use-toast';
     }, [profile, profileImage, validateProfile]);
   
     // Input change handler
-    const handleInputChange = useCallback((key: keyof ProfileModel, value: string) => {
+    const handleInputChange = useCallback((key: keyof ProfileModel, value: any) => {
       if (!profile) return;
   
       setProfile(prev => ({

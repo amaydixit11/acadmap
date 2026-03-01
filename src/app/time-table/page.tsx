@@ -4,13 +4,25 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TimeTableParsedCourse } from "@/types/time-table";
 import { parseCSV } from "@/lib/time-table";
+import { calculateCurrentSemester } from "@/utils/curriculum";
+import { curriculumData } from "@/data/curriculumData";
 import { TimeTableCourseList } from "@/components/time-table/course-list";
 import Timetable from "@/components/time-table/timetable";
 import { cn } from "@/lib/utils";
 import { detectClashes, SlotClash } from "@/lib/clashes";
 import { ClashesTab } from "@/components/time-table/clashesTab";
+import { useProfileContext } from "@/context/ProfileContext";
+import { Loader2, Save } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export default function Home() {
+export default function TimeTablePage() {
+  return (
+    <TimeTableContent />
+  );
+}
+
+function TimeTableContent() {
+  const { profile, handleInputChange, handleSave, loading: profileLoading } = useProfileContext();
   const [courses, setCourses] = useState<TimeTableParsedCourse[]>([]);
   const [selectedCourses, setSelectedCourses] = useState<
     TimeTableParsedCourse[]
@@ -18,11 +30,66 @@ export default function Home() {
   const [isCompact, setIsCompact] = useState(true);
   const [viewSlots, setViewSlots] = useState(true);
   const [clashes, setClashes] = useState<SlotClash[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Sync selected courses from profile AND core curriculum when both are loaded
+  useEffect(() => {
+    if (profile && courses.length > 0 && !isInitialized) {
+      // 1. Get courses from profile.selected_courses
+      const profileCodes = profile.selected_courses || [];
+      
+      // 2. Identify core courses for current semester
+      let coreCodes: string[] = [];
+      if (profile.batch && profile.program && profile.department) {
+        const gradYear = parseInt(profile.batch);
+        if (!isNaN(gradYear)) {
+          const currentSemester = calculateCurrentSemester(gradYear, profile.program);
+          const branchData = curriculumData.find(
+            b => b.branch === profile.department && b.degree === profile.program
+          );
+          if (branchData) {
+            const semesterData = branchData.semesters.find(s => s.semester === currentSemester);
+            if (semesterData) {
+              coreCodes = semesterData.courses.flatMap(c => c.code.toUpperCase().split('/'));
+            }
+          }
+        }
+      }
+
+      // 3. Combine both lists (uniques)
+      const allSelectedCodes = new Set([
+        ...profileCodes.map(c => c.toUpperCase()),
+        ...coreCodes.map(c => c.toUpperCase())
+      ]);
+
+      // 4. Populate selectedCourses state
+      const initialSelected = courses.filter(c => 
+        allSelectedCodes.has(c.code.toUpperCase())
+      );
+      
+      setSelectedCourses(initialSelected);
+      setIsInitialized(true);
+    }
+  }, [profile, courses, isInitialized]);
 
   useEffect(() => {
     const detectedClashes = detectClashes(selectedCourses);
     setClashes(detectedClashes);
   }, [selectedCourses]);
+
+  const handleSaveToProfile = async () => {
+    if (!profile) return;
+    
+    const courseCodes = selectedCourses.map(c => c.code);
+    const updatedProfile = { 
+      ...profile, 
+      selected_courses: courseCodes 
+    };
+    
+    // Update local state and save with explicit data to avoid stale closures
+    handleInputChange('selected_courses' as any, courseCodes as any);
+    await handleSave([], updatedProfile); 
+  };
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -97,6 +164,24 @@ export default function Home() {
           >
             Course Timetable Generator
           </h1>
+
+          {profile && (
+            <div className="flex items-center gap-4">
+              <Button 
+                onClick={handleSaveToProfile}
+                disabled={profileLoading}
+                className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
+              >
+                {profileLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                Save to Profile
+              </Button>
+              {profile.selected_courses && profile.selected_courses.length > 0 && (
+                <span className="text-sm text-muted-foreground italic">
+                  Last saved: {profile.selected_courses.length} courses
+                </span>
+              )}
+            </div>
+          )}
 
           {courses.length > 0 ? (
             <div className="w-full max-w-7xl">

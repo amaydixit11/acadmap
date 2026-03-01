@@ -78,10 +78,16 @@ export const updateRecord = async (
       .from(table)
       .update(record)
       .eq('id', id)
+      .select()
       .maybeSingle();
 
     if (error) {
-      console.error(`[ERROR] Failed to update record in table '${table}' for ID '${id}':`, error);
+      console.error(`[ERROR] Failed to update record in table '${table}' for ID '${id}':`, {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      });
       return null;
     }
 

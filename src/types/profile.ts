@@ -77,6 +77,13 @@ export const profileFields: ProfileField[] = [
       options: [...Array.from({ length: new Date().getFullYear() + 6 - 2020 + 1 }, (_, index) => (2020 + index).toString())]
     },
     {
+      key: "program",
+      icon: GraduationCap,
+      label: "Program",
+      component: "select",
+      options: ['BTech', 'MSc', 'MTech', 'PhD']
+    },
+    {
       key: "linkedin_url",
       icon: Linkedin,
       label: "LinkedIn Profile",

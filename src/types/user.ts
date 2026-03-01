@@ -6,5 +6,7 @@ export interface UserData {
     rollNumber: string;
     phone: string;
     avatar: string;
+    selected_courses?: string[];
+    completed_courses?: string[];
   }
   
