@@ -24,6 +24,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from 'next/link';
 import { ResourceModel } from '@/models/resources';
 import { useResources } from '@/hooks/useResources';
+import { UpvoteButton, BookmarkButton } from '@/components/resources';
 
 const getResourceIcon = (type: ResourceModel['type']) => {
   const iconMap = {
@@ -230,15 +231,19 @@ export default function ResourcesPage() {
                     )}
 
                     <div className="flex justify-between items-center pt-2">
-                      <span className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[70%]">
+                      <span className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[50%]">
                         By {resource.uploadedBy}
                       </span>
-                      <Badge 
-                        variant="secondary"
-                        className="bg-gray-100 dark:bg-gray-800"
-                      >
-                        {resource.year}
-                      </Badge>
+                      <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                        <UpvoteButton resourceId={resource.resourceId} size="sm" />
+                        <BookmarkButton resourceId={resource.resourceId} size="sm" />
+                        <Badge 
+                          variant="secondary"
+                          className="bg-gray-100 dark:bg-gray-800 ml-1"
+                        >
+                          {resource.year}
+                        </Badge>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

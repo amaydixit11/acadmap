@@ -9,8 +9,17 @@ export interface ProfileModel {
     profile_image?: string; 
     bio?: string; 
     linkedin_url?: string; 
+    github_url?: string;
     program?: 'BTech' | 'MSc' | 'MTech' | 'PhD';
     selected_courses?: string[];
     completed_courses?: string[];
+    created_at?: string;
+    updated_at?: string;
   }
-  
+
+// Stats interface for profile dashboard
+export interface ProfileStats {
+    uploads_count: number;
+    upvotes_received: number;
+    bookmarks_count: number;
+}

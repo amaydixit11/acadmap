@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { AuthProvider } from "@/context/AuthContext";
 import { ProfileProvider } from "@/context/ProfileContext";
+import { SearchProvider } from "@/context/SearchContext";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,11 +60,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <ToastProvider>
           <AuthProvider>
             <ProfileProvider>
+              <SearchProvider>
               <FilterProvider>
                 <Header />
                 {children}
                 <Footer />
               </FilterProvider>
+              </SearchProvider>
             </ProfileProvider>
           </AuthProvider>
         </ToastProvider>

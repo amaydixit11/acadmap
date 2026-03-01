@@ -29,6 +29,7 @@ import { ResourceModel } from '@/models/resources';
 import { useContributor } from '@/hooks/useContributor';
 import {PDFViewer} from '@/components/pdf-viewer';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { UpvoteButton, BookmarkButton } from '@/components/resources';
 
 interface ResourceCardProps {
   resource: ResourceModel;
@@ -129,31 +130,39 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         <CardFooter className="p-3 sm:p-4 pt-0">
           {/* Button container - stack on extra small screens */}
           <div className="flex flex-col xs:flex-row gap-2 w-full">
-          <Button 
-            size="sm"
-            variant="secondary"
-            onClick={() => handleResourceAction(false)}
-            disabled={isLoading}
-            className="hidden sm:flex w-full xs:flex-1 text-xs sm:text-sm bg-primary/10 hover:bg-primary/20 dark:bg-primary/5 dark:hover:bg-primary/10"
-          >
-            {isLoading ? (
-              <Loader2 className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin" />
-            ) : (
-              <ExternalLink className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            )}
-            {resource.type === 'link' ? 'Open Link' : resource.url.endsWith('.pdf') ? 'View PDF' : 'Open'}
-          </Button>
+            {/* Upvote and Bookmark buttons */}
+            <div className="flex items-center gap-1">
+              <UpvoteButton resourceId={resource.resourceId} size="sm" />
+              <BookmarkButton resourceId={resource.resourceId} size="sm" />
+            </div>
             
-            <Button 
-              size="sm"
-              variant="default"
-              onClick={() => handleResourceAction(true)}
-              disabled={isLoading}
-              className="w-full xs:flex-1 text-xs sm:text-sm"
-            >
-              <Download className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              Download
-            </Button>
+            <div className="flex flex-1 gap-2">
+              <Button 
+                size="sm"
+                variant="secondary"
+                onClick={() => handleResourceAction(false)}
+                disabled={isLoading}
+                className="hidden sm:flex flex-1 text-xs sm:text-sm bg-primary/10 hover:bg-primary/20 dark:bg-primary/5 dark:hover:bg-primary/10"
+              >
+                {isLoading ? (
+                  <Loader2 className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin" />
+                ) : (
+                  <ExternalLink className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                )}
+                {resource.type === 'link' ? 'Open Link' : resource.url.endsWith('.pdf') ? 'View PDF' : 'Open'}
+              </Button>
+              
+              <Button 
+                size="sm"
+                variant="default"
+                onClick={() => handleResourceAction(true)}
+                disabled={isLoading}
+                className="flex-1 text-xs sm:text-sm"
+              >
+                <Download className="mr-1.5 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                Download
+              </Button>
+            </div>
           </div>
         </CardFooter>
 

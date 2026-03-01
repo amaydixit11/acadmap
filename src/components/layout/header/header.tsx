@@ -2,29 +2,16 @@
 
 import { DesktopNavigation } from "./DesktopNavigation";
 import { MobileNavigation } from "./MobileNavigation";
-import { SearchDialog } from "./SearchDialog";
 import { UserMenu } from "./UserMenu";
 import { AuthButtons } from "./AuthButtons";
 import { ModeToggle } from "@/components/mode-toggle";
-// import { useAuth } from "@/hooks/useAuth";
 import { useAuth } from "@/context/AuthContext";
-import { useSearch } from "@/hooks/useSearch";
 import { Logo } from "../Logo";
-import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
 import StarThisProject from "./StarThisProject";
+import { GlobalSearchDialog } from "@/components/search/GlobalSearchDialog";
 
 export default function Header() {
-  // const { isAuthenticated, handleSignOut } = useAuth();
   const { isAuthenticated, signOut } = useAuth();
-  const {
-    searchQuery,
-    setSearchQuery,
-    isSearchOpen,
-    setIsSearchOpen,
-    handleSearch,
-  } = useSearch();
-
 
   return (
     <header className="mb-4 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -35,17 +22,10 @@ export default function Header() {
         </div>
         
         <div className="flex items-center space-x-2">
-          {/* <SearchDialog
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            isSearchOpen={isSearchOpen}
-            setIsSearchOpen={setIsSearchOpen}
-            handleSearch={handleSearch}
-          /> */}
+          <GlobalSearchDialog />
           <StarThisProject className="hidden lg:flex" />
 
           {isAuthenticated ? (
-            // <UserMenu handleSignOut={handleSignOut} />
             <UserMenu handleSignOut={signOut} />
           ) : (
             <AuthButtons />

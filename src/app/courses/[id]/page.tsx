@@ -4,6 +4,9 @@ import CoursePage from '../../../components/courses/CoursePage'
 import { getCourses } from '@/lib/courses'
 import { getUserSessionData } from '@/lib/auth'
 
+// Force dynamic rendering so new courses added to DB are immediately available
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: Promise<{ id: string }>
 }
