@@ -4,10 +4,10 @@ import { Department } from '@/types/courses';
 
 export async function GET(
   request: Request,
-  { params }: { params: { branch: string } }
+  { params }: { params: Promise<{ branch: string }> }
 ) {
   try {
-    const { branch } = params;
+    const { branch } = await params;
     const branchUpper = branch.toUpperCase();
     
     // Check if the input matches any Department key (e.g., "CSE")
