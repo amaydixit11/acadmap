@@ -14,6 +14,8 @@ import { useProfileContext } from "@/context/ProfileContext";
 import ProfileHeader from "./ProfileHeader";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileForm from "./ProfileForm";
+import { MyCourses } from "./MyCourses";
+import { ProgressTracker } from "./ProgressTracker";
 import { AlertCircle } from "lucide-react";
 
 export const ProfilePageContent = () => {
@@ -66,6 +68,10 @@ export const ProfilePageContent = () => {
             </Badge>
           </div>
           <ProfileForm />
+          
+          <ProgressTracker />
+          
+          <MyCourses />
         </CardContent>
       </Card>
     </div>
