@@ -33,6 +33,19 @@ export const getRecordById = async (table: string, id: string): Promise<Record |
   }
 };
 
+export const getRecordByEmail = async (table: string, email: string): Promise<Record | null> => {
+  const supabase = createClient();
+
+  try {
+    const { data, error } = await supabase.from(table).select('*').eq('email', email).maybeSingle();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error(`Error fetching record from ${table} by email:`, error);
+    return null;
+  }
+};
+
 export const insertRecord = async (table: string, record: Record): Promise<Record | null> => {
   console.log(`Inserting record into table: ${table}`);
   console.log("Record data to insert:", record);
