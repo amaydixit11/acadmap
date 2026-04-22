@@ -1,15 +1,15 @@
 "use client"
 
-import { useState } from "react";
-import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { FileText, Calendar, Library } from "lucide-react";
-import { Course} from "@/types/courses";
+import { FileText, Calendar, Library, MessageSquare } from "lucide-react";
+import { Course } from "@/types/courses";
 import { User } from "@supabase/supabase-js";
 import { CourseSyllabus } from "./courseSyllabus";
 import { CourseSchedule } from "./courseSchedule";
 import { ResourceSection } from "./resources/resourceSection";
+import { CourseDiscussions } from "./CourseDiscussions";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface CourseContentProps {
   course: Course;
@@ -19,6 +19,12 @@ interface CourseContentProps {
 export function CourseContent({ course, user }: CourseContentProps) {
   const tabItems = [
     { 
+      value: "resources", 
+      icon: Library, 
+      label: "Resources",
+      component: <ResourceSection course={course} user={user} />
+    },
+    { 
       value: "syllabus", 
       icon: FileText, 
       label: "Syllabus",
@@ -27,84 +33,55 @@ export function CourseContent({ course, user }: CourseContentProps) {
     { 
       value: "schedule", 
       icon: Calendar, 
-      label: "Schedule",
+      label: "Weekly Schedule",
       component: <CourseSchedule course={course} />
     },
-    { 
-      value: "resources", 
-      icon: Library, 
-      label: "Resources",
-      component: <ResourceSection course={course} user={user} />
+    {
+      value: "discussions",
+      icon: MessageSquare,
+      label: "Discussions",
+      component: <CourseDiscussions courseCode={course.code} user={user} />
     }
   ];
 
   return (
-    <div className={cn("w-full px-4 sm:px-6 lg:px-8")}>
-      <Card 
-        className={cn(
-          "shadow-lg border-gray-100 w-full",
-          "dark:bg-black",
-          "dark:border-gray-100"
-        )}
-      >
-        <Tabs defaultValue="syllabus" className="w-full">
-          <CardHeader className="pb-0">
-            <TabsList 
-              className={cn(
-                "border-gray-100",
-                "grid grid-cols-3 w-full py-1 px-2 gap-2 max-w-full h-14",
-                "bg-grey-50/50 dark:bg-black",
-                "dark:border-gray-100",
-                "mobile:flex mobile:flex-col mobile:w-full mobile:items-stretch mobile:space-y-2",
-              )}
-            >
-              {tabItems.map(({ value, icon: Icon, label }) => (
-                <TabsTrigger
-                  key={value}
-                  value={value}
-                  className={cn(
-                    "flex items-center justify-center py-2",
-                    "mobile:w-full mobile:justify-start mobile:px-4 mobile:text-left",
-                    "text-gray-700 dark:text-gray-200",
-                    "data-[state=active]:bg-white data-[state=active]:shadow-sm",
-                    "data-[state=active]:dark:bg-neutral-900",
-                    "text-base"
-                  )}
-                >
-                  <Icon 
-                    className={cn(
-                      "mr-2 h-4 w-4 mobile:mr-3",
-                      "text-gray-600 dark:text-gray-300"
-                    )} 
-                  />
-                  {label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </CardHeader>
-
-          <CardContent 
-            className={cn(
-              "p-6 mobile:p-4",
-              "text-gray-800 dark:text-gray-100",
-              "dark:bg-black"
-            )}
-          >
-            {tabItems.map(({ value, component }) => (
-              <TabsContent 
-                key={value} 
-                value={value} 
-                className={cn(
-                  "mt-0",
-                  "mobile:max-w-full mobile:overflow-x-auto mobile:p-2"
-                )}
+    <div className="w-full">
+      <Tabs defaultValue="resources" className="w-full">
+        <div className="mb-10 overflow-x-auto pb-2">
+          <TabsList className="bg-transparent h-auto p-0 gap-8 justify-start flex border-b border-slate-200 dark:border-slate-800 w-full rounded-none">
+            {tabItems.map(({ value, icon: Icon, label }) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-indigo-600 dark:data-[state=active]:text-emerald-400 data-[state=active]:border-b-2 data-[state=active]:border-indigo-600 dark:data-[state=active]:border-emerald-400 rounded-none px-0 py-4 text-sm font-black uppercase tracking-widest text-slate-500 flex items-center gap-2 transition-all whitespace-nowrap"
               >
-                {component}
-              </TabsContent>
+                <Icon className="w-4 h-4" />
+                {label}
+              </TabsTrigger>
             ))}
-          </CardContent>
-        </Tabs>
-      </Card>
+          </TabsList>
+        </div>
+
+        <div className="min-h-[400px]">
+          {tabItems.map(({ value, component }) => (
+            <TabsContent 
+              key={value} 
+              value={value} 
+              className="mt-0 focus-visible:outline-none"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="p-0 overflow-hidden">
+                  {component}
+                </div>
+              </motion.div>
+            </TabsContent>
+          ))}
+        </div>
+      </Tabs>
     </div>
   );
 }

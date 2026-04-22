@@ -126,11 +126,44 @@ export function GlobalSearchDialog() {
 
             {hasResults && (
               <div className="py-2">
+                {/* Courses */}
+                {results.courses.length > 0 && (
+                  <div className="mb-4">
+                    <div className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                      Academic Pathways
+                    </div>
+                    {results.courses.map((course) => (
+                      <button
+                        key={course.code}
+                        onClick={() => handleResultClick(`/courses/${course.code}`)}
+                        className={cn(
+                          "w-full flex items-center gap-4 px-4 py-3",
+                          "hover:bg-indigo-50 dark:hover:bg-slate-800/50",
+                          "transition-all duration-200 text-left group"
+                        )}
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                           <BookOpen className="h-5 w-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                            {course.title}
+                          </p>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                            {course.code} • {course.department}
+                          </p>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-slate-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 {/* Resources */}
                 {results.resources.length > 0 && (
-                  <div>
-                    <div className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                      Resources
+                  <div className="mb-4">
+                    <div className="px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                      Scholarly Resources
                     </div>
                     {results.resources.map((resource) => (
                       <button

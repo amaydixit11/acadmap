@@ -22,8 +22,10 @@ export const MobileNavigation = () => (
     <SheetContent side="left" className="w-64 flex flex-col">
       <SheetHeader className="border-b pb-4">
         <SheetTitle className="flex items-center space-x-2">
-          <Share2 className="h-5 w-5" />
-          <span>Student Resources</span>
+          <div className="w-8 h-8 flex items-center justify-center">
+            <img src="/logo_icon.png" alt="Logo" className="h-full w-full object-contain" />
+          </div>
+          <span className="font-black tracking-tight text-xl uppercase">AcadMap</span>
         </SheetTitle>
       </SheetHeader>
       <nav className="mt-6 flex flex-col gap-2 flex-grow">

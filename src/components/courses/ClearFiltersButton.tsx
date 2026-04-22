@@ -1,26 +1,21 @@
 import { useFilters } from "@/context/FiltersContext";
-import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export const ClearFilters = () => {
     const {filters, dispatch} = useFilters();
     const handleClearFilters = () => {
       dispatch({ type: 'RESET_FILTERS'});
-      // setIsDrawerOpen(false);
     };
     const activeFiltersCount = filters.departments.length + filters.levels.length;
+    
+    if (activeFiltersCount === 0) return null;
+
     return (
-      <>
-        {activeFiltersCount > 0 && (
-          <div >
-            <Button 
-              onClick={handleClearFilters} 
-              variant="destructive" 
-              className="w-full"
-            >
-              Clear Filters
-            </Button>
-          </div>
-        )}
-      </>
+      <button 
+        onClick={handleClearFilters} 
+        className="text-[10px] font-black uppercase tracking-widest text-[#ef4444] hover:underline"
+      >
+        Clear ({activeFiltersCount})
+      </button>
     )
   }

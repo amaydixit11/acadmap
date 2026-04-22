@@ -1,17 +1,15 @@
 "use client"
-import { useResources } from "@/hooks/useResources";
 import { 
   FileText, 
   Users,
   Zap,
-  Download,
-  Star,
-  TrendingUp
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionWrapper } from "./SectionWrapper";
 import React from "react";
 import { Card } from "../ui/card";
+import { useSiteStats } from "@/hooks/useSiteStats";
+import { AnimatedCounter } from "./AnimatedCounter";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -43,32 +41,37 @@ const itemVariants = {
 };
 
 export function BottomHighlights() {
+  const { totalResources, totalCourses, totalContributors } = useSiteStats();
+  
   const stats = [
     {
       icon: <FileText className="h-12 w-12 lg:h-16 lg:w-16" />,
-      title: "500+",
-      subtitle: "Resources",
-      description: "Comprehensive course materials and study guides",
+      title: totalResources.toString(),
+      suffix: "+",
+      subtitle: "Curated Resources",
+      description: "Comprehensive course materials and peer study guides.",
       gradient: "from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400"
     },
     {
       icon: <Users className="h-12 w-12 lg:h-16 lg:w-16" />,
-      title: "100+",
-      subtitle: "Contributors",
-      description: "Active community of helpful peers",
+      title: totalContributors.toString(),
+      suffix: "+",
+      subtitle: "Active Contributors",
+      description: "Growing community of scholars sharing knowledge.",
       gradient: "from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400"
     },
     {
       icon: <Zap className="h-12 w-12 lg:h-16 lg:w-16" />,
-      title: "24/7",
-      subtitle: "Access",
-      description: "Learn and share on your schedule",
+      title: totalCourses.toString(),
+      suffix: "+",
+      subtitle: "Active Courses",
+      description: "Structured academic pathways for all departments.",
       gradient: "from-amber-600 to-orange-600 dark:from-amber-400 dark:to-orange-400"
     }
   ];
 
   return (
-    <SectionWrapper className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
+    <SectionWrapper className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border-t border-slate-200/50 dark:border-slate-800/50">
       <motion.div
         variants={sectionVariants}
         initial="hidden"
@@ -76,13 +79,13 @@ export function BottomHighlights() {
         viewport={{ once: true }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl lg:text-4xl font-bold mb-4 bg-clip-text text-transparent 
+        <h2 className="text-3xl lg:text-4xl font-black mb-4 bg-clip-text text-transparent 
           bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400"
         >
-          Platform Highlights
+          Platform Metrics
         </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Growing together to create a better learning experience
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
+          Quantifying the pulse of our academic community.
         </p>
       </motion.div>
 
@@ -101,28 +104,28 @@ export function BottomHighlights() {
           >
             <Card className="h-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm
               border border-gray-200/50 dark:border-gray-700/50 overflow-hidden
-              transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+              transition-all duration-300 hover:scale-[1.02] hover:shadow-xl rounded-[2.5rem]"
             >
-              <div className="relative p-6 lg:p-8 flex flex-col items-center text-center">
-                <div className={`p-4 rounded-2xl bg-gradient-to-br ${stat.gradient}
-                  transform group-hover:scale-110 transition-transform duration-300`}
+              <div className="relative p-8 lg:p-10 flex flex-col items-center text-center">
+                <div className={`p-5 rounded-2xl bg-gradient-to-br ${stat.gradient}
+                  transform group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-indigo-500/10`}
                 >
                   {React.cloneElement(stat.icon, { 
                     className: "text-white" 
                   })}
                 </div>
                 
-                <h3 className={`text-3xl lg:text-4xl font-bold mt-6 mb-1 
+                <h3 className={`text-4xl lg:text-5xl font-black mt-8 mb-2 
                   bg-clip-text text-transparent bg-gradient-to-r ${stat.gradient} 
-                  dark:text-white dark:bg-gradient-to-l dark:bg-gradient-to-r`}
+                  dark:text-white dark:bg-gradient-to-l dark:bg-gradient-to-r tracking-tighter`}
                 >
-                  {stat.title}
+                  <AnimatedCounter value={parseInt(stat.title)} suffix={stat.suffix} />
                 </h3>
 
-                <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                <h4 className="text-lg font-black uppercase tracking-widest mb-3 text-slate-900 dark:text-white">
                   {stat.subtitle}
                 </h4>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                   {stat.description}
                 </p>
               </div>

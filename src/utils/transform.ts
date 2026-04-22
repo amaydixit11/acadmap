@@ -34,5 +34,6 @@ export function transformCourse(course: CourseModel): Course {
       workload: 0,
       reviews: 0,
     },
+    resourceCount: course.resourceCount || 0,
   };
 }

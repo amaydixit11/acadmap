@@ -81,8 +81,22 @@ export function useGlobalSearch(): UseGlobalSearchReturn {
         .or(`title.ilike.%${searchTerm}%,course_code.ilike.%${searchTerm}%`)
         .limit(5);
 
+      // Search courses from the courses table
+      const { data: coursesData, error: coursesError } = await supabase
+        .from('courses')
+        .select('*')
+        .or(`course_name.ilike.%${searchTerm}%,course_code.ilike.%${searchTerm}%`)
+        .limit(5);
+
       setResults({
-        courses: [], // Will be populated from static course data
+        courses: coursesData?.map(c => ({
+          id: c.course_code.toLowerCase(),
+          code: c.course_code,
+          title: c.course_name,
+          department: c.Department,
+          credits: c.credits,
+          // Add other required fields or map them
+        })) as Course[] || [],
         resources: resourcesData as ResourceModel[] || [],
         users: profilesData as ProfileModel[] || [],
       });

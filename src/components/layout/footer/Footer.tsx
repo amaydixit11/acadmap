@@ -2,107 +2,108 @@
 
 import Link from "next/link";
 import { Logo } from "../Logo";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Instagram, Twitter } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-50 dark:bg-black border-t dark:border-gray-800 mt-4">
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="w-full bg-slate-50/50 dark:bg-slate-900/50 border-t border-border mt-12 transition-colors">
+      <div className="container mx-auto px-6 py-16 max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Logo and Branding */}
-          <div className="flex flex-col space-y-4">
-            <div className="flex items-center space-x-3">
-              <Logo />
-            </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 max-w-xs">
-              Empowering students with the tools and resources they need to succeed.
+          <div className="flex flex-col space-y-6 col-span-1 md:col-span-1">
+            <Logo />
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+              The Intellectual Curator for IIT Bhilai. Empowering students with precision-curated academic archives.
             </p>
-          </div>
-
-          {/* Quick Links */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold text-gray-700 dark:text-white mb-3">Quick Links</h4>
-              <nav className="space-y-2">
-                <Link
-                  href="/"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/courses"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors block"
-                >
-                  Courses
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors block"
-                >
-                  About Us
-                </Link>
-              </nav>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-700 dark:text-white mb-3">Legal</h4>
-              <nav className="space-y-2">
-                <Link
-                  href="/privacy-policy"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors block"
-                >
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="/terms-of-service"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors block"
-                >
-                  Terms of Service
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors block"
-                >
-                  Contact
-                </Link>
-              </nav>
-            </div>
-          </div>
-
-          {/* Social and Newsletter */}
-          <div>
-            <h4 className="font-semibold text-gray-700 dark:text-white mb-3">Connect With Us</h4>
-            <div className="flex space-x-4 mb-4">
+            <div className="flex space-x-4">
               <Link
                 href="https://github.com/amaydixit11"
                 target="_blank"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                className="w-10 h-10 rounded-lg bg-card flex items-center justify-center border border-border text-muted-foreground hover:text-primary transition-all shadow-sm"
               >
                 <Github className="h-5 w-5" />
               </Link>
               <Link
                 href="https://www.linkedin.com/in/amay-dixit-462113284/"
                 target="_blank"
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 transition-colors"
+                className="w-10 h-10 rounded-lg bg-card flex items-center justify-center border border-border text-muted-foreground hover:text-primary transition-all shadow-sm"
               >
                 <Linkedin className="h-5 w-5" />
               </Link>
               <Link
                 href="https://www.instagram.com/amaydixit05/"
                 target="_blank"
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+                className="w-10 h-10 rounded-lg bg-card flex items-center justify-center border border-border text-muted-foreground hover:text-primary transition-all shadow-sm"
               >
-                <Twitter className="h-5 w-5" />
+                <Instagram className="h-5 w-5" />
               </Link>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-500">
-              © {new Date().getFullYear()} Student Resources. All rights reserved.
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-6">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-foreground">Platform</h4>
+            <nav className="flex flex-col space-y-3">
+              {[
+                { label: "Home", href: "/" },
+                { label: "Courses", href: "/courses" },
+                { label: "Resources", href: "/resources" },
+                { label: "Study Groups", href: "/groups" },
+                { label: "Contributors", href: "/contributors" },
+                { label: "Timetable", href: "/time-table" }
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-foreground">Legal</h4>
+            <nav className="flex flex-col space-y-3">
+              {[
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Terms of Service", href: "/terms" },
+                { label: "Support", href: "/support" }
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div className="space-y-6">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-foreground">Community</h4>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Join our growing community of student contributors. Help others excel.
             </p>
+            <Link 
+              href="/upload" 
+              className="inline-flex items-center text-sm font-bold text-primary hover:underline decoration-2 underline-offset-4"
+            >
+              Upload Material →
+            </Link>
           </div>
         </div>
-        <div className="mt-8 pt-4 border-t dark:border-gray-800 text-center text-xs text-gray-500 dark:text-gray-500">
-          Crafted with ❤️ by Amay Dixit
+        
+        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} AcadMap. The Intellectual Curator. All rights reserved.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Crafted with precision by <span className="text-foreground font-medium">Amay Dixit</span>
+          </p>
         </div>
       </div>
     </footer>

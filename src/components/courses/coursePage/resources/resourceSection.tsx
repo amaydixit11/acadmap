@@ -1,32 +1,24 @@
+"use client"
+
 import { Course } from "@/types/courses";
 import { User } from "@supabase/supabase-js";
-import { NoResources } from "./NoResources";
-import { useResourceFilters } from "@/hooks/useResourcesFilters";
 import { useResources } from "@/hooks/useResources";
-import { ResourceFilters } from "./ResourcesFilters";
-import ResourceCard from "./resourceCard";
-import UploadResourcesButton from "./UploadResourcesButton";
-import { uploadResource } from "@/lib/resources";
-import { Loader2, Filter, Upload } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from "@/components/ui/sheet";
-import { useAuth } from "@/context/AuthContext";
-
-const RESOURCE_TYPES = [
-  { value: "all", label: "All" },
-  { value: "lecture", label: "Lectures" },
-  { value: "assignment", label: "Assignments" },
-  { value: "tutorial", label: "Tutorials" },
-  { value: "pyq", label: "Past Year Questions" },
-  { value: "lab", label: "Labs" },
-  { value: "unclassified", label: "Unclassified" }
-];
+  FileText, 
+  Library, 
+  Download, 
+  PlayCircle, 
+  ChevronRight, 
+  ThumbsUp, 
+  ThumbsDown,
+  Verified,
+  Search
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface ResourceSectionProps {
   course: Course;
@@ -34,133 +26,133 @@ interface ResourceSectionProps {
 }
 
 export function ResourceSection({ course, user }: ResourceSectionProps) {
-  const { isAuthenticated } = useAuth();
-  const { filters, setResourceType, setYear, setSortOrder } = useResourceFilters();
-  const { resources, isLoading, error } = useResources(course.code);
+  const { resources, isLoading } = useResources(course.code);
 
-  const filteredAndSortedResources = resources
-    .filter(r => 
-      (filters.selectedResourceType === 'all' || r.category === filters.selectedResourceType) && 
-      (!filters.selectedYear || r.year === Number(filters.selectedYear))
-    )
-    .sort((a, b) => {
-      const order = filters.sortOrder === "desc" ? -1 : 1;
-      return order * ((a.year || 0) - (b.year || 0));
-    });
-
-  const availableYears = [...new Set(
-    resources
-      .filter(r => filters.selectedResourceType === 'all' || r.category === filters.selectedResourceType)
-      .map(r => r.year)
-      .filter(Boolean)
-  )].sort((a, b) => filters.sortOrder === "desc" ? b - a : a - b);
-
-  if (error) {
-    return (
-      <div className="w-full p-4 text-center bg-red-50 text-red-600 rounded-lg">
-        Error loading resources: {error.message}
-      </div>
-    );
-  }
-
-  const MobileFilters = () => (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" className="w-full flex items-center justify-center gap-2 m-2">
-          <Filter className="w-4 h-4" />
-          Apply Filters
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="bottom" className="h-[90vh] overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle>Filter Resources</SheetTitle>
-        </SheetHeader>
-        <div className="space-y-4 mt-4">
-          <ResourceFilters
-            filters={filters}
-            onTypeChange={setResourceType}
-            onYearChange={setYear}
-            onSortChange={setSortOrder}
-            availableYears={availableYears}
-            resourceTypes={RESOURCE_TYPES}
-            // className="w-full"
-          />
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
+  const lectureNotes = resources.filter(r => r.category === 'lecture').slice(0, 2);
+  const pyqs = resources.filter(r => r.category === 'pyq').slice(0, 2);
+  const tutorials = resources.filter(r => r.type === 'video').slice(0, 2);
 
   return (
-    <div className="container mx-auto px-4 py-6 space-y-6">
-      <div className="flex flex-col space-y-4">
-      {isAuthenticated && (
-            <UploadResourcesButton
-              onClick={() => uploadResource({
-                resourceType: filters.selectedResourceType, 
-                courseCode: course.code, 
-                year: filters.selectedYear ?? new Date().getFullYear().toString(),
-              })}
-              text={`Upload Resources`}
-            />
-          )}
-        {/* Mobile Filters - Visible on small screens */}
-        <div className="block md:hidden">
-          <MobileFilters />
+    <div className="space-y-16">
+      {/* Lecture Notes Section */}
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+             <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                <FileText className="w-5 h-5" />
+             </div>
+             <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Lecture Notes</h3>
+          </div>
+          <button className="text-xs font-black uppercase tracking-widest text-indigo-600 hover:underline">View All</button>
         </div>
 
-        {/* Desktop Filters - Visible on medium screens and above */}
-        <div className="hidden md:flex flex-col sm:flex-row justify-between gap-4 items-center">
-          <ResourceFilters
-            filters={filters}
-            onTypeChange={setResourceType}
-            onYearChange={setYear}
-            onSortChange={setSortOrder}
-            availableYears={availableYears}
-            resourceTypes={RESOURCE_TYPES}
-            // className="flex-grow"
-          />
-
-          {/* {isAuthenticated && (
-            <UploadResourcesButton
-              onClick={() => uploadResource({
-                resourceType: filters.selectedResourceType, 
-                courseCode: course.code, 
-                year: filters.selectedYear ?? new Date().getFullYear().toString(),
-              })}
-              text={`Upload Resources`}
-              className="flex items-center gap-2"
-            />
-          )} */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           {lectureNotes.length > 0 ? lectureNotes.map((res) => (
+             <div key={res.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                <div className="flex items-start justify-between mb-4">
+                   <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 transition-colors">
+                      <FileText className="w-5 h-5" />
+                   </div>
+                   {res.is_verified && (
+                     <Badge className="bg-indigo-50 text-indigo-700 border-0 font-bold text-[10px] uppercase px-2 py-0.5 rounded-md flex items-center gap-1">
+                        <Verified className="w-3 h-3" /> Verified
+                     </Badge>
+                   )}
+                </div>
+                <div className="space-y-1 mb-8">
+                  <h4 className="font-bold text-slate-900 dark:text-white leading-snug truncate">{res.title}</h4>
+                  <p className="text-xs text-slate-400 font-medium tracking-tight">
+                    {res.author_name || 'Contributor'} • {new Date(res.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700">
+                   <div className="flex items-center gap-4 text-slate-400">
+                      <button className="flex items-center gap-1 hover:text-indigo-600 transition-colors">
+                         <ThumbsUp className="w-4 h-4" />
+                         <span className="text-xs font-bold">{res.upvotes || 0}</span>
+                      </button>
+                   </div>
+                   <a href={res.url} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-600 transition-colors">
+                      <Download className="w-4 h-4" />
+                   </a>
+                </div>
+             </div>
+           )) : (
+             <div className="col-span-full py-8 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl text-slate-400 text-sm font-bold">
+               No lecture notes available yet.
+             </div>
+           )}
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="w-full flex justify-center items-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      {/* PYQ Section */}
+      <div className="space-y-8">
+        <div className="flex items-center gap-3">
+           <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <Library className="w-5 h-5" />
+           </div>
+           <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Previous Year Questions</h3>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-          {filteredAndSortedResources.length > 0 ? (
-            filteredAndSortedResources.map((resource, index) => (
-              <ResourceCard
-                key={resource.resourceId}
-                resource={resource} 
-                // className="w-full transition-all hover:shadow-lg" 
-              />
-            ))
-          ) : (
-            <div className="col-span-full">
-              <NoResources
-                courseCode={course.code}
-                user={user}
-                selectedResourceType={filters.selectedResourceType}
-                resourceTypes={RESOURCE_TYPES}
-                year={filters.selectedYear ?? new Date().getFullYear().toString()}
-              />
-            </div>
-          )}
+
+        <div className="space-y-3">
+           {pyqs.length > 0 ? pyqs.map((res) => (
+             <a key={res.id} href={res.url} target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex items-center justify-between group cursor-pointer hover:border-indigo-200 transition-all shadow-sm">
+                <div className="flex items-center gap-6">
+                   <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center text-xs font-black">
+                      {res.year || 'PYQ'}
+                   </div>
+                   <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white">{res.title}</h4>
+                      <p className="text-xs text-slate-400 font-medium tracking-tight truncate max-w-md">{res.description || 'Examination resource'}</p>
+                   </div>
+                </div>
+                <div className="flex items-center gap-4">
+                   <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-600 transition-colors" />
+                </div>
+             </a>
+           )) : (
+             <p className="text-sm text-slate-400 italic font-bold">No previous year questions found for this course.</p>
+           )}
         </div>
-      )}
+      </div>
+
+      {/* Video Tutorials Section */}
+      <div className="space-y-8">
+        <div className="flex items-center gap-3">
+           <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+              <PlayCircle className="w-5 h-5" />
+           </div>
+           <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Video Tutorials</h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           {tutorials.length > 0 ? tutorials.map((res) => (
+             <a key={res.id} href={res.url} target="_blank" rel="noopener noreferrer" className="group cursor-pointer">
+                <div className="relative aspect-video rounded-3xl overflow-hidden mb-4 shadow-sm border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
+                   <img 
+                    src={res.thumbnail_url || `https://img.youtube.com/vi/${res.url.split('v=')[1]?.split('&')[0]}/maxresdefault.jpg`} 
+                    alt={res.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                    onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop'; }}
+                   />
+                   <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-white text-indigo-600 flex items-center justify-center shadow-2xl">
+                         <PlayCircle className="w-6 h-6 fill-current" />
+                      </div>
+                   </div>
+                </div>
+                <div className="space-y-1">
+                   <h4 className="font-bold text-slate-900 dark:text-white tracking-tight leading-snug truncate">{res.title}</h4>
+                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Video Contribution</p>
+                </div>
+             </a>
+           )) : (
+             <div className="col-span-full py-8 text-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl text-slate-400 text-sm font-bold">
+               No video tutorials uploaded yet.
+             </div>
+           )}
+        </div>
+      </div>
     </div>
   );
 }

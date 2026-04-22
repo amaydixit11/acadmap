@@ -28,84 +28,55 @@ import {
         onOpenChange={setIsDrawerOpen}
         modal={true}
       >
-        <DrawerTrigger asChild className="md:hidden w-full">
+        <DrawerTrigger asChild>
           <Button 
             variant="outline" 
-            className={cn(
-              "w-full justify-between",
-              "dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
-            )}
+            className="lg:hidden w-full h-12 rounded-xl justify-between px-4 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
             aria-label="Open filters"
           >
-            <div className="flex items-center">
-              <SlidersHorizontal 
-                className={cn(
-                  "mr-2 h-4 w-4",
-                  "dark:text-gray-300"
-                )} 
-              />
-              Filters
+            <div className="flex items-center gap-2 text-sm font-bold text-foreground">
+              <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
+              Adjust Filters
             </div>
+            <ClearFilters />
           </Button>
         </DrawerTrigger>
         
-        <DrawerContent 
-          className={cn(
-            "dark:bg-black",
-            "dark:border-gray-800"
-          )}
-        >
-          <DrawerHeader className="relative">
-            <DrawerTitle 
-              className={cn(
-                "flex items-center justify-between",
-                "text-gray-900",
-                "dark:text-white"
-              )}
-            >
-              Filters
+        <DrawerContent className="dark:bg-[#0b0c10] border-slate-200 dark:border-slate-800">
+          <DrawerHeader className="text-left border-b border-slate-100 dark:border-slate-800 pb-6">
+            <div className="flex items-center justify-between">
+              <DrawerTitle className="text-xl font-black uppercase tracking-tight text-foreground">
+                Filter Vault
+              </DrawerTitle>
               <DrawerClose asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className={cn(
-                    "absolute right-0 top-0",
-                    "dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
-                  )}
-                  aria-label="Close filters"
-                >
+                <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
                   <X className="h-5 w-5" />
-                </Button>
+                </button>
               </DrawerClose>
-            </DrawerTitle>
-            <DrawerDescription 
-              className={cn(
-                "text-gray-600",
-                "dark:text-gray-400"
-              )}
-            >
-              Filter courses by department and level
+            </div>
+            <DrawerDescription className="text-slate-500 dark:text-slate-400 mt-1">
+              Refine your search by department and academic level.
             </DrawerDescription>
           </DrawerHeader>
           
-          <div className="px-4 overflow-y-auto max-h-[70vh]">
-            <FilterContent />
+          <div className="px-6 py-8 overflow-y-auto max-h-[60vh] space-y-8">
+            <div>
+              <h3 className="text-xs font-black uppercase tracking-widest text-foreground mb-6">Departments</h3>
+              <FilterContent section="department" />
+            </div>
+            <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
+              <h3 className="text-xs font-black uppercase tracking-widest text-foreground mb-6">Academic Level</h3>
+              <FilterContent section="level" />
+            </div>
           </div>
           
-          <DrawerFooter className="flex-row justify-between gap-2">
-            <DrawerClose asChild>
-              <Button 
-                variant="outline" 
-                className={cn(
-                  "flex-1",
-                  "dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
-                )}
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-            </DrawerClose>
-            <ClearFilters />
+          <DrawerFooter className="p-6 border-t border-slate-100 dark:border-slate-800">
+            <Button 
+              className="w-full h-14 rounded-xl font-bold text-lg"
+              onClick={handleClose}
+            >
+              Apply Selection
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

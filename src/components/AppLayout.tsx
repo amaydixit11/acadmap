@@ -47,7 +47,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-blue-500 dark:bg-blue-400 z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-indigo-600 z-[100] origin-left"
         style={{ scaleX }}
       />
 

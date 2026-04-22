@@ -15,12 +15,14 @@ export const metadata = {
     description: "Navigate your academic path with AcadMap - A comprehensive platform for academic planning and course management",
     url: defaultUrl,
     siteName: "AcadMap",
+    images: ["/logo_full.png"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "AcadMap - Your Academic Journey Simplified",
     description: "Navigate your academic path with AcadMap - A comprehensive platform for academic planning and course management",
+    images: ["/logo_full.png"],
   },
 };
 

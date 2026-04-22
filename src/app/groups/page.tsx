@@ -29,6 +29,8 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 // Invite Dialog
 function InviteDialog({ groupId }: { groupId: string }) {
@@ -534,11 +536,13 @@ function GroupDetailView({ group, onClose, onLeave, currentUserId }: { group: an
   );
 }
 
-// Main Page
-export default function StudyGroupsPage() {
+// Inner component to use search params
+function StudyGroupsContent() {
   const { groups, myGroups, isLoading, currentUserId, createGroup, joinGroup, leaveGroup, isMember } = useStudyGroups();
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
+  const searchParams = useSearchParams();
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newName, setNewName] = useState('');
   const [newDescription, setNewDescription] = useState('');
@@ -548,6 +552,15 @@ export default function StudyGroupsPage() {
   const [selectedGroup, setSelectedGroup] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('discover');
+
+  // Auto-filter by course from URL
+  useEffect(() => {
+    const course = searchParams.get('course');
+    if (course) {
+      setSearchQuery(course);
+      setActiveTab('discover');
+    }
+  }, [searchParams]);
 
   const handleCreate = async () => {
     if (!newName.trim() || !newDescription.trim()) return;
@@ -800,3 +813,12 @@ export default function StudyGroupsPage() {
     </div>
   );
 }
+
+export default function StudyGroupsPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Loader2 className="w-10 h-10 animate-spin text-emerald-500" /></div>}>
+      <StudyGroupsContent />
+    </Suspense>
+  );
+}
+

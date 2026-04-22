@@ -1,13 +1,15 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { 
   Users, 
   FileText, 
-  Award, 
-  Filter, 
   Search,
-  Linkedin
+  Linkedin,
+  Filter,
+  Loader2,
+  Award,
+  Sparkles
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -16,38 +18,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import Link from 'next/link';
 import { ProfileModel } from '@/models/profile';
-import { useResources } from '@/hooks/useResources';
-import { getRecordById } from '@/lib/supabase';
-
-interface Contributor extends ProfileModel {
-  contributionCount: number;
-//   topContributions: string[];
-}
-
-const contributorsData: Contributor[] = [
-];
+import { useContributors } from '@/hooks/useContributors';
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function ContributorsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState<ProfileModel['role'] | ''>("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const { uniqueContributors } = useResources();
-  const [contributors, setContributors] = useState<Contributor[]>(contributorsData);
-  useEffect(() => {
-    const fetchUserName = async () => {
-        uniqueContributors.forEach(async (name) => {
-            console.log("name: ", name)
-            const profile = await getRecordById('profiles', name);
-            if (profile) {
-              setContributors([...contributors, {...profile, contributionCount: 0 }] as Contributor[]);
-            }
-        })
-    };
-    fetchUserName();
-  }, []);
+  const { contributors, isLoading } = useContributors();
 
   const filteredContributors = contributors.filter(contributor => 
-    contributor.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (contributor.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+     contributor.email?.toLowerCase().includes(searchTerm.toLowerCase())) &&
     (selectedRole ? contributor.role === selectedRole : true) &&
     (selectedDepartment ? contributor.department === selectedDepartment : true)
   );
@@ -56,173 +39,179 @@ export default function ContributorsPage() {
   const roles: ProfileModel['role'][] = ['student', 'alumni', 'external'];
 
   return (
-    <div className="container mx-auto px-4 py-16 md:py-24">
-      <div className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 text-center p-3 rounded-md mb-6">
-        🚧 This page is still under construction. Stay tuned for updates! 🚧
-      </div>
-
-      <div className="text-center mb-12">
-        <Badge 
-          variant="secondary" 
-          className="inline-flex items-center px-3 py-1 transition-all duration-300 
-          hover:bg-blue-50 hover:shadow-sm dark:hover:bg-blue-900/30 mb-4"
-        >
-          <Users className="mr-2 h-4 w-4 text-green-500" />
-          Community Contributors
-        </Badge>
-
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight 
-          text-gray-900 dark:text-white leading-[1.1] mb-6">
-          Our <span className="text-blue-600 dark:text-blue-400">Resource Champions</span>
-        </h1>
-
-        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 
-          max-w-2xl mx-auto leading-relaxed">
-          Celebrating the students who help build our collective academic knowledge, 
-          one resource at a time.
-        </p>
-      </div>
-
-      {/* Filters */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0">
-        <div className="flex items-center space-x-4 w-full md:w-auto">
-          <div className="relative flex-grow">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
-            <Input 
-              placeholder="Search contributors" 
-              className="pl-10 w-full"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <Filter className="h-4 w-4" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  Filter Contributors
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        </div>
-        <div className="flex space-x-2">
-          {/* Department Filters */}
-          {departments.map(dept => (
-            <Badge 
-              key={dept}
-              variant={selectedDepartment === dept ? "default" : "secondary"}
-              onClick={() => setSelectedDepartment(selectedDepartment === dept ? "" : dept ?? "")}
-              className="cursor-pointer"
-            >
-              {dept}
-            </Badge>
-          ))}
-          {/* Role Filters */}
-          {roles.map(role => (
-            <Badge 
-              key={role}
-              variant={selectedRole === role ? "default" : "secondary"}
-              onClick={() => setSelectedRole(selectedRole === role ? "" : role)}
-              className="cursor-pointer capitalize"
-            >
-              {role}
-            </Badge>
-          ))}
-        </div>
-      </div>
-
-      {/* Contributors Grid */}
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-        {filteredContributors.map((contributor) => (
-          <Card 
-            key={contributor.id}
-            className="border-2 border-neutral-300 dark:border-neutral-800 
-            hover:border-neutral-400 hover:shadow-lg transition-all duration-300"
+    <div className="min-h-screen bg-slate-50/50 dark:bg-[#0b0c10] pb-24">
+      <div className="container mx-auto px-6 py-20">
+        <div className="text-center mb-20 space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 shadow-sm"
           >
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <div className="flex items-center space-x-3">
-                <img 
-                  src={contributor.profile_image || "/api/placeholder/200/200"} 
-                  alt={`${contributor.name}'s profile`} 
-                  className="w-12 h-12 rounded-full object-cover border-2 border-neutral-200"
-                />
-                <div>
-                  <CardTitle className="text-lg font-semibold">{contributor.name}</CardTitle>
-                  <p className="text-sm text-neutral-500 capitalize">{contributor.role}</p>
-                </div>
-              </div>
-              <Badge variant="outline" className="bg-neutral-100 dark:bg-neutral-900">
-                {contributor.department} {contributor.batch && `'${contributor.batch.slice(-2)}`}
-              </Badge>
-            </CardHeader>
-            
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <FileText className="h-4 w-4 text-neutral-500" />
-                    <span className="text-sm text-neutral-600 dark:text-neutral-400">
-                      {contributor.contributionCount} Resources
-                    </span>
-                  </div>
-                </div>
+            <Award className="h-4 w-4 text-indigo-600 dark:text-emerald-400" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-700 dark:text-indigo-300">
+              Intellectual Merit
+            </span>
+          </motion.div>
 
-                {contributor.bio && (
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 italic">
-                    "{contributor.bio}"
-                  </p>
-                )}
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
+            Hall of <span className="text-indigo-600 dark:text-emerald-400">Scholars</span>
+          </h1>
 
-                {/* <div>
-                  <h4 className="text-sm font-medium mb-2 text-neutral-700 dark:text-neutral-300">
-                    Top Contributions
-                  </h4>
-                  <ul className="space-y-1 text-sm text-neutral-600 dark:text-neutral-400">
-                    {contributor.topContributions.map((contribution, index) => (
-                      <li key={index} className="flex items-center">
-                        <Award className="h-3 w-3 mr-2 text-green-500" />
-                        {contribution}
-                      </li>
-                    ))}
-                  </ul>
-                </div> */}
-
-                <div className="flex justify-between items-center mt-4">
-                  {contributor.linkedin_url && (
-                    <Link href={contributor.linkedin_url} target="_blank">
-                      <Button variant="ghost" size="icon">
-                        <Linkedin className="h-4 w-4 text-neutral-500 hover:text-blue-600" />
-                      </Button>
-                    </Link>
-                  )}
-                  <Badge variant="secondary">
-                    Batch {contributor.batch}
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredContributors.length === 0 && (
-        <div className="text-center py-16">
-          <div className="bg-neutral-100 dark:bg-neutral-900 rounded-full p-4 inline-block mb-4">
-            <Search className="h-8 w-8 text-neutral-500" />
-          </div>
-          <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-            No contributors found
-          </h3>
-          <p className="text-neutral-500 mt-2">
-            Try adjusting your search or filter criteria
+          <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium">
+            Honoring the architects of our collective academic repository. Every contribution fuels the next generation of excellence.
           </p>
         </div>
-      )}
+
+        {/* Dynamic Filters Bar */}
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] p-6 shadow-xl shadow-indigo-500/5 mb-12">
+          <div className="flex flex-col lg:flex-row gap-6 items-center">
+            <div className="relative w-full lg:max-w-md group">
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+              <Input 
+                placeholder="Search scholars..." 
+                className="h-14 pl-14 pr-6 bg-slate-50 dark:bg-slate-800 border-transparent rounded-2xl text-sm font-bold focus:ring-2 focus:ring-indigo-600 transition-all dark:placeholder-slate-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+               {departments.map((dept) => (
+                 <button
+                  key={dept}
+                  onClick={() => setSelectedDepartment(selectedDepartment === dept ? "" : dept ?? "")}
+                  className={cn(
+                    "px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all border-2",
+                    selectedDepartment === dept 
+                      ? "bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/20" 
+                      : "bg-transparent border-slate-100 dark:border-slate-800 text-slate-400 hover:border-indigo-200"
+                  )}
+                 >
+                   {dept}
+                 </button>
+               ))}
+            </div>
+
+            <div className="lg:ml-auto flex items-center gap-2">
+              {roles.map(role => (
+                <button
+                  key={role}
+                  onClick={() => setSelectedRole(selectedRole === role ? "" : role)}
+                  className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-all border-2 capitalize text-xs font-black",
+                    selectedRole === role 
+                      ? "bg-slate-900 dark:bg-white border-slate-900 dark:border-white text-white dark:text-slate-900" 
+                      : "bg-transparent border-slate-100 dark:border-slate-800 text-slate-400"
+                  )}
+                >
+                  {role[0]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Contributors Grid */}
+        {isLoading ? (
+          <div className="flex justify-center py-32">
+             <div className="relative">
+                <Loader2 className="w-16 h-16 animate-spin text-indigo-600 opacity-20" />
+                <Sparkles className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-indigo-600" />
+             </div>
+          </div>
+        ) : (
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredContributors.map((contributor, idx) => (
+              <motion.div
+                key={contributor.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
+              >
+                <Card className="bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-8 shadow-sm hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 group overflow-hidden relative">
+                  {/* Decorative Elements */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-indigo-500/10 transition-colors" />
+
+                  <CardHeader className="p-0 mb-8 flex flex-row items-center gap-5 space-y-0">
+                    <div className="relative">
+                      <div className="w-20 h-20 rounded-[1.75rem] overflow-hidden border-2 border-slate-50 dark:border-slate-800 shadow-md">
+                        <img 
+                          src={contributor.profile_image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${contributor.name}`} 
+                          alt={contributor.name} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                        />
+                      </div>
+                      <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-slate-900 border-4 border-white dark:border-slate-900 flex items-center justify-center">
+                         <Award className="h-3 w-3 text-emerald-400" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">{contributor.name}</h3>
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 dark:text-emerald-400">{contributor.role}</p>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="p-0 space-y-6">
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800">
+                       <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 block mb-1">Academic Context</span>
+                       <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                         {contributor.department} Scholar • {contributor.batch ? `Batch of ${contributor.batch}` : 'Global Contributor'}
+                       </span>
+                    </div>
+
+                    {contributor.bio && (
+                      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed italic">
+                        &quot;{contributor.bio}&quot;
+                      </p>
+                    )}
+
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                           <FileText className="h-4 w-4" />
+                        </div>
+                        <span className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white">
+                           {contributor.contributionCount} Assets
+                        </span>
+                      </div>
+                      
+                      {contributor.linkedin_url && (
+                        <a 
+                          href={contributor.linkedin_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full border border-slate-100 dark:border-slate-800 flex items-center justify-center hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all shadow-sm"
+                        >
+                          <Linkedin className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        )}
+
+        {!isLoading && filteredContributors.length === 0 && (
+          <div className="text-center py-32 space-y-6">
+            <div className="w-24 h-24 rounded-[2rem] bg-slate-100 dark:bg-slate-900 flex items-center justify-center mx-auto mb-8 border border-dashed border-slate-300 dark:border-slate-800">
+              <Search className="h-10 w-10 text-slate-400" />
+            </div>
+            <h3 className="text-2xl font-black text-slate-900 dark:text-white">No scholars identified.</h3>
+            <p className="text-slate-500 font-medium max-w-sm mx-auto">
+              We couldn&apos;t find any contributors matching your specific search parameters.
+            </p>
+            <Button 
+              variant="outline" 
+              onClick={() => { setSearchTerm(""); setSelectedRole(""); setSelectedDepartment(""); }}
+              className="rounded-xl font-black uppercase tracking-widest text-xs h-12 px-8"
+            >
+              Reset Filters
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

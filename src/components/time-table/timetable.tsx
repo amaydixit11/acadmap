@@ -114,174 +114,53 @@ interface TimetableProps {
 // };
 
 const colors = {
-  // A - Blue
   blue: {
-    bg: "bg-blue-50/90 dark:bg-blue-900/30",
-    hover: "hover:bg-blue-100 dark:hover:bg-blue-800/40",
-    text: "text-blue-800 dark:text-blue-200",
-    border: "border-l-blue-500 dark:border-l-blue-400",
+    bg: "bg-blue-50 dark:bg-blue-950/20",
+    hover: "hover:bg-blue-100 dark:hover:bg-blue-900/40",
+    text: "text-blue-700 dark:text-blue-300",
+    border: "border-blue-200 dark:border-blue-800",
   },
-  // B - Emerald
   emerald: {
-    bg: "bg-emerald-50/90 dark:bg-emerald-900/30",
-    hover: "hover:bg-emerald-100 dark:hover:bg-emerald-800/40",
-    text: "text-emerald-800 dark:text-emerald-200",
-    border: "border-l-emerald-500 dark:border-l-emerald-400",
+    bg: "bg-emerald-50 dark:bg-emerald-950/20",
+    hover: "hover:bg-emerald-100 dark:hover:bg-emerald-900/40",
+    text: "text-emerald-700 dark:text-emerald-300",
+    border: "border-emerald-200 dark:border-emerald-800",
   },
-  // C - Purple
   purple: {
-    bg: "bg-purple-50/90 dark:bg-purple-900/30",
-    hover: "hover:bg-purple-100 dark:hover:bg-purple-800/40",
-    text: "text-purple-800 dark:text-purple-200",
-    border: "border-l-purple-500 dark:border-l-purple-400",
+    bg: "bg-purple-50 dark:bg-purple-950/20",
+    hover: "hover:bg-purple-100 dark:hover:bg-purple-900/40",
+    text: "text-purple-700 dark:text-purple-300",
+    border: "border-purple-200 dark:border-purple-800",
   },
-  // D - Amber
-  // D - Amber
   amber: {
-    bg: "bg-amber-50/90 dark:bg-amber-900/30",
-    hover: "hover:bg-amber-100 dark:hover:bg-amber-800/40",
-    text: "text-amber-800 dark:text-amber-200",
-    border: "border-l-amber-500 dark:border-l-amber-400",
+    bg: "bg-amber-50 dark:bg-amber-950/20",
+    hover: "hover:bg-amber-100 dark:hover:bg-amber-900/40",
+    text: "text-amber-700 dark:text-amber-300",
+    border: "border-amber-200 dark:border-amber-800",
   },
-  // E - Pink
   pink: {
-    bg: "bg-pink-50/90 dark:bg-pink-900/30",
-    hover: "hover:bg-pink-100 dark:hover:bg-pink-800/40",
-    text: "text-pink-800 dark:text-pink-200",
-    border: "border-l-pink-500 dark:border-l-pink-400",
+    bg: "bg-pink-50 dark:bg-pink-950/20",
+    hover: "hover:bg-pink-100 dark:hover:bg-pink-900/40",
+    text: "text-pink-700 dark:text-pink-300",
+    border: "border-pink-200 dark:border-pink-800",
   },
-  // F - Cyan
   cyan: {
-    bg: "bg-cyan-50/90 dark:bg-cyan-900/30",
-    hover: "hover:bg-cyan-100 dark:hover:bg-cyan-800/40",
-    text: "text-cyan-800 dark:text-cyan-200",
-    border: "border-l-cyan-500 dark:border-l-cyan-400",
+    bg: "bg-cyan-50 dark:bg-cyan-950/20",
+    hover: "hover:bg-cyan-100 dark:hover:bg-cyan-900/40",
+    text: "text-cyan-700 dark:text-cyan-300",
+    border: "border-cyan-200 dark:border-cyan-800",
   },
-  // G - Red
   red: {
-    bg: "bg-red-50/90 dark:bg-red-900/30",
-    hover: "hover:bg-red-100 dark:hover:bg-red-800/40",
-    text: "text-red-800 dark:text-red-200",
-    border: "border-l-red-500 dark:border-l-red-400",
+    bg: "bg-red-50 dark:bg-red-950/20",
+    hover: "hover:bg-red-100 dark:hover:bg-red-900/40",
+    text: "text-red-700 dark:text-red-300",
+    border: "border-red-200 dark:border-red-800",
   },
-  // H - Indigo
   indigo: {
-    bg: "bg-indigo-50/90 dark:bg-indigo-900/30",
-    hover: "hover:bg-indigo-100 dark:hover:bg-indigo-800/40",
-    text: "text-indigo-800 dark:text-indigo-200",
-    border: "border-l-indigo-500 dark:border-l-indigo-400",
-  },
-  // I - Orange
-  orange: {
-    bg: "bg-orange-50/90 dark:bg-orange-900/30",
-    hover: "hover:bg-orange-100 dark:hover:bg-orange-800/40",
-    text: "text-orange-800 dark:text-orange-200",
-    border: "border-l-orange-500 dark:border-l-orange-400",
-  },
-  // J - Teal
-  teal: {
-    bg: "bg-teal-50/90 dark:bg-teal-900/30",
-    hover: "hover:bg-teal-100 dark:hover:bg-teal-800/40",
-    text: "text-teal-800 dark:text-teal-200",
-    border: "border-l-teal-500 dark:border-l-teal-400",
-  },
-  // K - Lime
-  lime: {
-    bg: "bg-lime-50/90 dark:bg-lime-900/30",
-    hover: "hover:bg-lime-100 dark:hover:bg-lime-800/40",
-    text: "text-lime-800 dark:text-lime-200",
-    border: "border-l-lime-500 dark:border-l-lime-400",
-  },
-  // L - Fuchsia
-  fuchsia: {
-    bg: "bg-fuchsia-50/90 dark:bg-fuchsia-900/30",
-    hover: "hover:bg-fuchsia-100 dark:hover:bg-fuchsia-800/40",
-    text: "text-fuchsia-800 dark:text-fuchsia-200",
-    border: "border-l-fuchsia-500 dark:border-l-fuchsia-400",
-  },
-  // M - Sky
-  sky: {
-    bg: "bg-sky-50/90 dark:bg-sky-900/30",
-    hover: "hover:bg-sky-100 dark:hover:bg-sky-800/40",
-    text: "text-sky-800 dark:text-sky-200",
-    border: "border-l-sky-500 dark:border-l-sky-400",
-  },
-  // N - Rose
-  rose: {
-    bg: "bg-rose-50/90 dark:bg-rose-900/30",
-    hover: "hover:bg-rose-100 dark:hover:bg-rose-800/40",
-    text: "text-rose-800 dark:text-rose-200",
-    border: "border-l-rose-500 dark:border-l-rose-400",
-  },
-  // O - Violet
-  violet: {
-    bg: "bg-violet-50/90 dark:bg-violet-900/30",
-    hover: "hover:bg-violet-100 dark:hover:bg-violet-800/40",
-    text: "text-violet-800 dark:text-violet-200",
-    border: "border-l-violet-500 dark:border-l-violet-400",
-  },
-  // P - Yellow
-  yellow: {
-    bg: "bg-yellow-50/90 dark:bg-yellow-900/30",
-    hover: "hover:bg-yellow-100 dark:hover:bg-yellow-800/40",
-    text: "text-yellow-800 dark:text-yellow-200",
-    border: "border-l-yellow-500 dark:border-l-yellow-400",
-  },
-  // Q - Slate
-  slate: {
-    bg: "bg-slate-50/90 dark:bg-slate-900/30",
-    hover: "hover:bg-slate-100 dark:hover:bg-slate-800/40",
-    text: "text-slate-800 dark:text-slate-200",
-    border: "border-l-slate-500 dark:border-l-slate-400",
-  },
-  // R - Green
-  green: {
-    bg: "bg-green-50/90 dark:bg-green-900/30",
-    hover: "hover:bg-green-100 dark:hover:bg-green-800/40",
-    text: "text-green-800 dark:text-green-200",
-    border: "border-l-green-500 dark:border-l-green-400",
-  },
-  // S - Stone
-  stone: {
-    bg: "bg-stone-50/90 dark:bg-stone-900/30",
-    hover: "hover:bg-stone-100 dark:hover:bg-stone-800/40",
-    text: "text-stone-800 dark:text-stone-200",
-    border: "border-l-stone-500 dark:border-l-stone-400",
-  },
-  // T - Zinc
-  zinc: {
-    bg: "bg-zinc-50/90 dark:bg-zinc-900/30",
-    hover: "hover:bg-zinc-100 dark:hover:bg-zinc-800/40",
-    text: "text-zinc-800 dark:text-zinc-200",
-    border: "border-l-zinc-500 dark:border-l-zinc-400",
-  },
-  // U - Neutral
-  neutral: {
-    bg: "bg-neutral-50/90 dark:bg-neutral-900/30",
-    hover: "hover:bg-neutral-100 dark:hover:bg-neutral-800/40",
-    text: "text-neutral-800 dark:text-neutral-200",
-    border: "border-l-neutral-500 dark:border-l-neutral-400",
-  },
-  // V - Gray
-  gray: {
-    bg: "bg-gray-50/90 dark:bg-gray-900/30",
-    hover: "hover:bg-gray-100 dark:hover:bg-gray-800/40",
-    text: "text-gray-800 dark:text-gray-200",
-    border: "border-l-gray-500 dark:border-l-gray-400",
-  },
-  // W - Warmgray (using stone as alternative)
-  warmgray: {
-    bg: "bg-stone-100/90 dark:bg-stone-800/30",
-    hover: "hover:bg-stone-200 dark:hover:bg-stone-700/40",
-    text: "text-stone-900 dark:text-stone-100",
-    border: "border-l-stone-600 dark:border-l-stone-300",
-  },
-  // X - Coolgray (using slate as alternative)
-  coolgray: {
-    bg: "bg-slate-100/90 dark:bg-slate-800/30",
-    hover: "hover:bg-slate-200 dark:hover:bg-slate-700/40",
-    text: "text-slate-900 dark:text-slate-100",
-    border: "border-l-slate-600 dark:border-l-slate-300",
+    bg: "bg-indigo-50 dark:bg-indigo-950/20",
+    hover: "hover:bg-indigo-100 dark:hover:bg-indigo-900/40",
+    text: "text-indigo-700 dark:text-indigo-300",
+    border: "border-indigo-200 dark:border-indigo-800",
   },
 };
 
@@ -294,22 +173,22 @@ const slotColorMap: Record<string, keyof typeof colors> = {
   F: "cyan",
   G: "red",
   H: "indigo",
-  I: "orange",
-  J: "teal",
-  K: "lime",
-  L: "fuchsia",
-  M: "sky",
-  N: "rose",
-  O: "violet",
-  P: "yellow",
-  Q: "slate",
-  R: "green",
-  S: "stone",
-  T: "zinc",
-  U: "neutral",
-  V: "gray",
-  W: "warmgray",
-  X: "coolgray",
+  I: "blue",
+  J: "emerald",
+  K: "purple",
+  L: "amber",
+  M: "pink",
+  N: "cyan",
+  O: "red",
+  P: "indigo",
+  Q: "blue",
+  R: "emerald",
+  S: "purple",
+  T: "amber",
+  U: "pink",
+  V: "cyan",
+  W: "red",
+  X: "indigo",
 };
 
 function hashCode(str: string) {
@@ -344,16 +223,16 @@ const CourseCard = ({
   const cardContent = (
     <div
       className={cn(
-        isCompact ? "p-1" : "p-2 sm:p-3",
-        "h-full transition-all duration-200 group relative",
+        isCompact ? "p-1 sm:p-1.5" : "p-4 sm:p-5",
+        "h-full transition-all duration-300 group relative",
         colorScheme.bg,
         colorScheme.hover,
         colorScheme.text,
-        "rounded-md border-l-2",
+        "rounded-xl border",
         colorScheme.border,
-        "hover:scale-[1.01] hover:shadow-sm dark:hover:shadow-black/20",
+        "hover:scale-[1.02] hover:shadow-xl hover:shadow-indigo-500/5",
         isDraggable && "cursor-grab active:cursor-grabbing",
-        isMoved && "ring-2 ring-amber-400 dark:ring-amber-500 ring-offset-1"
+        isMoved && "ring-2 ring-amber-400 dark:ring-amber-500 ring-offset-2"
       )}
       draggable={isDraggable}
       onDragStart={(e) => {
@@ -365,7 +244,7 @@ const CourseCard = ({
     >
       {/* Drag handle and delete button */}
       {isDraggable && (
-        <div className="absolute top-1 right-1 flex items-center gap-1 opacity-50 group-hover:opacity-100 transition-opacity">
+        <div className="absolute top-1 right-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -376,53 +255,42 @@ const CourseCard = ({
             }}
             className={cn(
               "w-4 h-4 rounded-full flex items-center justify-center",
-              "bg-red-500/80 hover:bg-red-600",
-              "text-white",
+              "bg-rose-500 hover:bg-rose-600",
+              "text-white shadow-sm",
               "transition-colors duration-150"
             )}
-            title="Remove tile (temporary)"
+            title="Remove tile"
           >
             <X className="w-2.5 h-2.5" />
           </button>
-          <GripVertical className="w-3 h-3" />
         </div>
       )}
-      {/* Moved indicator */}
-      {isMoved && (
-        <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 dark:bg-amber-500 rounded-full flex items-center justify-center">
-          <span className="text-[8px] text-white font-bold">!</span>
-        </div>
-      )}
+      
       {isCompact ? (
-        <div className="space-y-1">
-          <div
-            className={`font-semibold text-center text-xs sm:text-sm ${colorScheme.text}`}
-          >
+        <div className="space-y-1 flex flex-col justify-center h-full">
+          <div className="font-black text-center text-[10px] uppercase tracking-tighter line-clamp-1">
             {course.courseCode}
           </div>
-          <div
-            className={`text-xs font-medium text-center leading-tight ${colorScheme.text}`}
-          >
+          <div className="text-[8px] font-bold text-center leading-none opacity-80 uppercase tracking-tighter truncate">
             {course.courseName}
           </div>
         </div>
       ) : (
-        <>
-          <div className="font-semibold mb-1 truncate text-xs sm:text-sm">
-            <BookOpen className="w-3 h-3 inline mr-1 opacity-75" />
+        <div className="flex flex-col h-full gap-1.5">
+          <div className="font-black text-xs uppercase tracking-tighter">
             {course.courseCode}
           </div>
-          <div className="text-xs sm:text-sm opacity-90 truncate">
-            <MapPin className="w-3 h-3 inline mr-1 opacity-75" />
+          <div className="text-[8px] font-black uppercase text-slate-400 tracking-tight flex items-center gap-1">
+            <MapPin className="w-2.5 h-2.5" />
             {course.venue}
           </div>
-          <div className="flex items-center gap-1 mt-1">
-            <AlertCircle className="w-2 h-2 opacity-75 flex-shrink-0" />
-            <span className="text-xs font-medium uppercase tracking-wide opacity-75 truncate">
+          <div className="mt-auto flex items-center gap-1">
+            <div className="w-1 h-1 rounded-full bg-current opacity-50" />
+            <span className="text-[8px] font-black uppercase tracking-tight opacity-60 truncate">
               {course.type}
             </span>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
@@ -1019,33 +887,34 @@ END:VEVENT
       >
         {/* Mobile-optimized scrollable container */}
         <div className="overflow-x-auto">
-          <Table className="w-full min-w-[600px] sm:min-w-full">
+          <Table className="w-full min-w-[800px] sm:min-w-full table-fixed">
             <TableHeader>
               <TableRow
                 className={cn("border-b", "border-gray-200 dark:border-gray-700")}
               >
                 <TableHead
                   className={cn(
-                    "w-16 sm:w-24 font-bold text-center transition-colors duration-300 sticky left-0 z-20",
-                    "bg-gray-100/95 dark:bg-gray-900/95",
+                    "w-12 sm:w-16 font-black transition-colors duration-300 sticky left-0 z-20",
+                    "bg-slate-50/95 dark:bg-slate-900/95",
                     "backdrop-blur-sm",
-                    "text-gray-800 dark:text-white",
-                    "text-xs sm:text-sm"
+                    "text-slate-400 uppercase tracking-tighter",
+                    "text-[8px]"
                   )}
                 >
-                  <div className="px-1">Time</div>
+                  <div className="text-center">Time</div>
                 </TableHead>
                 {times.map((time) => (
                   <TableHead
                     key={time}
                     className={cn(
-                      "text-center font-semibold px-1 sm:px-2 transition-colors duration-300 min-w-[80px] sm:min-w-[120px]",
-                      "bg-gray-100/95 dark:bg-gray-900/95",
+                      "text-center font-black px-0.5 transition-colors duration-300",
+                      "bg-slate-50/95 dark:bg-slate-900/95",
                       "backdrop-blur-sm",
-                      "text-gray-800 dark:text-white"
+                      "text-slate-400 uppercase tracking-tighter",
+                      "text-[8px] w-[calc((100%-4rem)/8)]"
                     )}
                   >
-                    <div className="text-xs sm:text-sm whitespace-nowrap">
+                    <div className="whitespace-nowrap overflow-hidden text-ellipsis">
                       {time}
                     </div>
                   </TableHead>
@@ -1057,23 +926,23 @@ END:VEVENT
                 <TableRow
                   key={day}
                   className={cn(
-                    "transition-colors duration-200 border-b",
-                    "hover:bg-gray-50/50 dark:hover:bg-gray-900/30",
-                    "border-gray-200/50 dark:border-gray-700/50"
+                    "transition-colors duration-200 border-b group/row dense-row",
+                    "hover:bg-slate-50/50 dark:hover:bg-slate-900/30",
+                    "border-slate-100 dark:border-slate-800"
                   )}
                 >
                   <TableCell
                     className={cn(
-                      "sticky left-0 z-10 font-medium transition-colors duration-300",
-                      "bg-gray-50/95 dark:bg-gray-900/95",
+                      "sticky left-0 z-10 font-black transition-colors duration-300",
+                      "bg-slate-50/95 dark:bg-slate-900/95 text-center",
                       "backdrop-blur-sm",
-                      "text-gray-700 dark:text-gray-200",
-                      "text-xs sm:text-sm px-1 sm:px-4"
+                      "text-slate-600 dark:text-slate-400 uppercase tracking-tighter",
+                      "text-[8px] px-0.5 sm:px-1 border-r border-slate-100 dark:border-slate-800",
+                      "w-12 sm:w-16"
                     )}
                   >
-                    <div className="text-center sm:text-left">
-                      <span className="sm:hidden">{day.slice(0, 3)}</span>
-                      <span className="hidden sm:inline">{day}</span>
+                    <div className="text-center">
+                      <span>{day.slice(0, 3)}</span>
                     </div>
                   </TableCell>
                   {times.map((time) => {
@@ -1083,11 +952,11 @@ END:VEVENT
                       <TableCell
                         key={`${day}-${time}`}
                         className={cn(
-                          "p-1 sm:p-2 relative transition-colors duration-200",
+                          "p-0.5 relative transition-colors duration-200 border-r border-slate-50 dark:border-slate-800/50",
                           isCompact
-                            ? "min-h-[50px] sm:min-h-[60px]"
-                            : "min-h-[80px] sm:min-h-[120px]",
-                          isDropTarget && "bg-blue-100/50 dark:bg-blue-900/30"
+                            ? "h-[50px] sm:h-[60px]"
+                            : "h-[70px] sm:h-[90px]",
+                          isDropTarget && "bg-indigo-50/50 dark:bg-indigo-900/20"
                         )}
                         onDragOver={(e) => isDragMode && handleDragOver(e, day, time)}
                         onDragLeave={handleDragLeave}
@@ -1131,11 +1000,11 @@ END:VEVENT
                               className={cn(
                                 isCompact
                                   ? "h-[50px] sm:h-[60px]"
-                                  : "h-[80px] sm:h-[120px]",
-                                "rounded-lg border-2 border-dashed transition-colors duration-300",
+                                  : "h-[70px] sm:h-[100px]",
+                                "rounded-2xl border-2 border-dashed transition-all duration-300",
                                 isDropTarget
-                                  ? "border-blue-400 dark:border-blue-500 bg-blue-50/50 dark:bg-blue-900/20"
-                                  : "border-gray-200 dark:border-gray-700"
+                                  ? "border-indigo-400 dark:border-indigo-500 bg-indigo-50/30 dark:bg-indigo-900/10 scale-[0.98]"
+                                  : "border-slate-100 dark:border-slate-800 opacity-20"
                               )}
                             />
                           )}

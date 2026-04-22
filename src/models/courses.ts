@@ -8,4 +8,5 @@ export interface CourseModel {
     prerequisites: string;
     overlap_with: string;
     syllabus: string;
+    resourceCount?: number;
   }

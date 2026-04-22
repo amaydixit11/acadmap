@@ -12,9 +12,11 @@ import { cn } from "@/lib/utils";
 import { detectClashes, SlotClash } from "@/lib/clashes";
 import { ClashesTab } from "@/components/time-table/clashesTab";
 import { useProfileContext } from "@/context/ProfileContext";
-import { Loader2, Save } from "lucide-react";
+import { Loader2, Save, Calendar, BookOpen, AlertTriangle, Settings2, Home, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SavedTimetablesPanel } from "@/components/time-table/SavedTimetablesPanel";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function TimeTablePage() {
   return (
@@ -36,10 +38,7 @@ function TimeTableContent() {
   // Sync selected courses from profile AND core curriculum when both are loaded
   useEffect(() => {
     if (profile && courses.length > 0 && !isInitialized) {
-      // 1. Get courses from profile.selected_courses
       const profileCodes = profile.selected_courses || [];
-      
-      // 2. Identify core courses for current semester
       let coreCodes: string[] = [];
       if (profile.batch && profile.program && profile.department) {
         const gradYear = parseInt(profile.batch);
@@ -57,13 +56,11 @@ function TimeTableContent() {
         }
       }
 
-      // 3. Combine both lists (uniques)
       const allSelectedCodes = new Set([
         ...profileCodes.map(c => c.toUpperCase()),
         ...coreCodes.map(c => c.toUpperCase())
       ]);
 
-      // 4. Populate selectedCourses state
       const initialSelected = courses.filter(c => 
         allSelectedCodes.has(c.code.toUpperCase())
       );
@@ -87,7 +84,6 @@ function TimeTableContent() {
       selected_courses: courseCodes 
     };
     
-    // Update local state and save with explicit data to avoid stale closures
     handleInputChange('selected_courses' as any, courseCodes as any);
     await handleSave([], updatedProfile); 
   };
@@ -120,7 +116,6 @@ function TimeTableContent() {
     });
   };
 
-  // Load timetable from saved configuration
   const handleLoadTimetable = useCallback((courseCodes: string[]) => {
     const matchedCourses = courses.filter(c => 
       courseCodes.includes(c.code)
@@ -129,296 +124,167 @@ function TimeTableContent() {
   }, [courses]);
 
   return (
-    <main
-      className={cn(
-        "min-h-screen transition-colors duration-300",
-        "bg-gray-50 dark:bg-black"
-      )}
-    >
-      {/* Decorative background elements for dark mode */}
-      <div className="absolute inset-0 -z-10">
-        <div
-          className={cn(
-            "absolute inset-0",
-            "bg-gradient-to-br from-blue-100/10 to-purple-100/10",
-            "dark:from-blue-900/10 dark:to-purple-900/10"
-          )}
-        />
-        <div
-          className={cn(
-            "absolute top-20 left-20 w-32 h-32",
-            "bg-blue-200/20 dark:bg-blue-800/20",
-            "rounded-full blur-3xl"
-          )}
-        />
-        <div
-          className={cn(
-            "absolute bottom-20 right-20 w-40 h-40",
-            "bg-purple-200/20 dark:bg-purple-800/20",
-            "rounded-full blur-3xl"
-          )}
-        />
-      </div>
+    <main className="min-h-screen bg-[#f8f9ff] dark:bg-[#0b0c10]">
+      <div className="container mx-auto px-4 py-4 max-w-7xl relative z-10">
+        
+        {/* Navigation Breadcrumbs */}
+        <nav className="flex items-center gap-2 mb-4 text-xs font-medium text-slate-500">
+          <Link href="/" className="hover:text-indigo-600 transition-colors flex items-center gap-1">
+            <Home className="w-3 h-3" />
+            Home
+          </Link>
+          <ChevronRight className="w-3 h-3" />
+          <span className="text-slate-900 dark:text-white">Timetable</span>
+        </nav>
 
-      <div className="container mx-auto px-4 py-4 sm:py-8 lg:px-8 relative z-10">
-        <div className="flex flex-col items-center space-y-6 sm:space-y-8">
-          <h1
-            className={cn(
-              "text-2xl sm:text-3xl lg:text-4xl font-bold text-center",
-              "bg-clip-text text-transparent",
-              "bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800",
-              "dark:from-white dark:via-gray-200 dark:to-gray-300",
-              "transition-all duration-300"
-            )}
-          >
-            Course Timetable Generator
-          </h1>
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+           <div className="space-y-1">
+             <h1 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase">
+               Scheduler <span className="text-indigo-600 dark:text-emerald-400">Pro</span>
+             </h1>
+             <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
+               Construct your ideal academic week. Detect clashes automatically.
+             </p>
+           </div>
+           
+           <div className="flex items-center gap-2">
+             {profile && (
+               <Button 
+                 onClick={handleSaveToProfile}
+                 disabled={profileLoading}
+                 className="h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md shadow-indigo-500/20 gap-2 border-0 text-xs"
+               >
+                 {profileLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+                 Save
+               </Button>
+             )}
+             <div className="h-9 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg flex items-center gap-3 shadow-sm">
+                <div className="flex items-center gap-2">
+                   <div className={cn("w-1.5 h-1.5 rounded-full", clashes.length > 0 ? "bg-rose-500 animate-pulse" : "bg-emerald-500")} />
+                   <span className="text-[8px] font-black uppercase text-slate-400">{clashes.length} Clashes</span>
+                </div>
+             </div>
+           </div>
+        </div>
 
-          {profile && (
-            <div className="flex items-center gap-4">
-              <Button 
-                onClick={handleSaveToProfile}
-                disabled={profileLoading}
-                className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
-              >
-                {profileLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                Save to Profile
-              </Button>
-              {profile.selected_courses && profile.selected_courses.length > 0 && (
-                <span className="text-sm text-muted-foreground italic">
-                  Last saved: {profile.selected_courses.length} courses
-                </span>
-              )}
-            </div>
-          )}
-
-          {courses.length > 0 ? (
-            <div className="w-full max-w-7xl">
-              <Tabs defaultValue="courses" className="w-full">
-                <div className="mb-6 sm:mb-8 space-y-4">
-                  <TabsList
-                    className={cn(
-                      "grid w-full max-w-md mx-auto grid-cols-3",
-                      "bg-white dark:bg-gray-800",
-                      "border border-gray-200 dark:border-gray-700",
-                      "shadow-sm dark:shadow-gray-900/20"
-                    )}
+        {courses.length > 0 ? (
+          <div className="w-full">
+            <Tabs defaultValue="courses" className="w-full">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 pb-2 border-b border-slate-200 dark:border-slate-800">
+                <TabsList className="bg-transparent h-auto p-0 gap-6 justify-start">
+                  <TabsTrigger 
+                    value="courses"
+                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-indigo-600 dark:data-[state=active]:text-emerald-400 data-[state=active]:border-b-2 data-[state=active]:border-indigo-600 dark:data-[state=active]:border-emerald-400 rounded-none px-0 py-1 text-xs font-bold text-slate-500 flex items-center gap-2"
                   >
-                    <TabsTrigger
-                      value="courses"
-                      className={cn(
-                        "data-[state=active]:bg-blue-50 dark:data-[state=active]:bg-blue-900/30",
-                        "data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-gray-50 dark:hover:bg-gray-700",
-                        "transition-all duration-200",
-                        "text-xs sm:text-sm"
-                      )}
-                    >
-                      Courses
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="timetable"
-                      className={cn(
-                        "data-[state=active]:bg-blue-50 dark:data-[state=active]:bg-blue-900/30",
-                        "data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-gray-50 dark:hover:bg-gray-700",
-                        "transition-all duration-200",
-                        "text-xs sm:text-sm"
-                      )}
-                    >
-                      Timetable
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="clashes"
-                      className={cn(
-                        "data-[state=active]:bg-blue-50 dark:data-[state=active]:bg-blue-900/30",
-                        "data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-gray-50 dark:hover:bg-gray-700",
-                        "transition-all duration-200",
-                        "text-xs sm:text-sm",
-                        clashes.length > 0 &&
-                          "data-[state=active]:text-red-600 dark:data-[state=active]:text-red-400"
-                      )}
-                    >
-                      <span className="flex items-center gap-1">
-                        Clashes
-                        {clashes.length > 0 && (
-                          <span
-                            className={cn(
-                              "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-semibold",
-                              "bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400"
-                            )}
-                          >
-                            {clashes.length}
-                          </span>
-                        )}
-                      </span>
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <div
-                    className={cn(
-                      "flex items-center justify-center space-x-2",
-                      "p-3 rounded-lg",
-                      "bg-white/50 dark:bg-gray-800/50",
-                      "backdrop-blur-sm",
-                      "border border-gray-200/50 dark:border-gray-700/50",
-                      "shadow-sm dark:shadow-gray-900/20"
-                    )}
+                    <BookOpen className="w-3 h-3" />
+                    Archive
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="timetable"
+                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-indigo-600 dark:data-[state=active]:text-emerald-400 data-[state=active]:border-b-2 data-[state=active]:border-indigo-600 dark:data-[state=active]:border-emerald-400 rounded-none px-0 py-1 text-xs font-bold text-slate-500 flex items-center gap-2"
                   >
-                    <input
-                      type="checkbox"
-                      id="compact-mode"
-                      checked={isCompact}
-                      onChange={(e) => setIsCompact(e.target.checked)}
-                      className={cn(
-                        "w-4 h-4 rounded",
-                        "text-blue-600 dark:text-blue-400",
-                        "bg-gray-100 dark:bg-gray-700",
-                        "border-gray-300 dark:border-gray-600",
-                        "focus:ring-blue-500 dark:focus:ring-blue-400",
-                        "focus:ring-2 transition-colors duration-200"
-                      )}
-                    />
-                    <label
-                      htmlFor="compact-mode"
-                      className={cn(
-                        "text-sm font-medium cursor-pointer select-none",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:text-gray-900 dark:hover:text-gray-100",
-                        "transition-colors duration-200"
-                      )}
-                    >
-                      Compact View
-                    </label>
-                    <input
-                      type="checkbox"
-                      id="slots"
-                      checked={viewSlots}
-                      onChange={(e) => setViewSlots(e.target.checked)}
-                      className={cn(
-                        "w-4 h-4 rounded",
-                        "text-blue-600 dark:text-blue-400",
-                        "bg-gray-100 dark:bg-gray-700",
-                        "border-gray-300 dark:border-gray-600",
-                        "focus:ring-blue-500 dark:focus:ring-blue-400",
-                        "focus:ring-2 transition-colors duration-200"
-                      )}
-                    />
-                    <label
-                      htmlFor="slots"
-                      className={cn(
-                        "text-sm font-medium cursor-pointer select-none",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:text-gray-900 dark:hover:text-gray-100",
-                        "transition-colors duration-200"
-                      )}
-                    >
-                      View Slots
-                    </label>
-                    
-                    {/* Saved Timetables */}
-                    <div className="hidden sm:block h-4 w-px bg-gray-300 dark:bg-gray-600" />
-                    <SavedTimetablesPanel
+                    <Calendar className="w-3 h-3" />
+                    Grid View
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="clashes"
+                    className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-rose-600 dark:data-[state=active]:text-rose-400 data-[state=active]:border-b-2 data-[state=active]:border-rose-600 dark:data-[state=active]:border-rose-400 rounded-none px-0 py-1 text-xs font-bold text-slate-500 flex items-center gap-2"
+                  >
+                    <AlertTriangle className="w-3 h-3" />
+                    Conflicts
+                  </TabsTrigger>
+                </TabsList>
+
+                <div className="flex items-center gap-4">
+                   <div className="flex items-center gap-3 px-3 py-1 bg-slate-100/50 dark:bg-slate-900/50 rounded-lg border border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="compact-mode"
+                          checked={isCompact}
+                          onChange={(e) => setIsCompact(e.target.checked)}
+                          className="w-3 h-3 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <label htmlFor="compact-mode" className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest cursor-pointer">Compact</label>
+                      </div>
+                      <div className="w-px h-3 bg-slate-300 dark:bg-slate-700" />
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="slots"
+                          checked={viewSlots}
+                          onChange={(e) => setViewSlots(e.target.checked)}
+                          className="w-3 h-3 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <label htmlFor="slots" className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-widest cursor-pointer">Slots</label>
+                      </div>
+                   </div>
+                   <SavedTimetablesPanel
                       currentCourseCodes={selectedCourses.map(c => c.code)}
                       onLoadTimetable={handleLoadTimetable}
                     />
-                  </div>
                 </div>
-
-                <TabsContent
-                  value="courses"
-                  className={cn(
-                    "mt-2 sm:mt-4 px-2 sm:px-4",
-                    "bg-white/30 dark:bg-gray-800/30",
-                    "backdrop-blur-sm rounded-lg",
-                    "border border-gray-200/50 dark:border-gray-700/50",
-                    "shadow-sm dark:shadow-gray-900/20",
-                    "transition-all duration-300"
-                  )}
-                >
-                  <TimeTableCourseList
-                    courses={courses}
-                    selectedCourses={selectedCourses}
-                    onCourseSelect={handleCourseSelect}
-                  />
-                </TabsContent>
-
-                <TabsContent
-                  value="timetable"
-                  className={cn(
-                    "mt-2 sm:mt-4",
-                    "bg-white/30 dark:bg-gray-800/30",
-                    "backdrop-blur-sm rounded-lg",
-                    "border border-gray-200/50 dark:border-gray-700/50",
-                    "shadow-sm dark:shadow-gray-900/20",
-                    "transition-all duration-300"
-                  )}
-                >
-                  <div className="max-w-full overflow-x-auto p-4">
-                    <Timetable
-                      selectedCourses={selectedCourses}
-                      isCompact={isCompact}
-                      viewSlots={viewSlots}
-                    />
-                  </div>
-                </TabsContent>
-
-                <TabsContent
-                  value="clashes"
-                  className={cn(
-                    "mt-2 sm:mt-4",
-                    "bg-white/30 dark:bg-gray-800/30",
-                    "backdrop-blur-sm rounded-lg",
-                    "border border-gray-200/50 dark:border-gray-700/50",
-                    "shadow-sm dark:shadow-gray-900/20",
-                    "transition-all duration-300"
-                  )}
-                >
-                  <ClashesTab
-                    clashes={clashes}
-                    selectedCourses={selectedCourses}
-                    allCourses={courses}
-                  />
-                </TabsContent>
-              </Tabs>
-            </div>
-          ) : (
-            <div
-              className={cn(
-                "w-full max-w-md p-6 text-center",
-                "bg-white/50 dark:bg-gray-800/50",
-                "backdrop-blur-sm rounded-lg",
-                "border border-gray-200/50 dark:border-gray-700/50",
-                "shadow-sm dark:shadow-gray-900/20"
-              )}
-            >
-              <div className="animate-pulse space-y-4">
-                <div
-                  className={cn(
-                    "h-4 rounded w-3/4 mx-auto",
-                    "bg-gray-200 dark:bg-gray-700"
-                  )}
-                ></div>
-                <div
-                  className={cn(
-                    "h-4 rounded w-1/2 mx-auto",
-                    "bg-gray-200 dark:bg-gray-700"
-                  )}
-                ></div>
-                <div
-                  className={cn(
-                    "h-4 rounded w-2/3 mx-auto",
-                    "bg-gray-200 dark:bg-gray-700"
-                  )}
-                ></div>
               </div>
-            </div>
-          )}
-        </div>
+
+              <div className="min-h-[300px]">
+                <TabsContent value="courses" className="m-0 focus-visible:outline-none">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                    <div className="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 p-4 md:p-6 shadow-sm">
+                      <TimeTableCourseList
+                        courses={courses}
+                        selectedCourses={selectedCourses}
+                        onCourseSelect={handleCourseSelect}
+                      />
+                    </div>
+                  </motion.div>
+                </TabsContent>
+
+                <TabsContent value="timetable" className="m-0 focus-visible:outline-none">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                    <div className="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 p-1 shadow-sm overflow-x-auto">
+                      <Timetable
+                        selectedCourses={selectedCourses}
+                        isCompact={isCompact}
+                        viewSlots={viewSlots}
+                      />
+                    </div>
+                  </motion.div>
+                </TabsContent>
+
+                <TabsContent value="clashes" className="m-0 focus-visible:outline-none">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                    <div className="bg-white dark:bg-slate-900/50 rounded-[2rem] border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+                      <ClashesTab
+                        clashes={clashes}
+                        selectedCourses={selectedCourses}
+                        allCourses={courses}
+                      />
+                    </div>
+                  </motion.div>
+                </TabsContent>
+              </div>
+            </Tabs>
+          </div>
+        ) : (
+          <div className="w-full flex flex-col items-center justify-center py-24 space-y-8 bg-white dark:bg-slate-900/50 rounded-[3rem] border border-slate-100 dark:border-slate-800">
+             <div className="w-20 h-20 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+                <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
+             </div>
+             <div className="text-center space-y-2">
+                <h3 className="text-2xl font-black uppercase text-slate-900 dark:text-white">Initializing Architect</h3>
+                <p className="text-slate-500 font-medium">Pulling latest course data from the IITB vault...</p>
+             </div>
+             <div className="w-64 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <motion.div 
+                  className="h-full bg-indigo-600"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+             </div>
+          </div>
+        )}
       </div>
     </main>
   );

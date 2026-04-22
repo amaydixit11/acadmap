@@ -1,85 +1,128 @@
+"use client"
+
 import React from 'react';
-import { Calendar, BookOpen, Activity, Users } from "lucide-react";
+import { Calendar, BookOpen, Clock, Users, Layers, Zap } from "lucide-react";
 import { Course } from "@/types/courses";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface CourseScheduleProps {
   course: Course;
 }
 
 export function CourseSchedule({ course }: CourseScheduleProps) {
+  const lectures = Number(course.schedule.lectures) || 0;
+  const labs = Number(course.schedule.labs) || 0;
+  const tutorials = Number(course.schedule.tutorials) || 0;
+
   const scheduleItems = [
     { 
       label: "Lectures", 
       icon: BookOpen, 
-      hours: course.schedule.lectures, 
-      color: "text-primary",
-      bgColor: "group-hover:bg-primary/10" 
+      hours: lectures, 
+      color: "text-indigo-600 dark:text-indigo-400",
+      accent: "bg-indigo-600",
+      description: "Theoretical frameworks and core concepts"
     },
     { 
-      label: "Labs", 
-      icon: Activity, 
-      hours: course.schedule.labs, 
-      color: "text-green-600",
-      bgColor: "group-hover:bg-green-600/10" 
+      label: "Laboratories", 
+      icon: Layers, 
+      hours: labs, 
+      color: "text-emerald-600 dark:text-emerald-400",
+      accent: "bg-emerald-600",
+      description: "Practical application and experimentation"
     },
     { 
       label: "Tutorials", 
       icon: Users, 
-      hours: course.schedule.tutorials, 
-      color: "text-blue-600",
-      bgColor: "group-hover:bg-blue-600/10" 
+      hours: tutorials, 
+      color: "text-amber-600 dark:text-amber-400",
+      accent: "bg-amber-600",
+      description: "Problem-solving and peer interaction"
     }
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 dark:bg-black dark:text-white">
-      <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 flex items-center mb-6">
-        <Calendar className="mr-3 w-6 h-6 sm:w-7 sm:h-7 text-primary dark:text-primary" /> 
-        Weekly Course Schedule
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-        {scheduleItems.map(({ label, icon: Icon, hours, color, bgColor }) => (
-          <div 
-            key={label} 
-            className={cn(
-              "group relative bg-white border border-gray-100 rounded-2xl p-5 sm:p-6 dark:bg-gray-900 dark:border-gray-700",
-              "transform transition-all duration-300 ease-in-out",
-              "hover:-translate-y-2 hover:shadow-lg",
-              "flex flex-col items-start",
-              "max-md:flex-row max-md:items-center max-md:gap-4",
-              bgColor
-            )}
+    <div className="space-y-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
+        <div className="space-y-1">
+          <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight text-center md:text-left">Weekly Engagement</h3>
+          <p className="text-sm text-slate-500 font-medium text-center md:text-left">Anatomy of the learning hours assigned to this course.</p>
+        </div>
+        <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-900/40 px-4 py-2 rounded-xl self-center">
+          <Clock className="w-4 h-4 text-slate-400" />
+          <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-400">
+            {lectures + labs + tutorials} Contact Hours / Week
+          </span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {scheduleItems.map((item, idx) => (
+          <motion.div 
+            key={item.label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            className="group relative bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500 overflow-hidden"
           >
+            {/* Background Accent */}
             <div className={cn(
-              "mb-4 p-3 rounded-xl bg-gray-50 dark:bg-gray-800",
-              "group-hover:rotate-6 transition-transform duration-300",
-              "max-md:mb-0 max-md:p-2",
-              color
-            )}>
-              <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <div className="max-md:flex-grow">
-              <h3 className="text-base sm:text-lg font-semibold mb-2 text-gray-800 dark:text-gray-300 max-md:mb-0">
-                {label}
-              </h3>
-              <div className="mt-auto w-full">
-                <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-baseline">
-                  {hours}
-                  <span className="text-sm sm:text-base font-normal text-gray-500 dark:text-gray-400 ml-2">
-                    hrs/week
-                  </span>
-                </p>
+              "absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 rounded-full opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500",
+              item.accent
+            )} />
+
+            <div className="relative z-10 flex flex-col h-full">
+              <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                <item.icon className={cn("w-7 h-7", item.color)} />
               </div>
+              
+              <div className="space-y-2 mb-8">
+                <h4 className="text-sm font-black uppercase tracking-widest text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                  {item.label}
+                </h4>
+                <div className="flex items-baseline gap-2">
+                   <span className="text-4xl font-black text-slate-900 dark:text-white">{item.hours}</span>
+                   <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Hours</span>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-500 font-medium leading-relaxed mt-auto">
+                {item.description}
+              </p>
             </div>
-            <div className={cn(
-              "absolute bottom-0 left-0 right-0 h-1 transition-all duration-300",
-              "opacity-0 group-hover:opacity-100",
-              "max-md:hidden",
-              color
-            )}></div>
-          </div>
+            
+            {/* Bottom Progress Indicator */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-50 dark:bg-slate-800">
+               <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.5 + idx * 0.1 }}
+                className={cn("h-full", item.accent)}
+               />
+            </div>
+          </motion.div>
         ))}
+      </div>
+
+      <div className="bg-slate-900 dark:bg-slate-800/20 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden">
+         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl" />
+         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
+            <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center shadow-2xl shadow-indigo-500/20 shrink-0">
+               <Zap className="w-10 h-10 text-white" />
+            </div>
+            <div className="space-y-2 flex-1 text-center md:text-left">
+               <h4 className="text-xl font-black tracking-tight">Academic Intensity Score</h4>
+               <p className="text-indigo-100/60 text-sm font-medium">
+                 Based on {course.credits} credits and {course.schedule.lectures + course.schedule.labs + course.schedule.tutorials} weekly contact hours, 
+                 this course requires a dedicated engagement of approximately {course.credits * 3} study hours per week.
+               </p>
+            </div>
+            <div className="text-center md:text-right px-8 py-4 bg-white/10 rounded-3xl backdrop-blur-md border border-white/10">
+               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-200 mb-1">Impact Level</p>
+               <p className="text-2xl font-black">{course.credits >= 4 ? 'High Voltage' : course.credits >= 3 ? 'Standard' : 'Guided'}</p>
+            </div>
+         </div>
       </div>
     </div>
   );

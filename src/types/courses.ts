@@ -42,6 +42,7 @@ export interface Course {
     difficulty: number;
     workload: number;
     reviews: number;
-  }
+  };
+  resourceCount?: number;
 }
 

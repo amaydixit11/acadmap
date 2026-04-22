@@ -1,13 +1,22 @@
 import Link from "next/link";
-import { Share2 } from "lucide-react";
+import { GraduationCap } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export const Logo = () => (
+export const Logo = ({ className }: { className?: string }) => (
   <Link 
     href="/" 
-    className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
-    aria-label="Student Resource Hub"
+    className={cn("flex items-center space-x-3 group transition-all", className)}
+    aria-label="AcadMap Home"
   >
-    <Share2 className="h-6 w-6" />
-    <span className="font-bold text-lg tracking-tight">AcadMap</span>
+    <div className="w-10 h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+      <img 
+        src="/logo_icon.png" 
+        alt="AcadMap" 
+        className="h-full w-full object-contain" 
+      />
+    </div>
+    <span className="font-black text-2xl tracking-tighter text-foreground uppercase transition-colors group-hover:opacity-70">
+      AcadMap
+    </span>
   </Link>
 );
