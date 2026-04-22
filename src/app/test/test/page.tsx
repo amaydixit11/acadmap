@@ -26,6 +26,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Department } from '@/types/courses';
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 interface Stats {
   title: string;
@@ -41,6 +44,8 @@ interface Feature {
 }
 
 export default function AcadMapHomePage(): JSX.Element {
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
 
@@ -78,6 +83,21 @@ export default function AcadMapHomePage(): JSX.Element {
     }
   ];
   
+  const handleAuthRequiredAction = (actionTitle: string, actionDescription: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Authentication Required",
+        description: `You must be signed in to ${actionDescription}.`,
+        action: (
+          <Link href="/sign-in">
+            <ToastAction altText="Sign In">Sign In</ToastAction>
+          </Link>
+        ),
+      });
+      return false;
+    }
+    return true;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-blue-50 to-emerald-50 dark:from-violet-950 dark:via-blue-950 dark:to-emerald-950">
@@ -280,6 +300,11 @@ export default function AcadMapHomePage(): JSX.Element {
               size="lg"
               className="bg-gradient-to-r from-violet-600 to-blue-600 
                 hover:from-violet-700 hover:to-blue-700"
+              onClick={() => {
+                if (handleAuthRequiredAction("Upload", "upload resources")) {
+                  window.location.href = "/upload";
+                }
+              }}
             >
               Upload Resources <Upload className="ml-2" />
             </Button>
@@ -287,6 +312,11 @@ export default function AcadMapHomePage(): JSX.Element {
               variant="outline"
               size="lg"
               className="border-2"
+              onClick={() => {
+                if (handleAuthRequiredAction("Join", "join the community")) {
+                  window.location.href = "/groups";
+                }
+              }}
             >
               Join Community <Users className="ml-2" />
             </Button>
@@ -294,8 +324,11 @@ export default function AcadMapHomePage(): JSX.Element {
               variant="outline"
               size="lg"
               className="border-2"
+              asChild
             >
-              View Guidelines <FileText className="ml-2" />
+              <Link href="/guidelines">
+                View Guidelines <FileText className="ml-2" />
+              </Link>
             </Button>
           </div>
         </div>

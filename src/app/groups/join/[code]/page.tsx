@@ -50,7 +50,7 @@ export default function JoinGroupPage() {
       
       if (!user) {
         // Redirect to login with return URL
-        router.push(`/auth?redirect=/groups/join/${code}`);
+        router.push(`/sign-in?redirect=/groups/join/${code}`);
         return;
       }
 

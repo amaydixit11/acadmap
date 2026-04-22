@@ -26,6 +26,9 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 // Invite Dialog
 function InviteDialog({ groupId }: { groupId: string }) {
@@ -534,6 +537,8 @@ function GroupDetailView({ group, onClose, onLeave, currentUserId }: { group: an
 // Main Page
 export default function StudyGroupsPage() {
   const { groups, myGroups, isLoading, currentUserId, createGroup, joinGroup, leaveGroup, isMember } = useStudyGroups();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newName, setNewName] = useState('');
   const [newDescription, setNewDescription] = useState('');
@@ -552,7 +557,23 @@ export default function StudyGroupsPage() {
     if (groupId) { setNewName(''); setNewDescription(''); setNewCourseCode(''); setIsDialogOpen(false); }
   };
 
-  const handleJoin = async (groupId: string) => { setActionId(groupId); await joinGroup(groupId); setActionId(null); };
+  const handleJoin = async (groupId: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "You must be signed in to join a study group.",
+        action: (
+          <Link href="/sign-in">
+            <ToastAction altText="Sign In">Sign In</ToastAction>
+          </Link>
+        ),
+      });
+      return;
+    }
+    setActionId(groupId);
+    await joinGroup(groupId);
+    setActionId(null);
+  };
   const handleLeave = async (groupId: string) => { setActionId(groupId); const s = await leaveGroup(groupId); setActionId(null); if (s && selectedGroup?.id === groupId) setSelectedGroup(null); return s; };
 
   const filteredGroups = groups.filter(g => g.name.toLowerCase().includes(searchQuery.toLowerCase()) || g.description.toLowerCase().includes(searchQuery.toLowerCase()) || g.course_code?.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -591,10 +612,27 @@ export default function StudyGroupsPage() {
                 </Button>
               </CardContent>
               <div className="p-4 pt-0">
+                <Button 
+                  className="w-full"
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      toast({
+                        title: "Authentication Required",
+                        description: "You must be signed in to create a study group.",
+                        action: (
+                          <Link href="/sign-in">
+                            <ToastAction altText="Sign In">Sign In</ToastAction>
+                          </Link>
+                        ),
+                      });
+                      return;
+                    }
+                    setIsDialogOpen(true);
+                  }}
+                >
+                  <Plus className="w-4 h-4 mr-2" />Create Group
+                </Button>
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button className="w-full"><Plus className="w-4 h-4 mr-2" />Create Group</Button>
-                  </DialogTrigger>
                   <DialogContent className="sm:max-w-md">
                     <DialogHeader><DialogTitle>Create Study Group</DialogTitle><DialogDescription>Start a new group for your course</DialogDescription></DialogHeader>
                     <div className="space-y-4 mt-4">
@@ -673,12 +711,12 @@ export default function StudyGroupsPage() {
                               <div className="flex items-start justify-between gap-2">
                                 <div>
                                   <h3 className="font-semibold text-gray-900 dark:text-white">{group.name}</h3>
-                                  <p className="text-sm text-gray-500 flex items-center gap-2 mt-0.5">
+                                  <div className="text-sm text-gray-500 flex items-center gap-2 mt-0.5">
                                     <span className="flex items-center gap-1"><Users className="w-3 h-3" />{group.member_count}</span>
                                     {group.course_code && (
                                       <Badge variant="outline" className="text-xs"><BookOpen className="w-3 h-3 mr-1" />{group.course_code}</Badge>
                                     )}
-                                  </p>
+                                  </div>
                                 </div>
                                 {memberStatus ? (
                                   <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 flex-shrink-0">

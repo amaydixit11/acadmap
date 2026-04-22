@@ -8,15 +8,33 @@ import { Users, UserPlus, Loader2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { useAuth } from '@/context/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
+
 interface CourseStudyGroupsProps {
   courseCode: string;
 }
 
 export function CourseStudyGroups({ courseCode }: CourseStudyGroupsProps) {
   const { groups, isLoading, joinGroup, isMember } = useStudyGroups(courseCode);
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const [joiningId, setJoiningId] = useState<string | null>(null);
 
   const handleJoin = async (groupId: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "You must be signed in to join a study group.",
+        action: (
+          <Link href="/sign-in">
+            <ToastAction altText="Sign In">Sign In</ToastAction>
+          </Link>
+        ),
+      });
+      return;
+    }
     setJoiningId(groupId);
     await joinGroup(groupId);
     setJoiningId(null);
