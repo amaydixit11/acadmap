@@ -140,10 +140,10 @@ ${url}`;
         fileName: `${title}.md`,
         name,
         userId,
-        type,
+        type: 'link',
         content,
         commitMessage: `Add link resource: ${title} (Uploaded by ${name})`,
-        groupId
+        groupId: undefined
     });
 }
 
@@ -154,8 +154,8 @@ interface UploadFactoryProps{
     title: string,
     category: ResourceCategory,
     year: string,
-    course_code: string
-
+    course_code: string,
+    groupId?: string
 }
 export function uploadFactory({response, name, type, title, category, year, course_code, groupId}: UploadFactoryProps): ResourceModel {
     const { content, commit } = response;

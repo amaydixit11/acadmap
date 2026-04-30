@@ -1,14 +1,19 @@
-export interface ResourceModel { 
+export interface ResourceModel {
   resourceId: string;
   course_code: string;
   title: string;
   type: 'document' | 'video' | 'image' | 'archive' | 'link' | 'other';
   category: 'lecture' | 'tutorial' | 'assignment' | 'pyq' | 'lab' | 'unclassified'
   url: string;
+  groupId?: string;
   uploadedBy: string;
   description ?: string;
   year: number;
-} 
+  git_url?: string;
+  upvotes_count?: number;
+  is_upvoted?: boolean;
+  is_bookmarked?: boolean;
+}
 export enum Department {
   CSE = "Computer Science and Engineering",
   DSAI = "Data Science and Artificial Intelligence",
