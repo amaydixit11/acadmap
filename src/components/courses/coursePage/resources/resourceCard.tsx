@@ -33,6 +33,7 @@ import { UpvoteButton, BookmarkButton } from '@/components/resources';
 
 interface ResourceCardProps {
   resource: ResourceModel;
+  onOpen?: () => void;
 }
 
 const truncateText = (text: string, maxLength: number = 30) => {
@@ -40,7 +41,7 @@ const truncateText = (text: string, maxLength: number = 30) => {
   return text.slice(0, maxLength) + '...';
 };
 
-export function ResourceCard({ resource }: ResourceCardProps) {
+export function ResourceCard({ resource, onOpen }: ResourceCardProps) {
   const [isPDFOpen, setIsPDFOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { selectedProfileName } = useContributor(resource.uploadedBy);
@@ -69,6 +70,8 @@ export function ResourceCard({ resource }: ResourceCardProps) {
   const handleResourceAction = async (download: boolean) => {
     if (download){
       window.open(resource.url, '_blank', 'noopener,noreferrer');
+    } else if (onOpen) {
+      onOpen();
     } else if (resource.url.endsWith('.pdf') && resource.git_url) {
       setIsLoading(true);
       setIsPDFOpen(true);

@@ -45,15 +45,32 @@ export default function ResourcesPage() {
   const [selectedResource, setSelectedResource] = useState<ResourceModel | null>(null);
   const { resources } = useResources();
 
-  const filteredResources = useMemo(() => 
-    resources.filter(resource => 
+  const filteredResources = useMemo(() => {
+    const filtered = resources.filter(resource =>
       (resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
        resource.course_code.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (selectedType ? resource.type === selectedType : true) &&
       (selectedCategory ? resource.category === selectedCategory : true)
-    ),
-    [resources, searchTerm, selectedType, selectedCategory]
-  );
+    );
+
+    const grouped: (ResourceModel | ResourceModel[])[] = [];
+    const seenIds = new Set<string>();
+
+    filtered.forEach(resource => {
+      if (seenIds.has(resource.resourceId)) return;
+
+      if (resource.groupId) {
+        const group = filtered.filter(r => r.groupId === resource.groupId);
+        grouped.push(group);
+        group.forEach(r => seenIds.add(r.resourceId));
+      } else {
+        grouped.push(resource);
+        seenIds.add(resource.resourceId);
+      }
+    });
+
+    return grouped;
+  }, [resources, searchTerm, selectedType, selectedCategory]);
 
   const types: ResourceModel['type'][] = ['document', 'video', 'image', 'archive', 'link', 'other'];
   const categories: ResourceModel['category'][] = ['lecture', 'tutorial', 'assignment', 'pyq', 'lab', 'unclassified'];
@@ -185,18 +202,21 @@ export default function ResourcesPage() {
             transition={{ delay: 0.5, duration: 0.5 }}
             className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
-            {filteredResources.map((resource) => {
-                return(
-              <motion.div
-                key={resource.resourceId}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                whileHover={{ scale: 1.02 }}
-                onClick={() => setSelectedResource(resource)}
-                className="cursor-pointer"
-              >
+            {filteredResources.map((resourceOrGroup, index) => {
+                const isGroup = Array.isArray(resourceOrGroup);
+                const resource = isGroup ? resourceOrGroup[0] : resourceOrGroup;
+
+                return (
+                  <motion.div
+                    key={resource.resourceId}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => setSelectedResource(resource)}
+                    className="cursor-pointer"
+                  >
                 <Card className="h-full border-2 border-gray-100 dark:border-gray-800 
                   hover:border-blue-300 dark:hover:border-blue-700 
                   hover:shadow-lg transition-all duration-300"
@@ -204,12 +224,19 @@ export default function ResourcesPage() {
                   <CardHeader className="space-y-2">
                     <div className="flex items-start justify-between">
                       {getResourceIcon(resource.type)}
-                      <Badge 
-                        variant="outline" 
-                        className={`${getCategoryColor(resource.category)} ml-2`}
-                      >
-                        {resource.category}
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        {isGroup && (
+                          <Badge variant="outline" className="bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                            {resourceOrGroup.length} Photos
+                          </Badge>
+                        )}
+                        <Badge
+                          variant="outline"
+                          className={`${getCategoryColor(resource.category)} ml-2`}
+                        >
+                          {resource.category}
+                        </Badge>
+                      </div>
                     </div>
                     <div>
                       <CardTitle className="text-lg font-semibold line-clamp-2 leading-tight
@@ -306,6 +333,28 @@ export default function ResourcesPage() {
                   </div>
                 )}
 
+                {selectedResource.groupId && selectedResource.type === 'image' && (
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      Photos
+                    </h4>
+                    <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-1">
+                      {resources
+                        .filter(r => r.groupId === selectedResource.groupId)
+                        .map((r, idx) => (
+                          <a
+                            key={r.resourceId}
+                            href={r.url}
+                            target="_blank"
+                            className="aspect-square rounded-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:opacity-80 transition-opacity"
+                          >
+                            <img src={r.url} alt={`${selectedResource.title} ${idx + 1}`} className="w-full h-full object-cover" />
+                          </a>
+                        ))}
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     Details
@@ -322,16 +371,16 @@ export default function ResourcesPage() {
 
                 <div className="flex justify-between items-center pt-4">
                   <Link href={selectedResource.url} target="_blank">
-                    <Button 
-                      variant="default" 
-                      className="bg-gradient-to-r from-blue-500 to-indigo-500 
+                    <Button
+                      variant="default"
+                      className="bg-gradient-to-r from-blue-500 to-indigo-500
                       hover:from-blue-600 hover:to-indigo-600 text-white"
                     >
                       <Download className="h-4 w-4 mr-2" />
-                      Download Resource
+                      {selectedResource.groupId && selectedResource.type === 'image' ? 'View All Photos' : 'Download Resource'}
                     </Button>
                   </Link>
-                  <Button 
+                  <Button
                     variant="outline"
                     onClick={() => setSelectedResource(null)}
                     className="border-2"

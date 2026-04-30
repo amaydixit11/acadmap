@@ -12,6 +12,8 @@ const ResourceData = () => {
     updateFormData,
     selectedType,
     setFiles,
+    failedFiles,
+    setFailedFiles,
   } = useUploadContext();
   return (
     <>
@@ -69,7 +71,12 @@ const ResourceData = () => {
             />
           </div>
         ) : (
-          <FileUploader resourceType={selectedType} onFilesChange={setFiles} />
+          <FileUploader
+            resourceType={selectedType}
+            onFilesChange={setFiles}
+            failedFiles={failedFiles}
+            onClearFailed={() => setFailedFiles([])}
+          />
         )}
       </div>
     </>

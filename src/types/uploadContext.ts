@@ -7,6 +7,7 @@ export interface UploadContextState {
   selectedType: ResourceType;
   selectedCategory: ResourceCategory;
   files: File[];
+  failedFiles: File[];
   formData: UploadFormData;
   nameOption: NameOption;
   customName: string;
@@ -24,6 +25,7 @@ export interface UploadContextActions {
   setSelectedType: (type: ResourceType) => void;
   setSelectedCategory: (category: ResourceCategory) => void;
   setFiles: (files: File[]) => void;
+  setFailedFiles: (files: File[]) => void;
   updateFormData: (updates: Partial<UploadFormData>) => void;
   setNameOption: (option: NameOption) => void;
   setCustomName: (name: string) => void;

@@ -10,25 +10,29 @@ interface UploadProps {
     repoName: string;
     category: ResourceCategory;
     title: string;
+    fileName: string;
     name: string;
     userId: string;
     type: string;
     content: string;
     commitMessage: string;
+    groupId?: string;
 }
 
 async function upload({
     repoName,
     category,
     title,
+    fileName,
     name,
     userId,
     type,
     content,
-    commitMessage
+    commitMessage,
+    groupId
 }: UploadProps) {
     try {
-        const filePath = `${category}/${type === 'link' ? `${title}.md` : title}`;
+        const filePath = `${category}/${type === 'link' ? `${title}.md` : fileName}`;
         const response = await uploadFileToRepository({
             repoName,
             filePath,
@@ -44,10 +48,11 @@ async function upload({
             title,
             category,
             year: repoName.split('-')[1],
-            course_code: repoName.split('-')[0]
+            course_code: repoName.split('-')[0],
+            groupId
         });
 
-        uploadResourceToDatabase(resource);
+        await uploadResourceToDatabase(resource);
     } catch (error) {
         throw `Failed to upload ${type === 'link' ? 'link' : 'file'} ${title}`;
     }
@@ -61,6 +66,7 @@ interface UploadFileProps {
     type: string;
     name: string;
     userId: string;
+    groupId?: string;
 }
 
 export async function UploadFile({
@@ -70,20 +76,33 @@ export async function UploadFile({
     title,
     type,
     name,
-    userId
+    userId,
+    groupId
 }: UploadFileProps) {
     const buffer = await readFileAsArrayBuffer(file);
     const base64Content = arrayBufferToBase64(buffer);
 
+    const uniqueFileName = groupId
+      ? (() => {
+          const lastDotIndex = file.name.lastIndexOf('.');
+          if (lastDotIndex === -1) return `${file.name}_${Date.now()}`;
+          const name = file.name.slice(0, lastDotIndex);
+          const ext = file.name.slice(lastDotIndex);
+          return `${name}_${Date.now()}${ext}`;
+        })()
+      : file.name;
+
     await upload({
         repoName,
         category,
-        title: file.name,
+        title,
+        fileName: uniqueFileName,
         name,
         userId,
         type,
         content: base64Content,
-        commitMessage: `Add ${type} resource: ${title} (Uploaded by ${name})`
+        commitMessage: `Add ${type} resource: ${title} (Uploaded by ${name})`,
+        groupId
     });
 }
 
@@ -118,11 +137,13 @@ ${url}`;
         repoName,
         category,
         title,
+        fileName: `${title}.md`,
         name,
         userId,
-        type: "link",
+        type,
         content,
-        commitMessage: `Add link resource: ${title} (Uploaded by ${name})`
+        commitMessage: `Add link resource: ${title} (Uploaded by ${name})`,
+        groupId
     });
 }
 
@@ -136,7 +157,7 @@ interface UploadFactoryProps{
     course_code: string
 
 }
-export function uploadFactory({response, name, type, title, category, year, course_code}: UploadFactoryProps): ResourceModel {
+export function uploadFactory({response, name, type, title, category, year, course_code, groupId}: UploadFactoryProps): ResourceModel {
     const { content, commit } = response;
 
     const resourceUrl = content.download_url;
@@ -152,5 +173,6 @@ export function uploadFactory({response, name, type, title, category, year, cour
       url: resourceUrl,
       uploadedBy,
       year: Number(year),
+      groupId
     };
   }

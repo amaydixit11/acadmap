@@ -60,10 +60,21 @@ export async function fetchResourceModels(options: ResourceFetchOptions = {}): P
   
       resources = (await Promise.all(resourcePromises)).flat();
       const resourceIds = resources.map(r => r.resourceId);
+
+      const supabase = createClient();
+      const { data: dbResources, error: dbError } = await supabase
+        .from('resources')
+        .select('resourceId, groupId')
+        .in('resourceId', resourceIds);
+
+      const groupMap = new Map();
+      dbResources?.forEach(r => groupMap.set(r.resourceId, r.groupId));
+
       const uploaderMap = await getUploaderNames(resourceIds);
 
       const finalResources: ResourceModel[] = resources.map(resource => ({
         ...resource,
+        groupId: groupMap.get(resource.resourceId),
         uploadedBy: uploaderMap.get(resource.resourceId) || 'Anonymous',
       }));
   

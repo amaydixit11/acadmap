@@ -5,6 +5,7 @@ export interface ResourceModel {
     type: 'document' | 'video' | 'image' | 'archive' | 'link' | 'other';
     category: 'lecture' | 'tutorial' | 'assignment' | 'pyq' | 'lab' | 'unclassified'
     url: string;
+    groupId?: string;
     uploadedBy: string;
     description?: string;
     year: number;

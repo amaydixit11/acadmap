@@ -15,6 +15,7 @@ export const useUploadState = (defaultCategory: ResourceCategory) => {
     selectedType: 'document',
     selectedCategory: defaultCategory,
     files: [],
+    failedFiles: [],
     formData: DEFAULT_FORM_DATA,
     nameOption: 'user',
     customName: '',

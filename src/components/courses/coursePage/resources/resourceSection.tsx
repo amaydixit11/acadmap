@@ -1,3 +1,6 @@
+"use client"
+
+import React, { useState, useMemo } from 'react';
 import { Course } from "@/types/courses";
 import { User } from "@supabase/supabase-js";
 import { NoResources } from "./NoResources";
@@ -7,15 +10,17 @@ import { ResourceFilters } from "./ResourcesFilters";
 import ResourceCard from "./resourceCard";
 import UploadResourcesButton from "./UploadResourcesButton";
 import { uploadResource } from "@/lib/resources";
-import { Loader2, Filter, Upload } from "lucide-react";
+import { Loader2, Filter, Upload, Image, Download, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
+import { Badge } from "@/components/ui/badge";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
 } from "@/components/ui/sheet";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
 
 const RESOURCE_TYPES = [
@@ -37,16 +42,38 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
   const { isAuthenticated } = useAuth();
   const { filters, setResourceType, setYear, setSortOrder } = useResourceFilters();
   const { resources, isLoading, error } = useResources(course.code);
+  const [selectedGroup, setSelectedGroup] = useState<any[] | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const filteredAndSortedResources = resources
-    .filter(r => 
-      (filters.selectedResourceType === 'all' || r.category === filters.selectedResourceType) && 
+    .filter(r =>
+      (filters.selectedResourceType === 'all' || r.category === filters.selectedResourceType) &&
       (!filters.selectedYear || r.year === Number(filters.selectedYear))
     )
     .sort((a, b) => {
       const order = filters.sortOrder === "desc" ? -1 : 1;
       return order * ((a.year || 0) - (b.year || 0));
     });
+
+  const groupedResources = useMemo(() => {
+    const result: (any | any[])[] = [];
+    const seenIds = new Set<string>();
+
+    filteredAndSortedResources.forEach(resource => {
+      if (seenIds.has(resource.resourceId)) return;
+
+      if (resource.groupId) {
+        const group = filteredAndSortedResources.filter(r => r.groupId === resource.groupId);
+        result.push(group);
+        group.forEach(r => seenIds.add(r.resourceId));
+      } else {
+        result.push(resource);
+        seenIds.add(resource.resourceId);
+      }
+    });
+
+    return result;
+  }, [filteredAndSortedResources]);
 
   const availableYears = [...new Set(
     resources
@@ -83,7 +110,6 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
             onSortChange={setSortOrder}
             availableYears={availableYears}
             resourceTypes={RESOURCE_TYPES}
-            // className="w-full"
           />
         </div>
       </SheetContent>
@@ -96,19 +122,17 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
       {isAuthenticated && (
             <UploadResourcesButton
               onClick={() => uploadResource({
-                resourceType: filters.selectedResourceType, 
-                courseCode: course.code, 
+                resourceType: filters.selectedResourceType,
+                courseCode: course.code,
                 year: filters.selectedYear ?? new Date().getFullYear().toString(),
               })}
               text={`Upload Resources`}
             />
           )}
-        {/* Mobile Filters - Visible on small screens */}
         <div className="block md:hidden">
           <MobileFilters />
         </div>
 
-        {/* Desktop Filters - Visible on medium screens and above */}
         <div className="hidden md:flex flex-col sm:flex-row justify-between gap-4 items-center">
           <ResourceFilters
             filters={filters}
@@ -117,20 +141,7 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
             onSortChange={setSortOrder}
             availableYears={availableYears}
             resourceTypes={RESOURCE_TYPES}
-            // className="flex-grow"
           />
-
-          {/* {isAuthenticated && (
-            <UploadResourcesButton
-              onClick={() => uploadResource({
-                resourceType: filters.selectedResourceType, 
-                courseCode: course.code, 
-                year: filters.selectedYear ?? new Date().getFullYear().toString(),
-              })}
-              text={`Upload Resources`}
-              className="flex items-center gap-2"
-            />
-          )} */}
         </div>
       </div>
 
@@ -139,28 +150,136 @@ export function ResourceSection({ course, user }: ResourceSectionProps) {
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-          {filteredAndSortedResources.length > 0 ? (
-            filteredAndSortedResources.map((resource, index) => (
-              <ResourceCard
-                key={resource.resourceId}
-                resource={resource} 
-                // className="w-full transition-all hover:shadow-lg" 
-              />
-            ))
-          ) : (
-            <div className="col-span-full">
-              <NoResources
-                courseCode={course.code}
-                user={user}
-                selectedResourceType={filters.selectedResourceType}
-                resourceTypes={RESOURCE_TYPES}
-                year={filters.selectedYear ?? new Date().getFullYear().toString()}
-              />
-            </div>
-          )}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+            {groupedResources.length > 0 ? (
+              groupedResources.map((resourceOrGroup, index) => {
+                const isGroup = Array.isArray(resourceOrGroup);
+                const resource = isGroup ? resourceOrGroup[0] : resourceOrGroup;
+
+                return (
+                  <div key={resource.resourceId} className="relative">
+                    {isGroup && (
+                      <Badge
+                        className="absolute -top-2 -right-2 z-10 bg-blue-500 text-white text-[10px] px-1.5 py-0.5 rounded-full shadow-sm"
+                      >
+                        {resourceOrGroup.length} Photos
+                      </Badge>
+                    )}
+                    <div
+                      onClick={() => isGroup ? setSelectedGroup(resourceOrGroup) : null}
+                      className={isGroup ? "cursor-pointer" : ""}
+                    >
+                      <ResourceCard
+                        resource={resource}
+                        onOpen={() => isGroup && setSelectedGroup(resourceOrGroup)}
+                      />
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="col-span-full">
+                <NoResources
+                  courseCode={course.code}
+                  user={user}
+                  selectedResourceType={filters.selectedResourceType}
+                  resourceTypes={RESOURCE_TYPES}
+                  year={filters.selectedYear ?? new Date().getFullYear().toString()}
+                />
+              </div>
+            )}
+          </div>
+
+          <Dialog open={!!selectedGroup} onOpenChange={() => setSelectedGroup(null)}>
+            {selectedGroup && (
+              <DialogContent className="max-w-lg">
+                <DialogHeader className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Image className="h-6 w-6 text-emerald-500" />
+                    <Badge variant="outline" className={getCategoryColor(selectedGroup[0].category)}>
+                      {selectedGroup[0].category}
+                    </Badge>
+                  </div>
+                  <DialogTitle className="text-xl font-semibold leading-tight">
+                    {selectedGroup[0].title}
+                  </DialogTitle>
+                  <DialogDescription className="text-base">
+                    {selectedGroup[0].course_code} • {selectedGroup[0].year}
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                      Photos
+                    </h4>
+                    <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-1">
+                      {selectedGroup.map((r, idx) => (
+                        <div
+                          key={r.resourceId}
+                          className="aspect-square rounded-md overflow-hidden border border-gray-200 dark:border-gray-700"
+                        >
+                          <img
+                            src={r.url}
+                            alt={`${selectedGroup[0].title} ${idx + 1}`}
+                            className="w-full h-full object-cover cursor-zoom-in"
+                            onClick={() => setSelectedImage(r.url)}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end items-center pt-4">
+                    <Button
+                      variant="outline"
+                      onClick={() => setSelectedGroup(null)}
+                      className="border-2"
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            )}
+          </Dialog>
+
+          <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+            {selectedImage && (
+              <DialogContent className="max-w-screen-xl p-0 bg-black border-none overflow-hidden">
+                <div className="relative h-[90vh] w-full flex items-center justify-center">
+                  <img
+                    src={selectedImage}
+                    alt="Zoomed view"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                  <Button
+                    variant="ghost"
+                    className="absolute top-4 right-4 text-white hover:bg-white/20"
+                    onClick={() => setSelectedImage(null)}
+                  >
+                    <X className="h-6 w-6" />
+                  </Button>
+                </div>
+              </DialogContent>
+            )}
+          </Dialog>
+        </>
       )}
     </div>
   );
+}
+
+// Helper function for colors (since it was used in the main page and needs to be here too)
+function getCategoryColor(category: string) {
+  const colorMap = {
+    'lecture': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+    'tutorial': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+    'assignment': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+    'pyq': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+    'lab': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+    'unclassified': 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
+  };
+  return colorMap[category as keyof typeof colorMap] || colorMap.unclassified;
 }
