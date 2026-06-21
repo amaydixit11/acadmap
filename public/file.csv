@@ -1,206 +1,216 @@
 Course Code,Course Name,L-T-P,Credits,Discipline,Program,Course category,Slot Lecture\Venue,Tutorial Slot\Venue,Lab slot\Venue,Instructor
-BML101,Biology for Engineers,3-0-0,3,BSBM/BMD,BTech,PC,A\L-209,,,Dr. Arun Kumar Upadhyay
-BML551,Instrumentation in Biomedical Engineering,3-0-0,3,BSBM/BMD,MTech,PC,B\L-103,,,DPGC_BSBM
-BML651,Magnetic Resonance Imaging and Contrast Agents,2-0-0,2,BSBM/BMD,MTech,PE,M\L-101,,,DPGC_BSBM
-BMP582,Bioengineering Lab 2,0-0-2,1,BSBM/BMD,MTech,PC,,,U23,DPGC_BSBM
-BMP600,Biomedical Devices Lab,0-0-2,1,BSBM/BMD,MTech,PE,,,O23,DPGC_BSBM
-BMT799,MTECH THESIS,X-X-X,15,BSBM/BMD,MTech,TC,,,,DPGC_BSBM
-BMT895,PHD CANDIDACY,X-X-X,0,BSBM/BMD,PhD,TC,,,,DPGC_BSBM
-BMT899,PHD THESIS,X-X-X,12 to 15,BSBM/BMD,PhD,TC,,,,DPGC_BSBM
-CS250,Operating Systems,,4,CSE,BTech,,,,,Dhiman Saha
-CS253,Theory of Computation II,,2,CSE,BTech,,,,,Rishi Ranjan Singh
-CS499,THESIS (BTECH),X-X-X,6 to 12,CSE,BTech,TC,,,,DUGC_CSE
-CS799,THESIS (PHD) OLD,X-X-X,6 to 30,CSE,PhD,TC,,,,DPGC_CSE
-CSl251/CS204,Computer Organization and Architecture,3-0-2,4,CSE,BTech,PC,D\L-101,,O23,Dr. SK Subidh Ali
-CSL252,Design and Analysis of Algorithms,3-1-0,4,CSE,BTech,PC,E\L-101,H2\L-101,,Dr. I. Vinod Reddy
-CSL253,Theory of Computation,3-1-0,4,CSE,BTech,PC,F\ED-1\212/213,H1\ED-1\212/213,,Dr. Rishi Ranjan Singh
-CSL351,Computer Networks,3-0-2,4,CSE,BTech,PC,F\L-101,,V23,Dr. Anand M. Baswade
-CSL504/CS502,Graph Theory an Applications,3-0-0,3/6,CSE,NA,PE,B\ED-1\207/208,,,Dr. Barun Gorain
-CSL505/CS553,Cryptography,3-0-0,3/6,CSE,NA,PE,E\ED-1\212/213,,,Dr. Dhiman Saha
-CSL511/CS511,Introduction to Formal Verification and Its Applications,3-0-0,3/6,CSE,NA,PC,J\L-101,,,Prof. Santosh Biswas
-CSL516/CS516,Parallelization of Programs,3-0-0,3/6,CSE,NA,PC,D\L-102,,,Dr. Vishwesh Jatala
-CSL601/CS552,Network Science,3-0-0,3/6,CSE,NA,PE,K\L-101,,,Dr. Rishi Ranjan Singh
-CSL604/CS620,Mobile and Wireless Networks,3-0-0,3/6,CSE,NA,PC,M\L-102,,,Dr. Anand M. Baswade
-CSL607,ADVERSARIAL MACHINE LEARNING: SECURITY AND PRIVACY OF ML,3-0-0,3,CSE,NA,DE,I\L-101,,,Dr. SK Subidh Ali
-CST799,THESIS (MTECH),X-X-X,3 to15,CSE,MTech,TC,,,,DPGC_CSE
-CST895,PHD CANDIDACY,X-X-X,0,CSE,PhD,TC,,,,DPGC_CSE
-CST899,THESIS (PHD) NEW,X-X-X,9 to12,CSE,PhD,TC,,,,DPGC_CSE
-CSV595,MOOC-BASED (NPTEL): AFFECTIVE COMPUTING,X-X-X,3,CSE/DSAI,,PE,,,,DPGC_CSE
-CY799,PhD Thesis (Old),X-X-X,6 to 30,CY,PhD,TC,,,,DPGC_CY
-CYL020,Chemistry-II,3-1-0,4,CY,BTech (prep),PREP,B\SD-1\110/111,H3,,"Dr. Satyajit Gupta (IC), Dr. Arup Mukherjee, Dr. Hemanta Kumar Kisan"
-CYL504,Thermodynamics and Statistical Mechanics,3-0-0,3,CY,MSc,PC,G\L-103,,,Dr. Rukmankesh
-CYL505,Organic Reactions and Reagents,3-0-0,3,CY,MSc,PC,H\L-207,,,Dr. Sanjib Banerjee
-CYL506,Bioinorganic Chemistry,3-0-0,3,CY,MSc,PC,E\L-103,,,Dr. R Mayilmurugan
-CYL507,Chemistry of Main Group Elements,3-0-0,3,CY,,PE,C\SD-1\208/209,,,Dr. Arup Mukherjee
-CYL508,Organic Photochemistry and Pericyclic Reactions,3-0-0,3,CY,,PE,A\SD-1\110/111,,,Dr. Raghavender Medishetty
-CYL510,Physical Organic Chemistry,3-0-0,3,CY,,PE,D\SD-1\110/111,,,Dr. Hemanta Kumar Kisan
-CYL603,Chemistry of Heterocyclic Compounds and Natural Products,3-0-0,3,CY,,PE,F\SD-1\110/111,,,Dr. Ganapathy D.
-CYP021,Chemistry Lab-II,0-0-3,1.5,CY,BTech (prep),PREP,,,T,"Dr. Satyajit Gupta (IC), Dr. Mehboob Alam"
-CYP102,Chemistry lab,0-0-3,1.5,CY,BTech,PC,NA,,OWQSU,"Dr. Suchetan Pal (IC), Dr. Rukmankesh, Dr. Ganapathy D."
-CYT699,MSc Thesis,X-X-X,6 to 18,CY,MSc,TC,NA,NA,NA,DPGC_CY
-CYT895,PhD Candidacy,X-X-X,0,CY,PhD,TC,,,,DPGC_CY
-CYT899,PhD Thesis (New),X-X-X,12 to 15,CY,PhD,TC,,,,DPGC_CY
-CYL602,Interpretative molecular spectroscopy,3-0-0,3,CY/BMD,MTech,PE,J\L-102,,,Dr. Suchetan Pal
-CYL612,Molecular Modeling and Drug Design,2-0-2,3,CY/BMD,MTech,PE,K12\L-103,,O23,Dr. Rukmankesh
-DS799,PhD Thesis,X-X-X,6 to 30,DSAI,PhD,TC,,,,DPGC_CSE
-DSL251,Data Analytics and Visualization,3-0-0,3,DSAI,BTech,PC,A\L-101,,,Dr. Gagan Raj Gupta
-DSL253,Statistical Programming,1-0-2,2,DSAI,BTech,PC,B1\ED-1\203/204,,P23,Dr. Anil Kumar Sao
-DSL351,Bigdata Analytics,3-0-0,3,DSAI,BTech,PC,E\ED-1\203/204,,,Dr. Amit Kumar Dhar
-DSL353,Information Secruity,3-0-0,3,DSAI,BTech,PC,C\L-101,,,Dr. Souradyuti Paul
-DSL506/DS519,Deep Learning for Computer Vision,3-0-2,4/6,DSAI,,PE,F\L-102,,P12,Dr. Soumajit Pramanik
-DSL507,Data Science Methods for Brain Functional Connectivity Analysis,3-0-2,4,DSAI,,PE,J\L-103,,Q12,Dr. Anil Kumar Sao
-DSL605/DS605,Deep Learning for Low Resource NLP,3-0-0,3,DSAI,,PE,B\ED-1\212/213,,,Dr. Rajesh Kumar Mundotiya
-DSP252,Data Analytics and Visualization Lab,0-0-2,1,DSAI,BTech,PC,NA,,S23,Dr. Gagan Raj Gupta
-DSP352,Bigdata Analytics Lab,0-0-2,1,DSAI,BTech,PC,NA,,O,Dr. Amit Kumar Dhar
-DSQ401,BTech Project-I,0-0-6,3,DSAI,BTech,PC,NA,,,DUGC_CSE
-DST799,MTech Thesis,X-X-X,9 to 12,DSAI,MTech,TC,,,,DPGC_CSE
-DST895,PHD CANDIDACY,X-X-X,0,DSAI,PhD,TC,,,,DPGC_CSE
-DST899,THESIS (PHD) NEW,X-X-X,12 to 15,DSAI,PhD,TC,,,,DPGC_CSE
-ECL101,Basic Electronics Engineering,3-0-2,4,ECE,BTech,PC,B\L-209,,,"Dr. Vivek Raghuwanshi, Dr. Nitanhsu Chauhan, Dr. Aditya Singh"
-ECL211,Microcontroller and Embedded Systems,3-0-0,3,ECE,BTech,PC,F\L-103,,,Dr. Aditya Singh
-ECL212,Digital Signal Processing,3-0-0,3,ECE,BTech,PC,E\L-104,,,Dr. Sreejith T V
-ECL213,Communication Systems,3-0-0,3,ECE,BTech,PC,B\L-207,,,Dr. Arzad Alam Kherani
-ECL214,Solid State Devices,3-0-0,3,ECE,BTech,PC,D\L-103,,,Dr. Manish Pandey
-ECP211,Microcontroller and Embedded Systems Lab,0-0-3,1.5,ECE,BTech,PC,NA,,O,Dr. Nitanhsu Chauhan & Dr. Aditya Singh
-ECP212,Digital Signal Processing lab,0-0-3,1.5,ECE,BTech,PC,NA,,W,Dr. Hathiram Nenavath
-ECT799,MTech Thesis,X-X-X,9 to12,ECE,MTech,TC,,,,DPGC_EC
-ECT895,PHD CONDIDACY,X-X-X,0,ECE,PhD,TC,,,,DPGC_EC
-ECT899,THESIS (PHD),X-X-X,9 to12,ECE,PhD,TC,,,,DPGC_EC
-ECL527,Machine Learning for Signal Processing,2-0-2,3,ECE & MV,,"C1, C3 ED-1 203/204","C2,X",,Dr.\Hathiram\Nenavath
-ECL529,Fundamentals of Wireless and Cellular Communications,3-0-0,3,ECE & MV,,,I\L-103,,,Dr. Sreejith T V
-ECL531,Integrated Circuit Technology,3-0-0,3,ECE & MV,MTech,,J\L-206,,,Dr. Manish Pandey
-ECL532,MOS Device Physics,3-0-0,3,ECE & MV,,,J\L-104,,,Dr. Nitanhsu Chauhan
-ECL660,Sensors and Measurements,3-0-0,3,ECE & MV,,,K\L-104,,,Dr. Vivek Raghuwanshi
-ECL661,Advanced Antenna Engineering,3-0-0,3,ECE & MV,,,M\L-103,,,Dr. Aditya Singh
-EE499,Thesis,X-X-X,6 to12,EE,BTech,,,,,DUGC_EE
-EE799,PhD Thesis,,3,EE,PhD,,,,,DPGC_EE
-EEL101,Basic Electrical Engineering,3-0-2,6 to 12,EE,BTech,PC,D\L-209,,,Dr. Shashank Kurm/Dr. Lalit Sahu/Dr. Shashank Kurm(L)/Dr. Krishna Murari (L)/Dr. Nitin Khanna(L)
-EEL205,Control Systems,3-1-0,30,EE/MT,BTech,PC,A\ED-1\203/204,H1\ED-1\203/204,,Dr. Krishna Murari/Dr. Shashank Kurm
-EEL206,Electrical Machines-I,3-0-0,4,EE,BTech,PC,B\L-204,,,Dr. Lalit Sahu
-EEL207,Power System Analysis,3-0-0,2,EE,BTech,PC,E\ED-1\207/208,,,Dr. Krishna Murari
-EEL208,Sensors and Instrumentation,3-0-0,3,EE/MT,BTech,PC,F\L-104,,,Dr. Saikat Sahu
-EEL602/EE572,Advanced Sensing Techniques,3-0-0,3/6,EE,MTech,PE,A\L-104,,,Dr. Avishek Adhikari
-EEL603/EE573,Optimal Control,3-0-0,3/6,EE,MTech,PE,F\ED-1\207/208,,,Dr. Avishek Adhikari
-EEL605/EE613,Image processing,0-0-3,6,EE,,,K\L-102,,,Dr. Nitin Khanna
-EEL622/EE574,Power Quality,3-0-0,4,EE,MTech,PC,I\L-102,,,Dr. Shailendra
-EEP209,Device and Circuit Lab,0-0-3,2,EE,BTech,PC,,,Q,Dr. Nikhil Chander
-EEP210,Digital Electronics Lab,0-0-3,3,EE,BTech,PC,,,S,Dr. Nikhil Chander
-EEP306,Machines Lab,0-0-3,1.5,EE,BTech,PC,NA,,S,Dr. Lalit Sahu
-EEP307,Instrumentation Lab,0-0-3,1.5,EE,BTech,PC,NA,,S,Dr. Nitin Khanna
-EEP308,Control Lab,0-0-3,9 to 12,EE,BTech,TC,NA,,R,Dr. Shailendra
-EEP309,Power Electronics Lab,0-0-3,1.5,EE,BTech,TC,NA,,W,Dr. Shashank Kurm
-EEP522,Power Electronics Lab,0-0-3,1.5,EE,MTech,PC,,,N,Dr. Shashank Kurm
-EEP523,Power Systems Lab,0-0-3,1.5,EE,MTech,PC,,,S,Dr. Shailendra
-EET799,MTech Thesis,,3,EE,MTech,,,,,DPGC_EE
-EET895,PhD Candidacy,,6 to 30,EE,,,,,,DPGC_EE
-EET899,PhD Thesis,,3,EE,PhD,,,,,DPGC_EE
-EVL506/EV508,Energy Storage Technologies,3-0-0,3,EE/EV/CY,,PE,J\L-207,,,Dr. Katchala Nanaji
-EVP506,"Power Electronics for EV, Lab",0-0-3,1.5,EE,MTech,,,,R,Dr. Shashank Kurm
-EVP602,Drives Lab,0-0-3,3,EE/EVT,MTech,,,,V,Dr. Shailendra
-EV799,PhD Thesis,,1 to 4,EVT,NA,,,,,DPGC_EVT
-EVT799,Thesis,X-X-X,1,EVT,MTech,NA,NA,,,DPGC_EVT
-EVT899,PhD Thesis,,1 to 4,EVT,NA,,,,,DPGC_EVT
-UGQ301,Interdisciplinary project,0-0-6,9 to 12,EE,BTech,TC,NA,,,Dr. Nitin Khanna
-LA799,PhD Thesis,X-X-X,6 to 30,LA,PhD,,,,,DPGC_LA
-LAL020,English II,2-1 - 0,3,LA,BTech (prep),PREP,C12\SD-1\110/111,C3\SD-1\110/111,,Dr. Sruthi Vinayan and Dr. Anubhav Pradhan
-LAL101,Introduction to Finance,1-0-0,1,LA,BTech,,H3\L-209,,,Dr. Rekha Ravindran
-LAL200/LA321,Macroeconomics,2-0-0,2/2,LA,,,G23\L-101,,,Dr. Rekha Ravindran
-LAL222 /LA305,City in Literature,2-0-0,2/4,LA,,,H12\L-104,,,Anubhav Pradhan
-LAL224,Introduction to Postcolonial Literature,2-0-0,2,LA,,,G12\L-207,,,Dr Sruthi Vinayan
-LAL244/LA324,Leadership: An Organizational Behaviour Perspective,1-0-0,1/2,LA,,,L1\L-101,,,Dr Anindita Ghosh
-LAL249/LA249,Introduction to understanding psychological disorders,2-0-0,2/4,LA,,,L23\L-103,,,Dr. Eslavath Rajkumar
-LAL732/LA703,Positive Organizational Behaviour,3-0-0,3/6,LA,,,I\L-207,,,Dr Anindita Ghosh
-LAL733,Statistical Analysis,3-0-0,3,LA,,,J\L-208,,,Dr. Eslavath Rajkumar
-LAL734,Allied Health Studies,3-0-0,3,LA,,,M\L-208,,,Dr. Eslavath Rajkumar
-LAL735,Culture And The Study Of Human Strengths,3-0-0,3,LA,,,B\SD-1\208/209,,,Dr. Eslavath Rajkumar
-LAN103,Professional Ethics,X-X-X,,LA,BTech,,G2\L-209,,,Dr Anindita Ghosh & Dr. Eslavath Rajkumar
-LAT795,PhD Candidacy,X-X-X,0,LA,,,,,,DPGC_LA
-LAT899,PhD Thesis,X-X-X,12,LA,PhD,,,,,DPGC_LA
-MA799,PhD Thesis,,6 to 30,MA,PhD,,,,,DPGC_MA
-MAL020,Mathematics-II,3-1-0,4,MA,BTech (prep),PREP,G\L-104,H1\L-103,,Dr. Raj Kumar Mistri
-MAL101,Mathematics-II,3-1-0,4,MA,BTech,PC,C\L-209,G1\L-201,L-202,203,204,205,206,Dr. Pawan Kumar Mishra
-MAL405,Differential Equations,3-1-0,4,MA,MSC,PC,M\L-104,H3\L-104,,Dr. Swati Yadav & Dr. Pawan Kumar Mishra
-MAL406,Numerical Analysis,3-1-0,4,MA,MSC,PC,I\L-208,H2\L-208,,Dr. Swati Yadav
-MAL500,Topology,3-0-0,3,MA,MSC,PC,C\SD-2\202/203,,,Dr Asrifa Sultana
-MAL501/MA505,Complex Analysis,3-0-0,3,MA,MSC,PC,A\SD-2\202/203,,,Dr. Avijit Pal
-MAL502,Functional Analysis,3-1-0,4,MA,MSC,PC,E\SD-2\202/203,H1\SD-2\202/203,,Dr. Arnab Patra
-MAL510/MA510,Elementary Number Theory,3-0-0,3,MA,,PE,L\L-104,,,Dr. Raj Kumar Mistri
-MAL514,Statistical Inference,3-0-0,3,MA,,PE,J\L-203,,,Dr. Lakshmi Kanta Patra
-MAL515,Algebraic Topology,3-0-0,3,MA,,PE,B\SD-2\202/203,,,Dr. Anurag Singh
-MAL520/MA520,Large Sample Statistical Methods,3-0-0,3,MA,,PE,I\L-104,,,Dr. Lakshmi Kanta Patra
-MAL521/MA521,Measure Theory,3-0-0,3,MA,,PE,A\SD-2\206/207,,,Dr Kuldeep Kumar kataria
-MAL604,Stochastic Processes,3-0-0,3,MA,,PE,F\SD-2\202/203,,,Dr Kuldeep Kumar kataria
-MAQ699,MSc Project,X-X-X,18,MA,MSc,PC,NA,NA,NA,DPGC_MA
-MAT895,PhD Candidacy,,,MA,PhD,,,,,DPGC_MA
-MAT899,PhD Thesis,,12 to 15,MA,PhD,,,,,DPGC_MA
-ME499,Thesis (BTech),,,ME,BTech,,,,,DUGC_ME
-ME799,PhD Thesis,,,ME,PhD,,,,,DPGC_ME
-MEL212/ME212,Fluid Mechanics,3-1-0,4,ME,BTech,,C\L-102,E1\ED-2\210/211,,Dr. Udayraj
-MEL214,Applied Thermal Engineering,2-1-0,3,ME,BTech,,A12\ED-2\206/207,A3\ED-2\206/207,,Dr. Pravesh C Shukla
-MEL232/ME231,Mechanics of Solids,2-1-0,3,ME/MT,BTech,,F12\L-207,F3\L-207,,Dr. Ganesh Kolappan Geetha
-MEL252/ME444,Fundamentals of Industrial Engineering,3-0-0,3,ME,BTech,,D\ED-2\210/211,,,"Dr. Purnendu Das (I), Dr. Soumya Gangopadhyay"
-MEL304,Applied Numerical Methods,3-0-0,3,ME,BTech,,B\L-203,,,Dr. Vijay Shantaram Duryodhan
-MEL334/ME333,Theory of Mechanisms and Machine,3-0.5-0,3.5,ME/MT,BTech,,D\ED-2\206/207,E1\ED-2\206/207,,DUGC_MT. This course will be taken by the Mechatronics Department.
-MEL558/ME558,Surface Engineering,3-0-0,3/6,ME,,,E\L-207,,,Dr. Soumya Gangopadhyay and Dr. Purnendu Das
-MEL613,Convective Heat Transfer,3-0-0,3,ME,MTech,,C\L-207,,,Dr. Vijay Shantaram Duryodhan
-MEL614/ME615,Computational Fluid Dynamics,3-0-0,3/6,ME,,,D\L-104,,,Dr. Nagesh Patil
-MEL616/ME616,Advanced Interfacial Science,3-0-0,3/6,ME/BMD/CY,,,K\L-207,,,Dr. Nagesh Patil
-MEL622/ME653,Experimental methods in Fluids and Thermal Science,3-0-0,3/6,ME,,,J\L-204,,,Dr. Balkrishana Mehta
-MEL623/ME515,Engine Management System and Alternative Fuels,3-0-0,3/6,ME,,,F\ED-2\206/207,,,Dr. Pravesh C. Shukla
-MEL632/ME632,Fracture Mechanics,3-0-0,3/6,ME,,,J\L-201,,,Dr. Anshul Faye
-MEL633,Finite Element Method,2-1-0,3,ME,MTech,,H12\L-102,H3\L-102,,Dr. Anshul Faye
-MEL637/ME637,Wave Propagation in Structures,3-0-0,3/6,ME,,,C\L-208,,,Dr. Ganesh Kolappan Geetha
-MEL651/ME560,Additive Manufacturing,3-0-0,3,ME,MTech,,I\L-204,,,Dr. Rahul Jain
-MEL656/ME557,Material Processing with Laser,3-0-0,3/6,ME,,,B\L-208,,,Dr. Kaushik Bandyopadhyay
-MEL658,Mechanical behavior and Testing of Materials,3-0-0,3,ME,,,A\ED-2\201/202,,,Dr. Jose Immenual R
-MEP102,Digital fabrication,1-0.5-3,3,ME,BTech,,G3\L-209,H3\L-201,L-202,203,204,205,206,OWQSU,Dr. Jose Immenual R
-MEP302,Engineering and Machine Drawing,0-0-4,2,ME,BTech,,,,Q\&\K3,Dr. Kaushik Bandyopadhyay
-MEP376,Solid Mechanics and Dynamics Lab,0-0-2,1,ME,BTech,,,,O12,Dr. Anshul Faye and Dr. Ganesh Kolappan Geetha
-MET799,MTech Thesis,,9 to 15,ME,MTech,,,,,DPGC_ME
-MET895,PhD Candidacy,,0,ME,PhD,,,,,DPGC_ME
-MET899,PhD Thesis,,12 to 15,ME,PhD,,,,,DPGC_ME
-MML203,Chemical synthesis of Materials,3-0-0,3,MSME,BTech,,C\SD-1\212/213,,,Dr. Sanjib Banerjee
-MML251,Physical Properties of Materials,3-0-0,3,MSME,BTech,,A\L-103,,,Dr. Arvind Singh
-MML252,Materials Characterization-Scattering and Imaging,3-0-0,3,MSME,BTech,,D\L-208,,,"Dr. Yagnesh Shadangi, Dr. Nithin B"
-MML253,Computational Materials Science and Engineering,3-0-0,3,MSME,BTech,,F\L-208,,,DUGC_MSME
-MML254,Mechanical behavior of Materials,3-0-0,3,MSME,BTech,,B\L-101,,,Dr. Shobhit Singh
-MML351,Technologies of Thin-film Fabrication,3-0-0,3,MSME,BTech,,C\L-103,,,Dr. Ashutosh Kumar
-MML401,Enviornmental Degradation of Materials,3-0-0,3,MSME,BTech,,D\ED-2\212/213,,,"Dr. Nithin B, Dr. Yagnesh Shadangi"
-MML554,Computational methods in Materials science,3-0-0,3,MSME,MTech,,D\ED-2\201/202,,,DPGC_MSME
-MML555,Microstructural Engineering of Structural Materials,3-0-0,3,MSME,,,F\ED-2\201/202,,,Dr. Nithin B
-MML556,Physics of Materials,3-0-0,3,MSME,,,K\L-208,,,Dr. Ashutosh
-MML557,Deformation Behavior of Materials,3-0-0,3,MSME,,PE,B\L-101,,,Dr. Shobhit Singh
-MML561,Industrial Metallurgical Processing,3-0-0,3,MSME,,PE,J\L-202,,,Dr. Yagnesh Shadangi
-MMP251,Chemical synthesis and characterization lab,0-0-3,1.5,MSME,BTech,,,,U,Dr. Ashutosh Kumar and Dr. Arvind Singh
-MMP401,Thin Film Fabrication and Characterization Lab,0-0-3,1.5,MSME,BTech,,,,Q,"Dr. Ashutosh Kumar, Dr. Arvind Singh"
-MMP511,"Material Processing, Testing and characterization laboratory",0-0-3,1.5,MSME,MTech,,,,W,"Dr. Nithin B, Dr. Yagnesh Shadangi"
-MMT799,MTech Thesis,X-X-X,3/12,MSME,MTech,,,,,DPGC_MSME
-MMT895,PhD Candidacy,X-X-X,0,MSME,,,,,,DPGC_MSME
-MMT899,PhD Thesis,X-X-X,12,MSME,PhD,,,,,DPGC_MSME
-MT799,PhD Thesis,,6 to 30,MT,PhD,,,,,DPGC_MT
-MTL202,Industry 4.0,3-0-0,3,MT,BTech,,C\L-203,,,Dr Ashish
-MTL561/MT561,UAV-I,3-0-2,4/6,MT,,,M\L-207,,,Dr. Kedarisetty Siddhardha
-MTL602,Design and Analysis of Robotic System,3-0-0,3,MT,MTech,,C\L-104,,,Dr. Kedarisetty Siddhardha and Dr. Saikat Sahu
-MTL655,Automation in Production Systems,3-0-0,3,MT,MTech,,B\L-104,,,Dr. Ashish Kumar Sahu
-MTP301,Mechanism Lab,0-0-3,1.5,MT,BTech,,,,Q,Dr. Saikat Sahoo
-MTP302,Mechatronics Lab,0-0-3,1.5,MT,BTech,,,,U,Dr. Kedarisetty Siddhardha
-MTT799,MTech Thesis,,3 to 15,MT,MTech,,,,,DPGC_MT
-MTT895,PhD Candidacy,,0,MT,PhD,,,,,DPGC_MT
-MTT899,PhD Thesis,,12,MT,PhD,,,,,DPGC_MT
-NCN101/AA103,NATIONAL SERVICE SCHEME,X-X-X,1 to 4,,BTech,,,,,Dr. Krishna Murari
-NCN102/AA102,National Sports Organization,X-X-X,1 to 4,,BTech,,,,,Dr. Pawan Kumar Mishra
-PH799,PhD Thesis,X-X-X,,PH,PhD,PC,,,,DPGC_PH
-PHL020,Physics-II,3-1-0,4,PH,BTech (prep),PREP,E\SD-2\206/207,H2\SD-2\206/207,,"Dr. Anjali Choudhary, Dr. Praveen Kumar, Dr. Avijit"
-PHL507,Statistical Mechanics,3-0-0,3,PH,MSc,PC,C\SD-2\206/207,,,Dr. Mahavir Sharma
-PHL508,Solid State Physics,3-0-0,3,PH,MSc,PC,D\SD-2\-202/203,,,Dr. Sesha Vempati
-PHL509/PH509,Nuclear and Particle Physics,3-0-0,3,PH,MSc,PC,E\L-102,,,Dr. Sabyasachi Ghosh
-PHL510,Atomic and Molecular Physics,3-0-0,3,PH,MSc,PC,J\L-205,,,Dr. Avijit
-PHL511,Advanced Micro-and-Nanofabrication and Electrical Characterization,3-0-0,3,PH,,,I\L-203,,,"Dr. Bhaskar Ghawri, Dr. Anjali Choudhary"
-PHL607,Experimental and Measurement Techniques,3-0-0,3,PH,,,F\SD-2\206/207,,,Dr. Dhruv Pratap Singh
-PHL610,Science and Technology of Thin Films,3-0-0,3,PH,,,K\L-203,,,Dr. Anjali Choudhary
-PHP021,Physics lab-II,0-0-3,1.5,PH,BTech (prep),PREP,,,W,Dr. Sesha Vempati
-PHP102,Physics lab,0-0-3,1.5,PH,BTech,PC,NA,,OWQSU,Dr. Praveen Kumar
-PHP511,General Physics Laboratory,0-0-6,3,PH,MSc,PC,NA,NA,"O,Q",Dr. Dhruv Pratap Singh
-PHT699,Thesis,X-X-X,18,PH,MSc,PE,NA,NA,NA,DPGC_PH
-PHT895,PhD Candidacy,X-X-X,0,PH,PhD,PC,,,,DPGC_PH
-PHT899,PhD Thesis,X-X-X,12,PH,PhD,PC,,,,DPGC_PH
+NCN101,NATIONAL SERVICE SCHEME,X-X-X,1 to 4,All,BTech,PC,Dr.,,,Krishna Murari
+NCN102,National Sports Organization,X-X-X,1 to 4,All,BTech,PC,Dr.,,,Pawan Kumar Mishra
+BML511,Physiology,2-0-0,2,BSBM,MTech,PC,B23,,,DPGC_BSBM
+BML512,Molecular Biology,3-0-0,3,BSBM,MTech,PC,D,,,Dr. Arun Kumar Upadhyay
+BML513,Biochemistry,2-0-0,2,BSBM,MTech,PC,C12,,,Dr. Ashish Kumar Tripathi
+BML514,Evolutionary principles in Health and Diseases,3-0-0,3,,,PE,K,,,Dr. Neetika Ahlawat
+BML615,Biomaterials Science and Engineering,3-0-0,3,,,PE,J,,,Dr. Suchetan Pal
+BML618,Principles of Epidemiology and Public Health,3-0-0,3,,,PE,L,,,Dr. Henu Kumar Verma
+BMP581,Bioengineering Lab 1,0-0-2,1,BSBM,MTech,PC,U23,,,DPGC_BSBM
+BMT799,MTech Thesis,X-X-X,15,BSBM,MTech,TC,DPGC_BSBM,,,
+BMT895,PhD Candidacy,X-X-X,0,BSBM,PhD,TC,DPGC_BSBM,,,
+BMT899,PhD Thesis,X-X-X,12 to 15,BSBM,PhD,TC,DPGC_BSBM,,,
+MAL403,Probability and Statistics,3-1-0,4,CS&DS&EE&ECE&MTMA,BTech/MSC,PC,C,,,H3 Dr. Lakshmi Kanta Patra
+CS499,Thesis (BTech),X-X-X,6 to 12,CSE,BTech,TC,DUGC_CSE,,,
+CS799,Thesis (PhD) Old,X-X-X,30,CSE,PhD,TC,DPGC_CSE,,,
+CSL301,Operating Systems,3-0-2,4,CSE,BTech,PC,D,,,O23 Dr. SK Subidh Ali
+CSL302,Compiler Design,3-0-2,4,CSE,BTech,PC,B,,,U23 Prof. Santosh Biswas
+CSL502,Foundation of Computer Science,3-0-0,3,CSE,MTech,PC,I,,,Dr. Barun Gorain PE for ECE
+CSL503,Computer Systems Engineering,2-0-2,3,CSE,MTech,PC,M12,,,T23 Dr. SK Subidh Ali PE for ECE
+CSL605,Computer Networks and Cyber Security,2-0-2,3,CSE,MTech,PC,F23,,,"O23 Dr. Anand M Baswade , Prof. Souradyuti Poul"
+CSL622,Quantum Computing for Computer Scientists,2-0-2,3,,,PE,L,,,V23 Dr. Dhiman Saha
+CSP203,Software Tool & Technologies Lab,1-0-4,3,CSE,BTech,PC,B1,,,"U12, S12 Dr. Anand M Baswade"
+CSQ401,BTech Project - I,0-0-6,3,CSE,BTech,PC,"T,R",,,"Dr. Dhiman Saha, Dr. Amit Kumar Dhar"
+CST799,Thesis (MTech),X-X-X,9 to 12,CSE,MTech,TC,DPGC_CSE,,,
+CST895,PhD Candidacy,X-X-X,0,CSE,PhD,TC,DPGC_CSE,,,
+CST899,Thesis (PhD) New,X-X-X,9,to12 CSE,PhD,TC,DPGC_CSE,,,
+DS499,Thesis (BTech),X-X-X,6 to 12,CSE - DSAI,BTech,TC,DUGC_CSE,,,
+DS799,Thesis (PhD) Old,X-X-X,30,CSE - DSAI,PhD,TC,DPGC_CSE,,,
+DSL201,Mathematical Foundations for Data Science,3-1-0,4,CSE - DSAI,BTech,PC,E,,,B2 Prof. Anil K Sao
+DSL501,Machine Learning,3-0-2,4,CSE - DSAI,MTech,PC,I,,,W23 Dr. Rajesh Kumar Mundotiya
+DSL502,Basic Mathematics for Data Science and Artificial Intelligence,2-1-0,3,CSE - DSAI,MTech,PC,A12,,,A3 Prof. Anil K Sao
+DSLXXX,Reinforcement Learning,2-0-2,3,,,PE,C,,,T23 Dr. Rajesh Kumar Mundotiya Under Approval
+DSP301,AI and ML Lab,0-0-3,1.5,CSE - DSAI,BTech,PC,N,,,Dr. Rajesh Kumar Mundotiya
+DSP505,Programming Lab for Data Science and Artificial Intelligence,1-0-2,2,CSE - DSAI,MTech,PC,B1,,,R23 Dr. Shivam Gupta
+DSQ402,BTech Project - II,0-0-6,3,CSE - DSAI,BTech,PC,"V,P",,,"Dr. Dhiman Saha, Dr. Amit Kumar Dhar"
+DST799,Thesis (MTech),X-X-X,9 to 12,CSE - DSAI,MTech,TC,DPGC_CSE,,,
+DST895,PhD Candidacy,X-X-X,0,CSE - DSAI,PhD,TC,DPGC_CSE,,,
+DST899,Thesis (PhD) New,X-X-X,9,to12 CSE - DSAI,PhD,TC,DPGC_CSE,,,
+CSL606,Advance Data Structure and Algorithms,3-0-0,3,CSE & DSAI,MTech,PC,D,,,Dr. I Vinod Kumar Reddy
+CSL304,Artificial Intelligence,3-0-2,4,CSE & DSAI & MT,BTech,PC,F,,,W23 Dr. Soumajit Pramanik
+CSL201/MAL503,Discrete Mathematics,3-1-0,4,CSE & DSAI/MA,BTech/MSC,PC,A,,,B3 Dr. Rishi Ranjan Singh
+CSL202/MAL504,Data Structures,2-1-2,4,CSE & DSAI/MA,BTech/MSC,PC,F12,,,F3 O23 Prof. Souradyuti Poul
+CSL303/MAL505,Database Management Systems,3-0-2,4,CSE & DSAI/MA,BTech/MSC,PC,D,,,Q12 Dr. Amit Kumar Dhar
+CSL100/MAL400,Introduction to programming,2-1-3,4.5,CSE/MA,BTech/MSC,,1,,,IC/PC A12 A3 OWQSU Dr. Vishwesh Jatala
+CSL559,COMPUTER SYSTEMS DESIGN,3-0-2,4,,,PE,K,,,U23 Dr. Gagan Raj Gupta This course should not overlap with EEL601 and MTL501 PE for
+CY799,Thesis (PhD) Old,X-X-X,30,CY,PhD,TC,DPGC_CY,,,
+CYL010,Chemistry-1,3-1-0,4,CY,BTech,,Prep,,,"K X Dr. Suchetan Pal, Dr. Hemanta Kumar Kisan (IC)"
+CYP011,Chemistry Lab-I,0-0-3,1.5,CY,BTech,,Prep,,,"S Dr. Mehboob Alam (IC), Dr. Hemanta Kumar Kisan,"
+CYL100,Applied Chemistry,3-0-0,3,CY,BTech,IC,D,,,"NA Dr. Sanjib Banerjee (IC), Dr. Torsha Moitra"
+CYL101,Environmental Science,1-0-0,1,CY,BTech,IC,E3,,,Dr. Raghavender Medishetty
+CYL400,Chemical Kinetics and Surface Science,3-0-0,3,CY,MSc,PC,D,,,Dr. Satyajit Gupta
+CYL401,Coordination Chemistry,3-0-0,3,CY,MSc,PC,B,,,Dr. Raghavender Medishetty
+CYL500,Quantum Chemistry,3-0-0,3,CY,MSc,PC,C,,,Dr. Mehboob Alam
+CYL501,Stereochemistry and Reaction Mechanism,3-0-0,3,CY,MSc,PC,A,,,Dr. Hemanta Kumar Kisan
+CYL509,Molecular Spectroscopy and Computational Chemistry,3-0-0,3,,,PE,G,,,"Dr. Satyajit Gupta (IC), Dr. Torsha Moitra"
+CYL600,Advanced Organic Chemistry,3-0-0,3,CY,MSc,PC,F,,,Dr. Ganapathy D
+CYL601,Organometallic Chemistry,3-0-0,3,CY,MSc,PC,B,,,Dr. Arup Mukherjee
+CYL605,EPR Spectroscopy and Applications,3-0-0,3,,,PE,A,,,Dr. Ramasamy Mayilmurugan
+CYLXXX,Density Functional Theory,2-1-0,3,,,,CY,,,L X Dr. Torsha Moitra
+CYP102,Chemistry Lab,0-0-3,1.5,CY,BTech,IC,OWQSU,,,"Dr. Rukmankesh (IC), Dr. Katchala Nanaji,Dr."
+CYP502,Organic and Inorganic Laboratory,0-0-6,3,CY,MSc,PC,"Q,S",,,"Dr. Raghavender Medishetty (IC), Dr. Ganapathy"
+CYP503,Physical and Computational Laboratory,0-0-6,3,CY,MSc,PC,"O,U",,,"Dr. Satyajit Gupta (IC), Dr. Suchetan Pal, Dr."
+CYT699,MSc Thesis,X-X-X,6,CY,MSc,TC,DPGC_CY,,,
+CYT895,PhD Candidacy,X-X-X,0,CY,PhD,TC,DPGC_CY,,,
+CYT899,Thesis (PhD) New,X-X-X,9 to 12,CY,PhD,TC,DPGC_CY,,,
+IC103,Material chemistry I,2-0-0,2,CY,BTech,IC,Dr.,,,Sanjib Banerjee
+ECL201,Digital Design,3-0-0,3,ECE,BTech,PC,E,,,Dr. Karthikeyan E
+ECL202,Signals and Systems,3-0-0,3,ECE,BTech,PC,B,,,Dr. Hathiram Nenavath
+ECL203,Introduction to Electronics,3-0-0,3,ECE,BTech,PC,F,,,Dr. Vivek Raghuwanshi
+ECL204,Network Theory,3-0-0,3,ECE,BTech,PC,A,,,Dr. Bitan Banerjee
+ECL301,Digital Communication,3-0-0,3,ECE,BTech,PC,E,,,Dr. Bitan Banerjee
+ECL302,Electromagnetic Theory,3-0-0,3,ECE,BTech,PC,F,,,Dr. Aditya Singh
+ECL303,Control System Engineering,3-0-0,3,ECE,BTech,PC,B,,,Dr. Arzad Alam Kherani
+ECL304,Analog Electronics Circuits,3-0-0,3,ECE,BTech,PC,D,,,Dr. Nikhil Chander
+ECP301,Communication Lab,0-0-3,1.5,ECE,BTech,PC,Q,,,Dr. Sreejith T. V
+ECP304,Analog Electronics Lab,0-0-3,1.5,ECE,BTech,PC,O,,,Dr. Nikhil Chander
+ECP305,Digital Electronics Lab,0-0-2,1,ECE,BTech,PC,U23,,,Dr. Manish Pandey
+ECT799,Thesis (MTech),X-X-X,9 to 12,ECE,MTech,TC,DPGC_ECE,,,
+ECT895,PhD Condidacy,X-X-X,0,ECE,PhD,TC,DPGC_ECE,,,
+ECT899,Thesis (PhD),X-X-X,9 to 12,ECE,PhD,TC,DPGC_ECE,,,
+ECL570,Matrix Theory,3-0-0,3,ECE - CSP,MTech,PC,B,,,Dr. Hathiram Nenavath
+ECL571,Random Variables and Stochastic Processes,3-0-0,3,ECE - CSP,MTech,PC,D,,,Dr. Sreejith T. V
+ECL572,Advanced Topics in Signal Processing,2-0-2,3,ECE - CSP,MTech,PC,C,,,Q23 Dr. Karthikeyan E
+ECL573,Advanced Communication Systems,2-0-2,3,ECE - CSP,MTech,PC,I,,,T12 Dr. Arzad Alam Kherani
+ECL503,Digital Integrated Circuit Design,3-0-0,3,ECE - VLSI,MTech,PC,A,,,Dr. Vivek Raghuwanshi
+ECL530,Semiconductor Device Modeling,3-0-0,3,ECE - VLSI,MTech,PC,G,,,Dr. Nitanshu Chauhan
+ECL551,CMOS Analog IC Design,3-0-0,3,ECE - VLSI,MTech,PC,H,,,Dr. Nitanshu Chauhan
+ECP540,Microfabrication Lab,0-0-3,1.5,ECE - VLSI,MTech,PC,W,,,"Dr. Vivek Raghuwanshi, Dr. Manish Pandey"
+ECP541,VLSI Design Lab,0-0-3,1.5,ECE - VLSI,MTech,PC,S,,,Dr. Manish Pandey
+ECL504,Semiconductor Devices,3-0-0,3,ECE (Old),MTech,PC,I,,,Dr. Nitanshu Chauhan This course is to be offered only to EC M.tech Students Who
+EE499,Thesis (BTech),X-X-X,6 to 12,EE,BTech,TC,DUGC_EE,,,
+EE799,Thesis (PhD) Old,X-X-X,24 to 30,EE,PhD,TC,DPGC_EE,,,
+EEL202,Analog Circuits,3-1-0,4,EE,BTech,PC,B,,,E3 Dr. Snehanjan Acharyya
+EEL203,Digital Circuits,2-0-0,2,EE,BTech,PC,E12,,,Dr. Snehanjan Acharyya
+EEL204,Engineering Electromagnetics,3-0-0,3,EE,BTech,PC,A,,,DUGC_EE
+EEL301,Electrical Machines-II,2-0-0,2,EE,BTech,PC,F23,,,Dr. Lalit Kumar Sahu
+EEL303,Power Electronics,3-0-0,3,EE,BTech,PC,D,,,Dr. Shailendra
+EEP304,Sensor Lab,0-0-3,1.5,EE,BTech,PC,S,,,Dr. Avishek Adhikari
+EEP305,Power System Lab,0-0-3,1.5,EE,BTech,PC,U23,,,Dr. Krishna Murari
+EEQ401,Minor Project,0-0-3,1.5,EE,BTech,PC,T,,,Dr. Nitin Khanna
+EET799,Thesis (MTech),X-X-X,9 to 12,EE,MTech,TC,DPGC_EE,,,
+EET899,Thesis (PhD) New,X-X-X,9 to 12,EE,PhD,TC,DPGC_EE,,,
+EEP501,Control Systems Lab,0-0-3,1.5,EE - CI,MTech,PC,U,,,Dr. Sandeep Kumar Soni
+EEP502,Sensors and Instrumentation Lab,0-0-3,1.5,EE - CI,MTech,PC,Q,,,Dr. Snehanjan Acharyya
+EEL601,Advanced Control Theory,3-0-0,3,EE - CI & MT,MTech,PC,I,,,Dr. Sandeep Kumar Soni
+EVL501,Introduction to EV and HEV,3-0-0,3,EE - EVT,MTech,TC,G,,,Dr. Lalit Kumar Sahu
+EVL503,Motor Drives,3-0-0,3,EE - EVT,MTech,TC,H,,,"Dr. Shashank Kurm, Dr. Shailendra"
+EEL521,Renewable and Distributed Energy Systems,3-0-0,3,EE - PSPE,MTech,PC,J,,,"Dr. Krishna Murari, Dr. Shashank Kurm"
+EEL621,Advanced Power Electronics,3-0-0,3,EE - PSPE,MTech,PC,B,,,Dr. Shashank Kurm
+EEL201,Circuit and System,3-1-0,4,EE & MT,BTech,PC,F,,,"X Dr. Nitin Khanna, Dr. Sandeep Kumar Soni"
+EEL302,Digital Control,3-1-0,4,EE & MT,BTech,PC,A,,,X Dr. Avishek Adhikari
+EET895,PhD Candidacy,X-X-X,0,EVT,PhD,TC,DPGC_EE,,,
+LA799,PhD Thesis,X-X-X,6 to 30,LA,PhD,TC,DPGC_LA,,,
+LAL010,English-I,2-1-0,3,LA,BTech,,Prep,,,I12 I3 Dr. Sruthi Vinayan
+LAL100,Introduction to Communication Skills,1-1-0,2,LA,BTech,LA/PC,G2,,,"G3 Dr. Sruthi Vinayan, Dr. Ritika Verma, Dr. Anubhav"
+LAL201,Microeconomics,1-0-0,1,LA,BTech,LA,H3,,,Dr. Rekha Ravindran
+LAL301,Econometrics I,3-0-0,3,LA,BTech,LA,G,,,Dr. Rekha Ravindran Pre-reuisite: LAL200 & LAL201
+LAL320,INTRODUCTION TO PSYCHOLOGY - I,2-1-0,3,LA,BTech,LA,G12,,,G3 Dr. Anindita Ghosh
+LAL621,Applied Econometrics,3-0-0,3,LA,PhD,PE,B,,,Dr. Rekha Ravindran
+LAL622,Advanced Macroeconomics,3-0-0,3,LA,PhD,LA,C,,,Dr. Rekha Ravindran
+LAL721,Development Economics-Theory and Policies,3-0-0,3,LA,PhD,PE,L,,,Dr. Rekha Ravindran
+LAL722,Current Economic Issues,3-0-0,3,LA,PhD,PE,A,,,Dr. Rekha Ravindran
+LAL731,ADVANCED POSITIVE PSYCHOLOGY,3-0-0,3,LA,PhD,PE,I,,,Dr. Anindita Ghosh
+LAL732,POSITIVE ORGANIZATIONAL BEHAVIOUR,3-0-0,3,LA,PhD,PE,M,,,Dr. Anindita Ghosh
+LAL734,Allied Health Studies,3-0-0,3,LA,PhD,LA,J,,,Dr. Eslavath Rajkumar
+LAL735,Culture and The Study of Human Strengths,3-0-0,3,LA,PhD,LA,K,,,Dr. Eslavath Rajkumar
+LAN102,Speaking and Writing Skills,1-0-0,0,LA,BTech,LA/PC,H1,,,Dr. Ritika Verma
+LAT795,PhD Candidacy,X-X-X,0,LA,PhD,TC,DPGC_LA,,,
+LAT899,PhD Thesis,X-X-X,3 to 12,LA,PhD,TC,DPGC_LA,,,
+MA799,Thesis (PhD) Old,X-X-X,6 to 30,MA,PhD,TC,DPGC_MA,,,
+MAL010,Mathematics-I,3-1-0,4,MA,BTech,,Prep,,,Prep A E1 Dr. Anurag Singh
+MAL100,Mathematics-I,3-1-0,4,MA,BTech,IC,B,,,E1 Dr. Swati Yadav
+MAL401,Linear Algebra,3-0-0,3,MA,MSC,PC,B,,,Dr. Avijit Pal
+MAL402,Real Analysis,3-0.5-0,3.5,MA,MSC,PC,F,,,X Dr. Asrifa Sultana
+MAL404,Modern Algebra,3-0-0,3,MA,MSC,PC,E,,,Dr. Raj Kumar Mistri
+MAL511,Additive Nunber Theory,3-0-0,3,,,PE,I,,,Dr. Raj Kumar Mistri
+MAL512,Partial Differential Equations,3-0-0,3,,,PE,F,,,Dr. Pawan Kumar Mishra
+MAL521,Measure Theory,3-0-0,3,,,PE,J,,,Dr. Bharat Talwar
+MAL600,Introduction to Spectral Theory,3-0-0,3,,,PE,K,,,Dr. Arnab Patra
+MAL601,Operator Theory I,3-0-0,3,,,PE,M,,,Dr. Avijit Pal
+MAL603,Martingale Theory,3-0-0,3,,,PE,G,,,Dr. Kuldeep Kumar kataria
+MAT895,PhD Candidacy,X-X-X,0,MA,PhD,TC,DPGC_MA,,,
+MAT899,Thesis (PhD) New,X-X-X,12 to 15,MA,PhD,TC,DPGC_MA,,,
+ME499,Thesis (BTech),X-X-X,6 to 12,ME,BTech,TC,DUGC_ME,,,
+ME799,Thesis (PhD) Old,X-X-X,6 to 30,ME,PhD,TC,DPGC_ME,,,
+MEL211,Thermodynamics,2-1-0,3,ME,BTech,PC,A12,,,A3 Dr. Sampad Laha
+MEL313,Heat and Mass Transfer,3-0.5-0,3.5,ME,BTech,PC,C,,,X Dr. Udayraj
+MEL351,Machining and Machine Tools,3-0-0,3,ME,BTech,PC,B,,,Dr. Purnendu Das
+MEL414,Internal Combustion Engine,3-0-0,3,,,PE,M,,,Dr. Pravesh C Shukla
+MEL554,Non-Conventional Machining,3-0-0,3,,,PE,I,,,Dr. Purnendu Das
+MEL5XX,Design of Experiments,3-0-0,3,,,PE,B,,,Dr. Rahul Jain
+MEL617,Microfluidics,3-0-0,3,,,PE,C,,,Dr. Vijay S Duryodhan ME (TF) PE
+MEL624,Energy Conservation and Management,3-0-0,3,,,PE,L,,,"Dr. Vijay Shantaram Duryodhan, Dr. Udayraj"
+MEL636,Structural Dynamics,3-0-0,3,,,PE,M,,,Dr. Ganesh Kolappan Geeth PE for MT
+MEL655,Automation,3-0-0,3,,,PE,L,,,Prof. Soumya Gangopadhyay DUGC/DPGC_ME Please specify the DM and TF courses under
+MEL652,Advances in Forming and Welding,3-0-0,3,,,PE,L,,,Dr. Kaushik Bandyopadhyay
+MEL659,Advanced Materials and Processing,3-0-0,3,,,PE,K,,,Dr. Jose Immanuel R
+MEP371,Thermal and Fluid Engineering Lab,0-0-3,1.5,ME,BTech,PC,O,,,Dr. Udayraj
+MEP381,Manufacturing and Metrology Lab,0-0-3,1.5,ME,BTech,PC,W,,,Dr. Rahul Jain
+MET799,Thesis (MTech),X-X-X,9 to 12,ME,MTech,TC,DPGC_ME,,,
+MET895,PhD Candidacy,X-X-X,0,ME,PhD,TC,DPGC_ME,,,
+MET899,Thesis (PhD) New,X-X-X,9 to 12,ME,PhD,TC,DPGC_ME,,,
+MEL631,Continuum Mechanics,3-0-0,3,ME - DM,MTech,PC,A,,,Dr. Anshul Faye
+MEL501,Advanced Engineering Mathematics,3-0-0,3,ME - DM & TF,MTech,PC,C,,,"Dr. Balkrishna Mehta, Dr. Ganesh Kolappan Geetha"
+MEL611,Advanced Fluid Mechanics,3-0-0,3,ME - TF,MTech,PC,E,,,Dr. Balkrishna Mehta
+MEL612,Conduction and Radiation Heat Transfer,3-0-0,3,ME - TF,MTech,PC,B,,,Dr. Pravesh C Shukla
+MEL231,Engineering Mechanics,2-1-0,3,ME & MT,BTech,PC,D12,,,D3 Dr. Yogesh Pratap Singh
+MEL333,Design of Machine Elements,3-0.5-0,3.5,ME & MT,BTech,PC,E,,,D3 Dr. Anshul Faye
+MEL251,"Casting, Forming and Welding",3-0-0,3,ME/MSME,BTech,PC,B,,,Dr. Kaushik Bandyopadhyay
+MML501,Characterization and Testing of Materials,3-0-0,3,MSME,MTech,PC,G,,,Dr. Yagnesh Shadangi and Dr. Nithin B. PE for ECE
+MML502,Thermodynamics and Phase Equilibria,3-0-0,3,MSME,MTech,PC,H,,,Dr. Ashutosh Kumar and Dr. Shobhit Pratap Singh
+MML201,Thermodynamics of Materials,3-0-0,3,MSME,BTech,PC,A,,,Dr. Ashutosh Kumar
+MML202,Structure of Materials,3-0-0,3,MSME,BTech,PC,D,,,Dr. Arvind Singh
+MML204/ME151,Properties and Phase transformation of Materials,3-0-0,3,MSME,BTech,PC,F,,,Dr. Nithin B
+MML205,Principle of Extractive Metallurgy,3-0-0,3,MSME,BTech,PC,C,,,Dr. Shobhit Pratap Singh
+MML301,Materials Characterization-Spectroscopy and other analytical tool,3-0-0,3,MSME,BTech,PC,D,,,Dr. Milan Kumar Jena
+MML302,Iron and Steel Making,3-0-0,3,MSME,BTech,PC,C,,,Dr. Anirban Dasgupta
+MML303,Polymeric Materials and Engineering,3-0-0,3,MSME,BTech,PC,F,,,Dr. Sanjib Banerjee
+MML504,Materials Synthesis and Processing,3-0-0,3,MSME,MTech,PC,I,,,Dr. Amit Kumar Mishra
+MML558,Machine Learning for Materials Engineering,3-0-0,3,,,PE,K,,,Dr. Milan Kumar Jena
+MML559,Structure and Property of Materials,3-0-0,3,,,PE,M,,,Dr. Yagnesh Shadangi PE for ECE
+MML560,Nanomaterials: Characterization and Applications,3-0-0,3,,,PE,L,,,Dr. Amit Kumar Mishra
+MML562,Energy Materials and Devices,3-0-0,3,,,PE,I,,,Dr. Arvind Singh
+MMP301,Computational Materials Science and Engineering Lab,0-0-2,1,MSME,BTech,PC,W12,,,Dr. Milan Kumar Jena
+MMP302,Industrial Exposure to Metals Processing,0-0-2,1,MSME,BTech,PC,Q12,,,"Dr. Yagnesh Shadangi, Dr. Nithin B"
+MMP303,Metallurgical/Metallography Lab,0-0-3,1.5,MSME,BTech,PC,R,,,"Dr. Nithin B, Dr. Yagnesh Shadangi"
+MMP510,Materials Synthesis and Characterization Laboratory,0-0-3,1.5,MSME,MTech,PC,W,,,Dr. Ashutosh Kumar and Dr. Amit Kumar Mishra
+MT799,PhD Thesis,X-X-X,6 to 30,MT,PhD,TC,DPGC_MT,,,
+MTT895,PhD Candidacy,X-X-X,0,MT,PhD,TC,DPGC_MT,,,
+MTL201,Fluid Power System,3-0-2,4,MT,BTech,PC,A,,,O23 Dr. Ashish Kumar Sahu
+MTL301,Fundamental of Robotics,3-0-0,3,MT,BTech,PC,B,,,Dr. Saikat Sahoo
+MTL501,Fundamental of Mechatronics,2-0-2,3,MT,MTech,PC,C12,,,"W23 Dr Saikat Sahoo, Dr. Kedarisetty Siddhardha"
+MTQ401,Minor Project,0-0-3,1.5,MT,BTech,PC,V,,,DUGC_MT
+MTT799,MTech Thesis,X-X-X,12,MT,MTech,PC,DPGC_MT,,,
+MTT899,PhD Thesis,X-X-X,12,MT,PhD,TC,DPGC_MT,,,
+PH799,Thesis (PhD) Old,X-X-X,6 to 30,PH,PhD,TC,DPGC_PH,,,
+PHL010,Physics-1,3-1-0,4,PH,BTech,IC,I,,,"E3 Dr. Sabyasachi Ghosh, Dr. Ravi Kashikar"
+PHP011,Physics Lab-I,0-0-3,1.5,PH,BTech,IC,U,,,Dr. Dhruv Pratap Singh
+PHL101,Physics for Engineers,3-1-0,4,PH,BTech,IC,C,,,"E2 Dr. Mahavir Sharma, Dr. Praveen Kumar, Dr. Anjali"
+PHL403,Mathematical Physics,3-0-0,3,PH,MSc,PC,F,,,Dr. Sudhanwa Patra
+PHL404,Electronics,3-0-0,3,PH,MSc,PC,B,,,Dr. Anjali Chaudhary
+PHL501,Classical Mechanics,3-0-0,3,PH,MSc,PC,A,,,Dr. Dhruv Pratap Singh
+PHL502,Quantum Mechanics,3-0-0,3,PH,MSc,PC,E,,,Dr. Sesha Pavan Kumar Vempati
+PHL601,Computational Physics,3-0-0,3,,,PE,L,,,Dr. Ravi Kashikar
+PHL602,Astrophysics and Cosmology,3-0-0,3,,,PE,M,,,Dr. Mahavir Sharma
+PHL603,Quantum Field Theory,3-0-0,3,,,PE,F,,,Dr. Sabyasachi Ghosh
+PHL609,Advanced quantum mechanics,3-0-0,3,,,PE,E,,,Dr. Sudhanwa Patra
+PHL612,Fundamentals of Nanoscience and Nanotechnology,3-0-0,3,,,PE,G,,,Dr. Avijit Saha PE for ECE
+PHL613,Quantum Materials and Devices: Fundamentals and Applications,3-0-0,3,,,PE,I,,,Dr. Bhaskar Ghawri PE for ECE
+PHP102,Physics Lab,0-0-3,1.5,PH,BTech,IC,NA,,,NA OWQSU Dr. Avijit Saha
+PHL505,Electrodynamics,3-0-0,3,PH,MSc,PC,D,,,Dr. Praveen Kumar
+PHP506,Electronics Laboratory,0-0-6,3,PH,MSc,PC,"Q,S",,,Dr. Bhaskar Ghawri
+PHT699,Thesis (MSc ),X-X-X,6,PH,MSc,TC,DPGC_PH,,,
+PHT895,PhD Candidacy,X-X-X,0,PH,PhD,TC,DPGC_PH,,,
+PHT899,Thesis (PhD) New,X-X-X,9 to 12,PH,PhD,TC,DPGC_PH,,,
