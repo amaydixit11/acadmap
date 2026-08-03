@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { CourseContent } from "@/components/courses/coursePage/courseContent";
 import { CourseSidebar } from "@/components/courses/coursePage/courseSidebar";
 import CourseHeader from "./coursePage/courseHeader";
-import { CourseReviewsSection } from "@/components/reviews/CourseReviewsSection";
 import { CourseStudyGroups } from "@/components/courses/CourseStudyGroups";
 
 interface CoursePageProps {
@@ -42,10 +41,7 @@ export default function CoursePage({ course, user }: CoursePageProps) {
             "lg:col-span-2 md:col-span-1 w-full space-y-6",
           )}>
             <CourseContent course={course} user={user} />
-            
-            {/* Course Reviews */}
-            <CourseReviewsSection courseCode={course.id} />
-            
+
             {/* Study Groups for this Course */}
             <CourseStudyGroups courseCode={course.id} />
           </div>

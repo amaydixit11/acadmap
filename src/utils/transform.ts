@@ -20,19 +20,5 @@ export function transformCourse(course: CourseModel): Course {
         tutorials: distributionParts[1],
         labs: distributionParts[2],
       },
-    // resources: {
-    //   lectures: [],
-    //   assignments: [],
-    //   labs: [],
-    //   tutorials: [],
-    //   pyq: [], // Empty array as no resource info is in CourseModel
-    //   unclassified: []
-    // },
-    rating: {
-      overall: 0, // Default to 0 for rating fields
-      difficulty: 0,
-      workload: 0,
-      reviews: 0,
-    },
   };
 }

@@ -42,11 +42,5 @@ export interface Course {
     tutorials: string;
     labs: string;
   };
-  rating: {
-    overall: number;
-    difficulty: number;
-    workload: number;
-    reviews: number;
-  }
 }
 
